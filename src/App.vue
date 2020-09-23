@@ -1,18 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- insert header -->
+    <nav>
+      <router-link to="/">Go to Home</router-link>    
+      <router-link to="/stuff">Settings</router-link>
+      <p v-if="userProfile.name" @click="logOut()">logout</p>
+      <p v-else @click="logIn()">login</p>
+    </nav>
+    <!-- end header -->
+   
+    
+    <router-view/>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import store from './store'
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+  },
+  data(){
+    return {
+    
+    }
+  },
+  methods: {
+    logOut: function(){
+      store.dispatch('logout')
+    }
+  },
+  computed: mapState(['userProfile']),
+    
+  
+  // mounted:function(){
+  //   console.log(this.isLoggedIn)
+  // }
 }
 </script>
 
@@ -25,4 +51,14 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+  nav{
+    display: flex;
+    justify-content: center;
+    
+    
+  }
+  nav >*{
+    margin:0px;
+    flex-basis: 33%;
+  }
 </style>
