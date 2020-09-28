@@ -20,6 +20,7 @@ import { auth } from '../components/firebaseInit'
 import HomePage from './../components/home/Home.vue'
 import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
+import Discover from './../views/Discover.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
         requiresAuth: true
       }
     
+  },
+  {
+    path: "/discover",
+    name: "discover",
+    component: Discover,
   },
   {
     path: '/login',

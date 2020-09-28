@@ -62,7 +62,6 @@ html {
     margin:0px;
     flex-basis: 33%;
   }
-=======
 body {
   margin:0;
 }
