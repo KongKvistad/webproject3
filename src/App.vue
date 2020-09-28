@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- insert header -->
+
     <nav>
       <router-link to="/">Go to Home</router-link>    
       <router-link to="/stuff">Settings</router-link>
@@ -16,12 +16,14 @@
 </template>
 
 <script>
+
 import store from './store'
 import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
+
   },
   data(){
     return {
@@ -39,18 +41,17 @@ export default {
   // mounted:function(){
   //   console.log(this.isLoggedIn)
   // }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+html {
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
+
   nav{
     display: flex;
     justify-content: center;
@@ -61,4 +62,12 @@ export default {
     margin:0px;
     flex-basis: 33%;
   }
+=======
+body {
+  margin:0;
+}
+#app {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 </style>
