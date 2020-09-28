@@ -2,26 +2,19 @@
 
   <div id="card">
       <div id="left-column">
-        <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/dog_cool_summer_slideshow/1800x1200_dog_cool_summer_other.jpg?resize=750px:*" alt="">
+       <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="">
       </div>
 
       <div id="right-column">
           <h1>{{ title }}</h1>
-          <h2>{{ company}}</h2>
-          <h3>Deadline: 24.09.2020</h3>
-          <p>Lorem impsum lalalalalalalalaala
-              fgdfgdfgdgdfg
-              dgfd
-              gridgdf
-              gffgd
-              f
-              ffffffff
-          </p>
-          <ul>
-              <li>30-50k</li>
-              <li>2 testimonies</li>
-              <li>2-4weeks</li>
-          </ul>
+          <h2>{{ owner }}</h2>
+          <h3>{{ deadline }}</h3>
+          <p>{{ description }}</p>
+          <div id="liste">
+                <p>{{ price }}</p>
+                <p>{{ reviews }} testemonies</p>
+                <p>{{ duration }} weeks</p>
+          </div>
       </div>
   </div>
 </template>
@@ -32,7 +25,12 @@ export default {
   name: 'Card',
   props: {
     title: String,
-    company: String
+    owner: String,
+    deadline: Date,
+    description: String,
+    price: Number,
+    reviews: Number,
+    duration: Number
   }
 }
 </script>
@@ -62,12 +60,9 @@ export default {
     display: block;
     object-fit: cover;
 }
-ul {
-    display: inline-block;
-}
-ul li {
-    display: inline;
-    padding: 20px;
+#liste {
+    display: flex;
+    justify-content: space-between;
 }
 
 
