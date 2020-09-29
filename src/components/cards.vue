@@ -2,16 +2,16 @@
 
   <div id="card">
       <div id="left-column">
-       <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="">
+       <img :src=imageLink :alt=altText>
       </div>
 
       <div id="right-column">
           <h1>{{ title }}</h1>
           <h2>{{ owner }}</h2>
-          <h3>{{ deadline }}</h3>
+          <p id = "deadline">Deadline: {{ deadline }}</p>
           <p>{{ description }}</p>
           <div id="liste">
-                <p>{{ price }}</p>
+                <p>{{ price }}k</p>
                 <p>{{ reviews }} testemonies</p>
                 <p>{{ duration }} weeks</p>
           </div>
@@ -30,7 +30,9 @@ export default {
     description: String,
     price: Number,
     reviews: Number,
-    duration: Number
+    duration: Number,
+    imageLink: String,
+    altText: String
   }
 }
 </script>
@@ -45,14 +47,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
-  border: 1px solid black;
+  border: 1px solid rgb(162, 162, 162);
 }
 #left-column {
     max-width: 30%;
 }
 #right-column {
+  padding: 0 2%;
     width: 70%;
-    border: 5px solid black;
 }
 #left-column img {
     height: 100%;
@@ -60,9 +62,24 @@ export default {
     display: block;
     object-fit: cover;
 }
+#deadline, #liste {
+  font-weight: bold;
+}
 #liste {
+  
     display: flex;
     justify-content: space-between;
+}
+
+h1 {
+  font-size: 1.7em;
+}
+h2 {
+  font-size: 1.5em;
+}
+
+p {
+  font-size: 1em;
 }
 
 

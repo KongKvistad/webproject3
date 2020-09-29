@@ -3,8 +3,8 @@
     <!--<img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <Card title="Sound boss" owner="NTNU" deadline="24.09.2020"
-    description="this is a year abroad" price="500" reviews="4"
-    duration="10"/>
+    description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to.." price=500 reviews=4
+    duration="10" imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg" altText="Image of a recording studio"/>
 
   </div>
 </template>
