@@ -1,71 +1,89 @@
 <template>
   <main>
-       <SearchBar/>
-       <label class="select-none container block relative cursor-pointer text-xl pl-8">Option
-        <input class="absolute opacity-0 left-0 top-0 cursor-pointer" type="checkbox" checked="checked">
-        <span class="h-6 w-6 checkmark absolute top-0 left-0 bg-gray-400"></span>
-        </label>
+       <RadioBtns v-on:childToParent="onFilterChange" v-if="this.cats.length > 0" :cats="this.cats"/>
+       <SearchBar v-on:childToParent="onChildChange" :matches="this.matches"/>
+       <FilterBox :filters="this.filters[this.activeFilters]" v-if="this.activeFilters" />
   </main>
 </template>
 
 <script>
-//import db from '@/components/firebaseInit.js'
-//import {getCollections} from '../helpers/collections.js'
-import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar.vue'
+import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
+//import {db} from '../components/firebaseInit.js'
+import SearchBar from '../components/SearchBar'
+import FilterBox from '../components/FilterBox'
+import RadioBtns from '../components/RadioBtns'
 
 export default {
   name: 'Home',
   components: {
     SearchBar,
+    FilterBox,
+    RadioBtns
   },
 
   data(){
     return {
       results:[],
-      cityOrCountry: false,
-      resCount: 0
+      searchTerm:'',
+      matches:[],
+      filters: [],
+      activeFilters:"",
+      cats: []
+     
     }
   },
   
   methods: {
-    getIsCapitalOrCountry: async function(){
-
-      let param = "spain"
-      const citiesRef = db.collection('Work');
-      let isACity = false;
-      //We define an async function
+    onChildChange: function(value){
+      this.searchTerm = value
       
-        const isCity = citiesRef.where('city', '==', param).get();
-        const isCountry = citiesRef.where('country', '==', param).get();
-        const [capitalQuerySnapshot, italianQuerySnapshot] = await Promise.all([
-          isCity,
-          isCountry
-        ]);
-        const CitiesArray = capitalQuerySnapshot.docs;
-       
-        const countryArray = italianQuerySnapshot.docs;
-
-        isACity = CitiesArray.length > 0 ? true : false;
-         console.log("is city?", isACity)
-        const result = CitiesArray.concat(countryArray);
-        this.resCount = result.length;
-        return result;
-
-       
-      }
-      //We call the asychronous function
+    },
+    onFilterChange: function(value){
+      this.activeFilters = value
+      console.log(this)
+    },
+    findMatches: function(val, type){
+      
+      //look for matching strings and count occurences of same value in name
+      let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
+      let names = match.map(x => {
+        return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
+      })
+      
+      // remove duplicates
+      return names.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
+    }
+   
+      
      
+  },
+  watch:{
+    searchTerm: function(){
+      if(this.searchTerm == ""){
+        this.matches = [{name: "no results!"}];
+
+      } else {
+        let countries = this.findMatches(this.searchTerm, "country")
+        let cities = this.findMatches(this.searchTerm, "city")
+        this.matches = countries.concat(cities)
+      }
+      
+
+
+    }
   },
   created(){
     
-     this.getIsCapitalOrCountry().then(result => {
-        result.forEach(docSnapshot => {
-          console.log(docSnapshot.data());
-        });
-      });
+    this.results = getCollections("Work", true);
+   
+    filtersWithHeaders().then(res => {
     
-  
+      this.filters = res
+      this.cats = Object.keys(res)
+      this.activeFilters=this.cats[0]
+    
+    });
+    
   }
 }
 </script>
