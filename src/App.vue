@@ -2,7 +2,8 @@
   <div id="app">
 
     <nav>
-      <router-link to="/">Go to Home</router-link>    
+      <router-link to="/">Go to Home</router-link>
+      <router-link to="/discover">Discover</router-link>    
       <router-link to="/stuff">Settings</router-link>
       <p v-if="userProfile.name" @click="logOut()">logout</p>
       <p v-else @click="logIn()">login</p>
