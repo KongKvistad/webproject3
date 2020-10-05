@@ -37,10 +37,31 @@
                     reviews=57 
                     duration=104 
                     imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"/>
+
+                <Card title="PHP programmer" 
+                    owner="UCLA" 
+                    deadline="21.05.2021" 
+                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
+                    price=300 
+                    reviews=10 
+                    duration=40 
+                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"/>
             </div>
     </section>
     <section id="rightBar">
-        <div></div>
+        <!--Bare satt det inn her for å se litt på grid-->
+        <div>
+            <LimitSearch 
+                heading="Experience" 
+                choice1="Work" 
+                choice2="Study programme" 
+                choice3="Exchange"/>
+            <LimitSearch 
+                heading="Engagement type" 
+                choice1="Internship" 
+                choice2="Short term" 
+                choice3="Long term"/>
+        </div>
     </section>
 </div>
 </template>
@@ -62,26 +83,24 @@ export default {
         margin-top: 50px;
     }
     #discover{
-        display: grid;
-        grid-template-areas: "l m r";
+        display: inline-grid;
+        grid-template-columns: 170px auto 170px;
+        grid-column-gap: 20px;
+        margin: 10% 2%;
     }
     #leftBar {
-        max-width: 20%;
-        grid-area: l;
-        margin-left: 10%;
+        grid-column: 1 / 2;
     }
     #middleBar{
-        margin: 0 2%;
-        grid-area: m;
-        width: 90%;
+        grid-column: 2 / 3;
         border-left: 1px solid rgb(177, 177, 177);
         border-right: 1px solid rgb(177, 177, 177);
         padding: 2%;
     }
 
     #rightBar{
-        width: 10%;
-        grid-area: r;
+        grid-column: 3 / 4;
+        margin-right: 5%;
     }
 
     #cards {
