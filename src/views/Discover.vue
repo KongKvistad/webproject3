@@ -29,7 +29,8 @@
                     description="You will get to join experienced recorders and have a lot of fun. We might even offer you a job." 
                     price=500 
                     reviews=2 
-                    duration=26 
+                    duration=26
+                    imageBox="Internship" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"/>
             
                 <Card title="Scientific findings" 
@@ -38,7 +39,8 @@
                     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
                     price=700 
                     reviews=57 
-                    duration=104 
+                    duration=104
+                    imageBox="Long term" 
                     imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"/>
 
                 <Card title="PHP programmer" 
@@ -47,7 +49,8 @@
                     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
                     price=300 
                     reviews=10 
-                    duration=40 
+                    duration=40
+                    imageBox="Long term"
                     imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"/>
             </div>
     </section>
@@ -82,6 +85,19 @@ export default {
 </script>
 
 <style>
+    #imageBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #5E80F8;
+    width: 100px;
+    height: 40px;
+    float:left;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    }
 
     #discoverheading {
         width: 100%;

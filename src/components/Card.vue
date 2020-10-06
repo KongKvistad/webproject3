@@ -3,6 +3,9 @@
   <div id="card">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
+       <div id="imageBox">
+        <p>{{ imageBox }}</p>
+       </div>
       </div>
 
       <div id="right-column">
@@ -31,6 +34,7 @@ export default {
     price: Number,
     reviews: Number,
     duration: Number,
+    imageBox: String,
     imageLink: String,
     altText: String
   }
@@ -38,6 +42,22 @@ export default {
 </script>
 
 <style>
+
+/* imageBox styling is moved to Discover.vue
+#imageBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #5E80F8;
+  width: 100px;
+  height: 40px;
+  float:left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}*/
+
 #card {
     display: flex;
     flex-direction: column;
@@ -51,6 +71,7 @@ export default {
 }
 #left-column {
     max-width: 30%;
+    position: relative;
 }
 #right-column {
   padding: 0 2%;
