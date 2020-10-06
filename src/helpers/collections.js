@@ -1,5 +1,6 @@
 import {db} from '../components/firebaseInit.js'
 
+
 //#PARAM name: String: name of the collection,
 //#PARAM payload: bool: wheter you want the data or the headers
 
@@ -14,7 +15,6 @@ function getCollections(collection, payLoad){
     });
     return res;
 }
-
 
 
 function getDocByReference(refParam, refId){
@@ -35,5 +35,3 @@ async function filtersWithHeaders(){
 
 
 export {getCollections, getDocByReference, filtersWithHeaders};
-
-

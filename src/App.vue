@@ -1,15 +1,7 @@
 <template>
   <div id="app">
-    
 
-    <nav>
-      <router-link to="/">Go to Home</router-link>    
-      <router-link to="/stuff">Settings</router-link>
-      <p v-if="userProfile.name" @click="logOut()">logout</p>
-      <p v-else @click="logIn()">login</p>
-    </nav>
-    <!-- end header -->
-   
+    <NavBar :userProfile="userProfile.name"></NavBar>
     
     <router-view/>
     
@@ -18,14 +10,14 @@
 </template>
 
 <script>
-
+import NavBar from '@/components/NavBar.vue'
 import store from './store'
 import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-
+    NavBar
   },
   data(){
     return {
