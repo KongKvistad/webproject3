@@ -1,5 +1,6 @@
 <template>
 <div id="discover">
+    <h1>Discover</h1>
     <section id="leftBar">
         <div>
             <LimitSearch 
@@ -79,14 +80,12 @@ export default {
 </script>
 
 <style>
-    #discover {
-        margin-top: 50px;
-    }
+
     #discover{
         display: inline-grid;
         grid-template-columns: 170px auto 170px;
         grid-column-gap: 20px;
-        margin: 10% 2%;
+        margin: 5% 2%;
     }
     #leftBar {
         grid-column: 1 / 2;
