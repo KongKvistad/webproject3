@@ -16,7 +16,7 @@
       <!-- searchboxes   -->
     </section>
     <section id="middleBar">
-            <form>
+            <form id="search" action="">
                 <input type="text" placeholder="Search...">
             </form>
             <div id="cards">
@@ -86,10 +86,11 @@ export default {
         display: inline-grid;
         grid-template-columns: 170px auto 170px;
         grid-column-gap: 20px;
-        margin: 10% 2%;
+        margin: 5% 2%;
     }
     #leftBar {
         grid-column: 1 / 2;
+        position: fixed;
     }
     #middleBar{
         grid-column: 2 / 3;
@@ -100,14 +101,16 @@ export default {
 
     #rightBar{
         grid-column: 3 / 4;
-        margin-right: 5%;
+        margin-right: 2%;
+        right: 0;
+        position: fixed;
     }
 
     #cards {
         margin-bottom: 50px;
     }
 
-    input{
+    #search input{
         width: 100%;
         height: 20px;
         border-radius: 40px;
@@ -117,10 +120,10 @@ export default {
         color: black;
     }
     
-   form {
+   #search {
         margin-left: auto;
         margin-right: auto;
-        max-width: 500px
+        max-width: 50%;
     }
 
     
