@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as fb from '../components/firebaseInit'
 import router from '../router/index'
+import {getCollections} from '../helpers/collections'
 
 Vue.use(Vuex)
 
@@ -9,11 +10,16 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
       userProfile: {},
+      filters: {}
     },
     mutations: {
       setUserProfile(state, val) {
         state.userProfile = val
       },
+
+      setFilters(state, val){
+        state.filters = val
+      }
 
       
     },
@@ -71,6 +77,16 @@ const store = new Vuex.Store({
   
         // redirect to login view
         router.push('/login')
+      },
+
+      async fetchFilters({ commit }) {
+        // filters
+        const filterData = await getCollections("filters", false);
+  
+        // set user filters in state
+        commit('setUserProfile', filterData.data())
+  
+        
       },
     }
   })
