@@ -8,12 +8,12 @@
       <div id="right-column">
           <h2>{{ title }}</h2>
           <p>{{ owner }}</p>
-          <p id = "deadline">Deadline: {{ deadline }}</p>
+          <p v-if="deadline" id = "deadline">Deadline: {{ deadline }}</p>
           <p>{{ description }}</p>
           <div id="liste">
-                <p>{{ price }}k</p>
-                <p>{{ reviews }} testemonies</p>
-                <p>{{ duration }} weeks</p>
+                <p v-if="price">{{ price }}k</p>
+                <p v-if="reviews">{{ reviews }} testemonies</p>
+                <p v-if="duration">{{ duration }} weeks</p>
           </div>
       </div>
   </div>

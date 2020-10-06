@@ -12,35 +12,27 @@
     </section>
     <section id="middleBar">
         <div id="marketplaceheading">
-            <h1>Discover</h1>
+            <h1>Marketplace</h1>
             <form id="search" action="">
                 <input type="text" name="search" placeholder="Search...">
             </form>
         </div>
             <div id="cards">
-                <Card title="Recording studio" 
-                    owner="Jupiter Recordings" 
-                    deadline="04.10.2020" 
-                    description="You will get to join experienced recorders and have a lot of fun. We might even offer you a job." 
-                    price=500 
+                <Card title="How to write a good application" 
+                    owner="John Hopkins" 
+                    description="How should you present yourself, and what is important to mention? Learn how to write the best possible application for an internship, job etc." 
                     reviews=2 
-                    duration=26 
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"/>
+                    imageLink="https://mendeleyblog.files.wordpress.com/2017/06/writingatdesk.jpg?w=810"/>
             
                 <Card title="Scientific findings" 
-                    owner="NASA" 
-                    deadline="21.05.2022" 
+                    owner="NASA"  
                     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=700 
                     reviews=57 
-                    duration=104 
                     imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"/>
 
                 <Card title="PHP programmer" 
                     owner="UCLA" 
-                    deadline="21.05.2021" 
                     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=300 
                     reviews=10 
                     duration=40 
                     imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"/>
