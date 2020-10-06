@@ -6,8 +6,8 @@
       </div>
 
       <div id="right-column">
-          <h1>{{ title }}</h1>
-          <h2>{{ owner }}</h2>
+          <h2>{{ title }}</h2>
+          <p>{{ owner }}</p>
           <p id = "deadline">Deadline: {{ deadline }}</p>
           <p>{{ description }}</p>
           <div id="liste">

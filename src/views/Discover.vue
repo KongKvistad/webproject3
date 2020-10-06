@@ -1,6 +1,5 @@
 <template>
 <div id="discover">
-    <h1>Discover</h1>
     <section id="leftBar">
         <div>
             <LimitSearch 
@@ -17,9 +16,12 @@
       <!-- searchboxes   -->
     </section>
     <section id="middleBar">
+        <div id="discoverheading">
+            <h1>Discover</h1>
             <form id="search" action="">
-                <input type="text" placeholder="Search...">
+                <input type="text" name="search" placeholder="Search...">
             </form>
+        </div>
             <div id="cards">
                 <Card title="Recording studio" 
                     owner="Jupiter Recordings" 
@@ -81,6 +83,13 @@ export default {
 
 <style>
 
+    #discoverheading {
+        width: 100%;
+        display: inline-grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+    }
+
     #discover{
         display: inline-grid;
         grid-template-columns: 170px auto 170px;
@@ -113,17 +122,12 @@ export default {
         width: 100%;
         height: 20px;
         border-radius: 40px;
-        padding: 10px;
+        padding: 5px;
         border: none;
         background-color: rgb(240, 240, 240);
         color: black;
     }
     
-   #search {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 50%;
-    }
 
     
 
