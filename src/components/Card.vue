@@ -3,6 +3,7 @@
   <div id="card">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
+       <!-- denne kan legges på imagediv for å style-> :style= "[imageBox == 'Internship' ? {'background-color': '#5E80F8'} : {'background-color': '#fff'}]"-->
        <div id="imageBox">
         <p>{{ imageBox }}</p>
        </div>

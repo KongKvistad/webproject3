@@ -97,8 +97,9 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
-    box-shadow: 5px 1px 4px #888888;
+    box-shadow: 2px 1px 5px #010;
     }
+    
     #imageBox p {
         font-size: 20px;
     }
