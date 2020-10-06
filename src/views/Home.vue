@@ -1,37 +1,14 @@
 <template>
-<!--
-  <main>
-      <section class="leftCol">
-       <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>
-       <SearchBar v-on:childToParent="onSearchChange" :matches="this.matches" v-on:searchClicked="search"/>
-      </section>
-      <section class="rightCol">
-       <FilterBox v-on:childToParent="onFilterChange"
-      :filters="this.filters[this.activeCats]"
-      v-if="this.activeCats" :isHorizontal="false"
-      :activeFilters="activeFilters" />
-      </section>
-  </main>
-</template>
-
-<script>
-import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
-//import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar'
-import FilterBox from '../components/FilterBox'
-import RadioBtns from '../components/RadioBtns'
--->
     <main>
         <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
           <div class="content-area">
             <div class="content">
-              <SearchBar/>
-              <!-- Checkbox
-              <label class="select-none container block relative cursor-pointer text-xl pl-8">Option
-                  <input class="absolute opacity-0 left-0 top-0 cursor-pointer" type="checkbox" checked="checked">
-                  <span class="h-6 w-6 checkmark absolute top-0 left-0 bg-gray-400"></span>
-              </label>
-              -->
+              <!--<RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
+              <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
+              <FilterBox v-on:childToParent="onFilterChange"
+              :filters="this.filters[this.activeCats]"
+              v-if="this.activeCats" :isHorizontal="false"
+              :activeFilters="activeFilters" />
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
             </div>
@@ -50,10 +27,11 @@ import RadioBtns from '../components/RadioBtns'
   </template>
 
 <script>
-//import db from '@/components/firebaseInit.js'
-//import {getCollections} from '../helpers/collections.js'
-import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar.vue'
+import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
+//import {db} from '../components/firebaseInit.js'
+import SearchBar from '../components/SearchBar'
+import FilterBox from '../components/FilterBox'
+//import RadioBtns from '../components/RadioBtns'
 import SmallCard from '../components/SmallCard.vue'
 
 export default {
@@ -61,14 +39,13 @@ export default {
   components: {
     SearchBar,
     FilterBox,
-    RadioBtns,
+    //RadioBtns,
     SmallCard
   },
 
   data(){
     return {
       results:[],
-      search,
       searchTerm:false,
       matches:[],
       filters: [],
@@ -76,11 +53,6 @@ export default {
       activeCats:"",
       cats: [],
      
-      cityOrCountry: false,
-      resCount: 0,
-      //image: {
-      //  backgroundImage: `url(${require('@/assets/students-park.jpg')})`
-      //},
       placeholder: [ 
         { id: 1, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
         { id: 2, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
@@ -174,32 +146,11 @@ export default {
 
 
   <style scoped>
-  main{
-     background-color:blue;
-    display: flex;
-    height: calc(100vh - 1em);
-    width: 100vw;
-    display: flex;
- }
- .leftCol{
-   display: flex;
-   flex-basis:75%;
-   flex-direction: column;
-   
- }
- 
- .rightCol{
-   display: flex;
-   flex-basis:25%;
- }
+  
 
     main {
       width: auto;
       margin: auto;
-      /*
-       height: calc(100vh - 1em);
-       width: 100vw;
-       */
     }
    
    /* Search bar and main content text */
