@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    
 
     <nav>
       <router-link to="/">Go to Home</router-link>    
@@ -13,6 +14,7 @@
     <router-view/>
     
   </div>
+  
 </template>
 
 <script>

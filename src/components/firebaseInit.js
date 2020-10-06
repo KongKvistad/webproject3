@@ -9,8 +9,10 @@ const db = firebaseApp.firestore()
 const auth = firebase.auth()
 const usersCollection = db.collection('Users')
 
+
 export {
     db,
     auth,
-    usersCollection
+    usersCollection,
+   
 }
