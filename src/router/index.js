@@ -21,6 +21,7 @@ import HomePage from './../components/home/Home.vue'
 import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
+import Marketplace from './../views/Marketplace.vue'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,11 @@ const routes = [
     path: "/discover",
     name: "discover",
     component: Discover,
+  },
+  {
+    path: "/marketplace",
+    name: "marketplace",
+    component: Marketplace,
   },
   {
     path: '/login',
