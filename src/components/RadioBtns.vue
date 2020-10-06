@@ -1,10 +1,10 @@
 <template>
-  <fieldset>
-    <div v-for="(cat, idx) in cats" v-bind:key="cat+idx">
+  <div :class="[isHorizontal ? 'horizontal' : 'vertical', 'radioComp']">
+    <div  v-for="(cat, idx) in cats" v-bind:key="cat+idx">
     <input :id="cat" type="radio" v-model="activeCat" :value="cat">
     <label :for="cat">{{cat}}</label>
     </div>
-  </fieldset>
+  </div>
 </template>
 
 <script>
@@ -14,6 +14,10 @@ export default {
   props: {
     cats: {
       type: Array,
+      required: true,
+    },
+    isHorizontal: {
+      type: Boolean,
       required: true,
     },
   },
@@ -42,5 +46,18 @@ export default {
 </script>
 
 <style>
+
+.horizontal{
+  display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: space-between;
+
+}
+.horizontal > div{
+  
+}
+
+
 
 </style>

@@ -1,8 +1,15 @@
 <template>
   <main>
-       <RadioBtns v-on:childToParent="onFilterChange" v-if="this.cats.length > 0" :cats="this.cats"/>
-       <SearchBar v-on:childToParent="onChildChange" :matches="this.matches"/>
-       <FilterBox :filters="this.filters[this.activeFilters]" v-if="this.activeFilters" />
+      <section class="leftCol">
+       <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>
+       <SearchBar v-on:childToParent="onSearchChange" :matches="this.matches" v-on:searchClicked="search"/>
+      </section>
+      <section class="rightCol">
+       <FilterBox v-on:childToParent="onFilterChange"
+      :filters="this.filters[this.activeCats]"
+      v-if="this.activeCats" :isHorizontal="false"
+      :activeFilters="activeFilters" />
+      </section>
   </main>
 </template>
 
@@ -24,24 +31,36 @@ export default {
   data(){
     return {
       results:[],
-      searchTerm:'',
+      searchTerm:false,
       matches:[],
       filters: [],
-      activeFilters:"",
+      activeFilters: [],
+      activeCats:"",
       cats: []
      
     }
   },
   
   methods: {
-    onChildChange: function(value){
+    //needed to empty out all filter values if cats change
+    cleanData(){
+      this.activeFilters = [];
+    },
+
+    onSearchChange: function(value){
       this.searchTerm = value
       
     },
+    onCatsChange: function(value){
+      this.activeCats = value
+      this.cleanData()
+    },
+
     onFilterChange: function(value){
       this.activeFilters = value
-      console.log(this)
     },
+
+
     findMatches: function(val, type){
       
       //look for matching strings and count occurences of same value in name
@@ -52,15 +71,24 @@ export default {
       
       // remove duplicates
       return names.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
-    }
+    },
    
-      
+   //construct query bases on data and navigate to discover
+    search: function(){
+      let obj = {
+        searchTerm: this.searchTerm,
+        filters: this.activeFilters.join("+"),
+        cat: this.activeCats
+        }
+      console.log(obj)
+      this.$router.push({ path: 'discover', query: obj })
+    }
      
   },
   watch:{
     searchTerm: function(){
       if(this.searchTerm == ""){
-        this.matches = [{name: "no results!"}];
+        this.matches = false;
 
       } else {
         let countries = this.findMatches(this.searchTerm, "country")
@@ -73,14 +101,14 @@ export default {
     }
   },
   created(){
-    
+    // initialize values
     this.results = getCollections("Work", true);
    
     filtersWithHeaders().then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)
-      this.activeFilters=this.cats[0]
+      this.activeCats=this.cats[0]
     
     });
     
@@ -95,36 +123,19 @@ export default {
     display: flex;
     height: calc(100vh - 1em);
     width: 100vw;
+    display: flex;
+ }
+ .leftCol{
+   display: flex;
+   flex-basis:75%;
+   flex-direction: column;
+   
+ }
+ 
+ .rightCol{
+   display: flex;
+   flex-basis:25%;
  }
 
 
-.container:hover input ~ .checkmark {
-  background-color: #a0aec0;
-}
-
-.container input:checked ~ .checkmark {
-  background-color: #0078d4;
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.container .checkmark:after {
-  left: 9px;
-  top: 6px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
 </style>
