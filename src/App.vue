@@ -1,19 +1,12 @@
 <template>
   <div id="app">
-    <NavBar :userProfile="userProfile.name"></NavBar>
 
-    <nav>
-      <router-link to="/">Go to Home</router-link>    
-      <router-link to="/stuff">Settings</router-link>
-      <p v-if="userProfile.name" @click="logOut()">logout</p>
-      <p v-else @click="logIn()">login</p>
-    </nav>
-    <!-- end header -->
-   
+    <NavBar :userProfile="userProfile.name"></NavBar>
     
     <router-view/>
     
   </div>
+  
 </template>
 
 <script>
@@ -63,7 +56,6 @@ html {
     margin:0px;
     flex-basis: 33%;
   }
-
 body {
   margin:0;
 }
