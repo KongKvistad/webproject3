@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="box pt-6">
     <div class="box-wrapper">
       <div class=" bg-white rounded flex items-center w-full p-3 shadow-sm border border-gray-200">

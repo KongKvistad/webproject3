@@ -20,24 +20,11 @@
         <div class="content-suggestion">
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
-          <!--
-          <div class="content-suggestion-cards">
-            <div v-for="item in placeholder" :key="item.id" >
-              <p>{{ item.id }} </p>
-              <p>{{ item.content }}</p>
-              <p> {{ item.price }}</p>
-            </div>
-          </div>
-        -->
           <div class="smallCard">
             <SmallCard v-for="item in placeholder" :key="item.id" :item="item"/>
           </div>
         </div>
-        
-        
-
     </main>
-  
   </template>
 
 <script>
@@ -45,15 +32,13 @@
 //import {getCollections} from '../helpers/collections.js'
 import {db} from '../components/firebaseInit.js'
 import SearchBar from '../components/SearchBar.vue'
-//import EngagementTypeBox from '../components/EngagementTypeBox.vue'
 import SmallCard from '../components/SmallCard.vue'
 
 export default {
   name: 'Home',
   components: {
     SearchBar,
-    SmallCard,
-    //EngagementTypeBox,
+    SmallCard
   },
 
   data(){
