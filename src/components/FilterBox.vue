@@ -1,8 +1,8 @@
 <template >
-    <div :class="[isHorizontal ? 'horizontal' : 'vertical', 'filterComp']">
+    <div :class="[isHorizontal ? 'horizontal' : 'vertical', ' bg-white rounded flex items-center h-full shadow-sm border border-gray-200 mx-auto p-4']">
         <div v-for="(filter, idx) in Object.keys(filters)" v-bind:key="filter+idx">
-            <label v-for="(subFilt, idx) in filters[filter]" v-bind:key="subFilt+idx">
-                <input type="checkbox" :value="subFilt" v-model="checkedfilters">
+            <label class="flex items-center" v-for="(subFilt, idx) in filters[filter]" v-bind:key="subFilt+idx">
+                <input class="mr-2" type="checkbox" :value="subFilt" v-model="checkedfilters">
                 <span>{{subFilt}}</span>
             </label>
         </div>
@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style>
+
 .vertical{
     display: flex;
     flex-direction: column;

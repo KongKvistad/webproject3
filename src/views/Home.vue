@@ -3,12 +3,15 @@
         <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
           <div class="content-area">
             <div class="content">
-              <!--<RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
-              <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
-              <FilterBox v-on:childToParent="onFilterChange"
-              :filters="this.filters[this.activeCats]"
-              v-if="this.activeCats" :isHorizontal="false"
-              :activeFilters="activeFilters" />
+              <!--DON'T DELETE ME YOU SILLY GOOSE
+              <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
+              <section class="w-full flex justify-between">
+                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
+                <FilterBox v-on:childToParent="onFilterChange"
+                :filters="this.filters[this.activeCats]"
+                v-if="this.activeCats" :isHorizontal="false"
+                :activeFilters="activeFilters" />
+              </section>
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
             </div>
@@ -172,8 +175,9 @@ export default {
      
    .content {
      text-align: center;
-     margin-top: 20%;
-     width: 60%;
+     margin-top: 10%;
+     width: 72%;
+     position: relative
    }
    
    
@@ -185,6 +189,8 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+     position: absolute;
+     top:1em;
    }
    
    .under-headline {
@@ -195,6 +201,8 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+     position: absolute;
+     top:6em;
    }
    
    
