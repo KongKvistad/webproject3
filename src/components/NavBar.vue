@@ -5,31 +5,55 @@
 -->
 
 <template>
-    <div id="nav">  
-        <div id="logo">
-            <div>LOGO</div>
+  <div id="nav">  
+      <div id="logo">
+          <router-link to="/home"><div>LOGO</div></router-link>
+      </div>
+      <div id="links">
+          <div id="navDiscover" :class="[currentPage.includes('stuff') ? activeDiscover : '']"><router-link to="/stuff"><img src="@/assets/compass.svg">Discover</router-link></div>
+          <div id="navMarket" :class="[currentPage.includes('market') ? activeMarket : '']"><router-link to="/market"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
+          <div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']"><router-link to="/social"><img src="@/assets/users.svg">Social</router-link></div>
+      </div>
+      <div id="left">
+        <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">Profile
+          <div class="dropdown-content">
+            <router-link to="/profile">Profile</router-link>
+            <a @click="logOut()">Log Out</a>
+          </div>
         </div>
-        <div id="links">
-            <div class="active" id="navDiscover"><a href=""><img src="@/assets/compass.svg">Discover</a></div>
-            <div id="navMarket"><a href=""><img src="@/assets/marketplace.svg">Marketplace</a></div>
-            <div id="navSocial"><a href=""><img src="@/assets/users.svg">Social</a></div>
-        </div>
-        <div id="profile">
-            <a href=""><img src="@/assets/user.svg">Profile</a>
-        </div>
-    </div>
+        <div v-else><router-link to="/login">LOG IN</router-link></div> 
+      </div>
+  </div>
 </template>
 
 <script> //Javascript and vue scripts to be used in the component
+import store from '@/store';
 export default {
     name: 'NavBar', // name of component to be used elsewhere as well as router
     data() {
+        return {
+          activeDiscover: 'activeDiscover',
+          activeMarket: 'activeMarket',
+          activeSocial: 'activeSocial',
+        }
 
     },
+
+    props: ["userProfile"],
 
     methods: {
-
+    logOut: function(){
+      store.dispatch('logout')
     },
+
+    
+    },
+
+    computed: { 
+      currentPage() {
+        return this.$route.path;
+      }
+    }
 }
 </script>
 
@@ -41,10 +65,10 @@ export default {
     min-height: 5vw;
     grid-auto-flow: column;
     background-color: white;
-    grid-gap: 1.5em;
-    padding: 0 40px;
+    padding: 0 5vw;
     border-bottom: 1px solid black;
     margin-top: 5px;
+    max-height: 5vw;
     
 }
 
@@ -64,14 +88,7 @@ export default {
   justify-content: center;
   align-content: center;
   grid-auto-flow: column;
-  grid-gap: 1.5em;
-  
-}
-
-#navDiscover img{
-    bottom: 1em;
-    left: 3.2em;
-    position: relative;
+  grid-gap: 5vw;
 }
 
 #nav a {
@@ -79,27 +96,81 @@ export default {
   color: #333;
 }
 
-#nav a:hover {
-  text-decoration-line: underline;
+#left{
+  display: grid;
+  justify-content: right;
+  align-content: center;
+  grid-auto-flow: column;
+  grid-gap: 0.5em;
 }
+
+.activeDiscover{
+  border-bottom: 0.5vw solid rgb(94,166,248);
+}
+
+#navDiscover:hover {
+  border-bottom: 0.5vw solid rgb(94,166,248);
+}
+
+.activeMarket {
+  border-bottom: 0.5vw solid rgb(18,244,122);
+
+}
+
+#navMarket:hover{
+  border-bottom: 0.5vw solid rgb(18,244,122);
+
+}
+.activeSocial{
+  border-bottom: 0.5vw solid rgb(255,230,3);
+} 
+
+#navSocial:hover{
+  border-bottom: 0.5vw solid rgb(255,230,3);
+} 
 
 #nav img{
-    height: 3vw;
-    /* bottom: 1em;
-    left: 2.7em;
-    position: relative; */
+    max-height: 2vw;
 }
 
-#profile{
-    display: grid;
-    justify-content: right;
-    align-content: center;
-    grid-auto-flow: column;
-    grid-gap: 1em;
+/* Style The Dropdown Button */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.active {
-    border-bottom: 1px solid #5e80f8;
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  font-size: 0.9em;
+  min-width: 5vw;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 0.7vw;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #f1f1f1;
 }
 
 </style>

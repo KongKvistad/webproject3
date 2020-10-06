@@ -41,6 +41,7 @@ const routes = [
     
   },
   {
+
     path: "/discover",
     name: "discover",
     component: Discover,

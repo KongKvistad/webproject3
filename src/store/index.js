@@ -16,11 +16,9 @@ const store = new Vuex.Store({
       setUserProfile(state, val) {
         state.userProfile = val
       },
-
       setFilters(state, val){
         state.filters = val
       }
-
       
     },
     actions: {
