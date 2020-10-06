@@ -24,11 +24,11 @@
                     reviews=2 
                     imageLink="https://mendeleyblog.files.wordpress.com/2017/06/writingatdesk.jpg?w=810"/>
             
-                <Card title="Scientific findings" 
-                    owner="NASA"  
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
+                <Card title="Essential strategies and skills" 
+                    owner="Sarah Berg"  
+                    description="Its essential to have good skills in everything you do. A great self esteem is always handy, am I right?." 
                     reviews=57 
-                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"/>
+                    imageLink="https://www.marketing91.com/wp-content/uploads/2020/03/Essential-Skills.jpg"/>
 
                 <Card title="PHP programmer" 
                     owner="UCLA" 
