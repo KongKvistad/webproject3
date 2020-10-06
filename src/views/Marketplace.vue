@@ -30,12 +30,12 @@
                     reviews=57 
                     imageLink="https://www.marketing91.com/wp-content/uploads/2020/03/Essential-Skills.jpg"/>
 
-                <Card title="PHP programmer" 
-                    owner="UCLA" 
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
+                <Card title="Finding accomodation abroad" 
+                    owner="Lisa Simpson" 
+                    description="Its essential to know exactly what you are looking for when searching for a place to live during your semester away from home. I will teach you the do's and the dont's!" 
                     reviews=10 
                     duration=40 
-                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"/>
+                    imageLink="https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768"/>
             </div>
     </section>
     <section id="rightBar">
