@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <NavBar :userProfile="userProfile.name"></NavBar>
 
     <nav>
       <router-link to="/">Go to Home</router-link>    
@@ -16,14 +17,14 @@
 </template>
 
 <script>
-
+import NavBar from '@/components/NavBar.vue'
 import store from './store'
 import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-
+    NavBar
   },
   data(){
     return {
@@ -62,7 +63,7 @@ html {
     margin:0px;
     flex-basis: 33%;
   }
-=======
+
 body {
   margin:0;
 }
