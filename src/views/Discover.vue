@@ -94,7 +94,7 @@ export default {
         background-color: #5E80F8;
     } */
 
-    /* #imageBox {
+    #imageBox {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,8 +105,13 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
-    } */
 
+    box-shadow: 2px 1px 5px #010;
+    }
+    
+    #imageBox p {
+        font-size: 20px;
+    }
     #discoverheading {
         width: 100%;
         display: inline-grid;
