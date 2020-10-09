@@ -3,7 +3,7 @@
   <div id="card">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
-       <div id="imageBox">
+       <div id="imageBox" :class=boxcolourclass>
         <p>{{ imageBox }}</p>
        </div>
       </div>
@@ -36,27 +36,34 @@ export default {
     duration: Number,
     imageBox: String,
     imageLink: String,
-    altText: String
+    altText: String,
+    boxcolourclass: String
   }
 }
 </script>
 
 <style>
 
-/* imageBox styling is moved to Discover.vue
+.bluebox {
+      background-color: #5E80F8;
+    }
+.greenbox {
+    background-color: #36A90F;
+  }
+
 #imageBox {
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: #5E80F8;
   width: 100px;
   height: 40px;
   float:left;
   position: absolute;
   bottom: 0;
   left: 0;
-}*/
+}
+
 
 #card {
     display: flex;

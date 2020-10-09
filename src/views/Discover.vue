@@ -2,12 +2,14 @@
 <div id="discover">
     <section id="leftBar">
         <div>
-            <LimitSearch 
+            <LimitSearch
+                checkboxcolour="bluecheckbox"
                 heading="Experience" 
                 choice1="Work" 
                 choice2="Study programme" 
                 choice3="Exchange"/>
-            <LimitSearch 
+            <LimitSearch
+                checkboxcolour="bluecheckbox"
                 heading="Engagement type" 
                 choice1="Internship" 
                 choice2="Short term" 
@@ -31,7 +33,8 @@
                     reviews=2 
                     duration=26
                     imageBox="Internship" 
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"/>
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    boxcolourclass="bluebox"/>
             
                 <Card title="Scientific findings" 
                     owner="NASA" 
@@ -41,7 +44,8 @@
                     reviews=57 
                     duration=104
                     imageBox="Long term" 
-                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"/>
+                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"
+                    boxcolourclass="bluebox"/>
 
                 <Card title="PHP programmer" 
                     owner="UCLA" 
@@ -51,7 +55,8 @@
                     reviews=10 
                     duration=40
                     imageBox="Long term"
-                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"/>
+                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
+                    boxcolourclass="bluebox"/>
             </div>
     </section>
     <section id="rightBar">
@@ -85,19 +90,22 @@ export default {
 </script>
 
 <style>
-    #imageBox {
+    /* .bluebox {
+        background-color: #5E80F8;
+    } */
+
+    /* #imageBox {
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    background-color: #5E80F8;
     width: 100px;
     height: 40px;
     float:left;
     position: absolute;
     bottom: 0;
     left: 0;
-    }
+    } */
 
     #discoverheading {
         width: 100%;

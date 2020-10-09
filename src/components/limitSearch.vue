@@ -2,7 +2,7 @@
 
     <div id="limitSearch">
         <p id="checkboxHeading">{{ heading }}</p>
-        <form action="">
+        <form action="" :class=checkboxcolour>
             <label> {{choice1}} 
             <input type="checkbox" id="choice1" name="choice1" value="">
             <span></span>
@@ -24,6 +24,7 @@
 export default {
   name: 'LimitSearch',
   props: {
+    checkboxcolour: String,
     heading: String,
     choice1: String,
     choice2: String,
@@ -86,7 +87,12 @@ export default {
         display:block;
     }
     /*with a blue background*/
-    label input:checked ~ span {
+    .bluecheckbox label input:checked ~ span {
         background-color: #2eaadc;
     } 
+
+    .greencheckbox label input:checked ~ span {
+        background-color: #36A90F;
+    } 
+
 </style>
