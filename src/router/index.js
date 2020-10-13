@@ -21,6 +21,7 @@ import HomePage from './../views/Home.vue'
 import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
+import Social from './../views/Social.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/social',
+    name: 'Social',
+    component: Social
+  }
 ]
 
 const router = new VueRouter({
