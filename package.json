@@ -13,8 +13,8 @@
   "main": "index.js",
   "dependencies": {
     "core-js": "^3.6.5",
-    "firebase": "^7.19.1",
-    "vue": "^2.6.12",
+    "firebase": "^7.23.0",
+    "vue": "^2.6.11",
     "vue-router": "^3.4.3",
     "vue-star-rating": "^1.7.0",
     "vuex": "^3.5.1"

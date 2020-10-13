@@ -84,8 +84,11 @@ import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
 export default {
     components:{
-        Card,
         LimitSearch
+        Card
+    },
+    created(){
+        console.log(this.$route.query.filters.split("+"))
     }
 
    

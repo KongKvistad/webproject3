@@ -17,11 +17,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { auth } from '../components/firebaseInit'
-import HomePage from './../components/home/Home.vue'
+import HomePage from './../views/Home.vue'
 import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
 import Marketplace from './../views/Marketplace.vue'
+import Ecourse from './../views/Ecourse.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,7 @@ const routes = [
     
   },
   {
+
     path: "/discover",
     name: "discover",
     component: Discover,
@@ -55,6 +57,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/ecourse/:id',
+    name: 'Ecourse',
+    component: Ecourse
   },
 ]
 
