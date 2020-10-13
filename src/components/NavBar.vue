@@ -7,15 +7,15 @@
 <template>
   <div id="nav">  
       <div id="logo">
-          <router-link to="/home"><div>LOGO</div></router-link>
+          <router-link to="/"><div>LOGO</div></router-link>
       </div>
       <div id="links">
-          <div id="navDiscover" :class="[currentPage.includes('stuff') ? activeDiscover : '']"><router-link to="/stuff"><img src="@/assets/compass.svg">Discover</router-link></div>
+          <div id="navDiscover" :class="[currentPage.includes('Discover') ? activeDiscover : '']"><router-link to="/Discover"><img src="@/assets/compass.svg">Discover</router-link></div>
           <div id="navMarket" :class="[currentPage.includes('market') ? activeMarket : '']"><router-link to="/market"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
           <div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']"><router-link to="/social"><img src="@/assets/users.svg">Social</router-link></div>
       </div>
       <div id="left">
-        <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">Profile
+        <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">{{userProfile}}
           <div class="dropdown-content">
             <router-link to="/profile">Profile</router-link>
             <a @click="logOut()">Log Out</a>
@@ -147,7 +147,7 @@ export default {
   position: absolute;
   background-color: #f9f9f9;
   font-size: 0.9em;
-  min-width: 5vw;
+  width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -155,7 +155,7 @@ export default {
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
-  padding: 0.7vw;
+  padding: 5%;
   text-decoration: none;
   display: block;
 }
