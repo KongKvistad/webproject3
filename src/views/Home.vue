@@ -30,7 +30,7 @@
 
 <script>
 import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
-//import {db} from '../components/firebaseInit.js'
+import {db} from '../components/firebaseInit.js'
 import SearchBar from '../components/SearchBar'
 import FilterBox from '../components/FilterBox'
 //import RadioBtns from '../components/RadioBtns'
@@ -55,12 +55,6 @@ export default {
       activeFilters: [],
       activeCats:"",
       cats: [],
-     
-      placeholder: [ 
-        { id: 1, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 2, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 3, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' }
-      ]
     }
   },
   
@@ -73,7 +67,9 @@ export default {
   
   methods: {
    
-
+    randomList: function(rand){
+      return rand.slice().sort(function(){return 0.5 - Math.random()});
+      },
 
   
 
