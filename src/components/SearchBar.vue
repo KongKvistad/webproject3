@@ -80,13 +80,11 @@ export default {
       this.$emit('catsChanged', val)
   }
   }
+
 }
 </script>
 
 <style>
-
-
-
 
 
 

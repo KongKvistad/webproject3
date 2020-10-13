@@ -17,13 +17,12 @@
             </div>
           </div>
         </div>
-  
-  
         <div class="content-suggestion">
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
-            <SmallCard v-for="item in placeholder" :key="item.id" :item="item"/>
+
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :content="item.content" :price="item.price" :routePath="pathEcourse"/>            
           </div>
         </div>
     </main>
@@ -49,6 +48,7 @@ export default {
   data(){
     return {
       results:[],
+      e_course: [],
       searchTerm:false,
       matches:[],
       filters: [],
@@ -64,7 +64,18 @@ export default {
     }
   },
   
+  // smallCard click path for displaying full data in seperate view
+  computed: {
+    pathEcourse () {
+      return this.$store.state.routePath.ecourse
+    }
+  },
+  
   methods: {
+   
+
+
+  
 
     //needed to empty out all filter values if cats change
     cleanData(){
@@ -136,6 +147,18 @@ export default {
     
     });
     
+     // Get e-course data fro db used for displaying suggested content on home page
+    db.collection('E-course').get()
+    .then(qs => {
+      qs.forEach(doc => {
+        const data = {
+          'id': doc.id,
+          'content': doc.data().content,
+          'price': doc.data().price
+        }
+        this.e_course.push(data)
+      })
+    })
      
   },
   
@@ -143,13 +166,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-
- 
-
-
-
   <style scoped>
-  
 
     main {
       width: auto;
@@ -201,6 +218,7 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+
      position: absolute;
      top:6em;
    }
@@ -224,6 +242,7 @@ export default {
       margin-left: 3%;
     }
    
+
   
 
    .content-suggestion-cards {
@@ -236,5 +255,3 @@ export default {
    }
    
    </style>
-   
-

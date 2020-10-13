@@ -21,6 +21,7 @@ import HomePage from './../views/Home.vue'
 import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
+import Ecourse from './../views/Ecourse.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/ecourse/:id',
+    name: 'Ecourse',
+    component: Ecourse
   },
 ]
 
