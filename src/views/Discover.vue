@@ -34,7 +34,8 @@
                     duration=26
                     imageBox="Internship" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
-                    boxcolourclass="bluebox"/>
+                    boxcolourclass="bluebox"
+                    />
             
                 <Card title="Scientific findings" 
                     owner="NASA" 
@@ -45,7 +46,8 @@
                     duration=104
                     imageBox="Long term" 
                     imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"
-                    boxcolourclass="bluebox"/>
+                    boxcolourclass="bluebox"
+                    />
 
                 <Card title="PHP programmer" 
                     owner="UCLA" 
@@ -56,7 +58,8 @@
                     duration=40
                     imageBox="Long term"
                     imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
-                    boxcolourclass="bluebox"/>
+                    boxcolourclass="bluebox"
+                    />
             </div>
     </section>
     <section id="rightBar">

@@ -19,12 +19,20 @@
                 <p v-if="price">{{ price }}k</p>
                 <p v-if="reviews">{{ reviews }} testemonies</p>
                 <p v-if="duration">{{ duration }} weeks</p>
+                <p v-if="ecoursetime>60" > {{ ecoursetime/60 }} hours </p>
+                <p v-else-if="ecoursetime<60"> {{ecoursetime}} minutes</p>
+                <div v-if="rating">
+                  <star-rating v-model="rating" read-only=true @rating-selected ="setRating" star-size= 20></star-rating>
+                </div>
+        
           </div>
       </div>
   </div>
 </template>
 
 <script>
+import StarRating from 'vue-star-rating';
+
 
 export default {
   name: 'Card',
@@ -39,8 +47,26 @@ export default {
     imageBox: String,
     imageLink: String,
     altText: String,
-    boxcolourclass: String
+    boxcolourclass: String,
+    rating: Number,
+    ecoursetime: Number
+  },
+  components: {
+    StarRating
+  },
+  methods: {
+    setRating: function(rating){
+      this.rating= rating;
+    },
+    /* roundup: function (ecoursetime) {		
+      this.ecoursetime = this.ecoursetime.toFixed(2);
+    } */
   }
+  /* data: function(){
+    return {
+      rating: Number
+    }
+  } */
 }
 </script>
 
