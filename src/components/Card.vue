@@ -104,6 +104,11 @@ export default {
   margin-top: 60px;
   /*border: 1px solid rgb(162, 162, 162);*/
 }
+#card:hover{
+    border: 1px solid #00000047;
+    box-shadow: 2px 3px 6px #00000073;
+
+}
 #left-column {
     max-width: 30%;
     position: relative;

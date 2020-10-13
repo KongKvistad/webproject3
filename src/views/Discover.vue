@@ -17,6 +17,7 @@
         </div>
       <!-- searchboxes   -->
     </section>
+    
     <section id="middleBar">
         <div id="discoverheading">
             <h1>Discover</h1>
@@ -25,19 +26,23 @@
             </form>
         </div>
             <div id="cards">
-                <Card title="Recording studio" 
-                    owner="Jupiter Recordings" 
-                    deadline="04.10.2020" 
-                    description="You will get to join experienced recorders and have a lot of fun. We might even offer you a job." 
-                    price=500 
-                    reviews=2 
-                    duration=26
+                
+               <Card
+                    :key="idx" 
+                    v-for="(elem,idx) in results"
+                    :title="elem.Title" 
+                    :owner="elem.School" 
+                    :deadline="elem.Visa"
+                    :description="elem.Description" 
+                    :price="elem.Cost" 
+                    :reviews="elem.Testemonies" 
+                    :duration="elem.Duration"
                     imageBox="Internship" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
             
-                <Card title="Scientific findings" 
+               <!-- <Card title="Scientific findings" 
                     owner="NASA" 
                     deadline="21.05.2022" 
                     description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
@@ -59,7 +64,7 @@
                     imageBox="Long term"
                     imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
                     boxcolourclass="bluebox"
-                    />
+                    />-->
             </div>
     </section>
     <section id="rightBar">
@@ -82,13 +87,28 @@
 <script>
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
+import {getCollections} from "../helpers/collections.js"
 export default {
+    name:"Discover",
     components:{
-        LimitSearch
+        LimitSearch,
         Card
     },
+    data(){
+        return{
+            results: false,
+            activeCat: false
+        }
+    },
+    computed:{
+        
+    },
     created(){
-        console.log(this.$route.query.filters.split("+"))
+        //console.log(this.$route.query.filters.split("+"))
+        let activeCat= this.$route.query.cat
+        this.activeCat=activeCat
+        this.results = getCollections(activeCat, true);
+        
     }
 
    
