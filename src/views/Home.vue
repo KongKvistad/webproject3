@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
+        <div class="banner-area">
           <div class="content-area">
             <div class="content">
               <!--DON'T DELETE ME YOU SILLY GOOSE

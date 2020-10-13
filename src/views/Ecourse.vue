@@ -1,8 +1,13 @@
 <template>
   <div>
       <p>ID: {{ id }}</p>
+      <p>Title: {{ item.title }}</p>
       <p>Content: {{ item.content }}</p>
+      <p>Creator: {{ item.creator }}</p>
+      <p>Description: {{ item.description }}</p>
+      <p>Difficulty: {{ item.difficulty }}</p>
       <p>Price: {{ item.price }}</p>
+      <p>Rating: {{ item.rating}}</p>
       <button type="button" @click="$router.go(-1)">Go back</button>
   </div>
 </template>
@@ -24,6 +29,7 @@ export default {
             .then(querySnapshot => {
                 if(querySnapshot.exists) {
                     this.item = querySnapshot.data()
+                    console.log(querySnapshot.data())
                 } else {
                     console.log('Error msg')
                 }
