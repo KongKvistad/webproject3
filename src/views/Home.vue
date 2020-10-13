@@ -1,27 +1,20 @@
 <template>
     <main>
-        <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
+        <div class="banner-area">
           <div class="content-area">
             <div class="content">
               <SearchBar/>
-              <!-- Checkbox
-              <label class="select-none container block relative cursor-pointer text-xl pl-8">Option
-                  <input class="absolute opacity-0 left-0 top-0 cursor-pointer" type="checkbox" checked="checked">
-                  <span class="h-6 w-6 checkmark absolute top-0 left-0 bg-gray-400"></span>
-              </label>
-              -->
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
             </div>
           </div>
         </div>
   
-  
         <div class="content-suggestion">
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
-            <SmallCard v-for="item in placeholder" :key="item.id" :item="item"/>
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :content="item.content" :price="item.price" :routePath="pathEcourse"/>            
           </div>
         </div>
     </main>
@@ -46,14 +39,7 @@ export default {
       results:[],
       cityOrCountry: false,
       resCount: 0,
-      //image: {
-      //  backgroundImage: `url(${require('@/assets/students-park.jpg')})`
-      //},
-      placeholder: [ 
-        { id: 1, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 2, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 3, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' }
-      ]
+      e_course: [],
     }
   },
   
@@ -82,10 +68,16 @@ export default {
         return result;
 
        
-      }
+      },    
       //We call the asychronous function
      
+      // Sorting function for returning and displaying randomly picked e-courses on home page
+    randomList: function(rand){
+      return rand.slice().sort(function(){return 0.5 - Math.random()});
+      },
+
   },
+
   created(){
     
      this.getIsCapitalOrCountry().then(result => {
@@ -94,7 +86,25 @@ export default {
         });
       });
     
-  
+    // Get e-course data fro db used for displaying suggested content on home page
+    db.collection('E-course').get()
+    .then(qs => {
+      qs.forEach(doc => {
+        const data = {
+          'id': doc.id,
+          'content': doc.data().content,
+          'price': doc.data().price
+        }
+        this.e_course.push(data)
+      })
+    })
+  },
+
+  // smallCard click path for displaying full data in seperate view
+  computed: {
+    pathEcourse () {
+      return this.$store.state.routePath.ecourse
+    }
   }
 }
 </script>
@@ -122,7 +132,7 @@ export default {
    }
    
    .content-area {
-      display: flex;
+     display: flex;
      justify-content: center;
      flex-direction: column;
      align-items: center;
@@ -172,12 +182,6 @@ export default {
       font-size: 24px;
       padding: 3%;
       margin-left: 3%;
-    }
-   
-  
-
-   .content-suggestion-cards {
-      
     }
    
    .smallCard {
