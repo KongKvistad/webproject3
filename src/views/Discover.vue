@@ -1,17 +1,90 @@
 <template>
-<div>
+<div id="discover">
     <section id="leftBar">
+        <div>
+            <LimitSearch
+                checkboxcolour="bluecheckbox"
+                heading="Experience" 
+                choice1="Work" 
+                choice2="Study programme" 
+                choice3="Exchange"/>
+            <LimitSearch
+                checkboxcolour="bluecheckbox"
+                heading="Engagement type" 
+                choice1="Internship" 
+                choice2="Short term" 
+                choice3="Long term"/>
+        </div>
       <!-- searchboxes   -->
     </section>
     <section id="middleBar">
-        <Card/>
+        <div id="discoverheading">
+            <h1>Discover</h1>
+            <form id="search" action="">
+                <input type="text" name="search" placeholder="Search...">
+            </form>
+        </div>
+            <div id="cards">
+                <Card title="Recording studio" 
+                    owner="Jupiter Recordings" 
+                    deadline="04.10.2020" 
+                    description="You will get to join experienced recorders and have a lot of fun. We might even offer you a job." 
+                    price=500 
+                    reviews=2 
+                    duration=26
+                    imageBox="Internship" 
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    boxcolourclass="bluebox"
+                    />
+            
+                <Card title="Scientific findings" 
+                    owner="NASA" 
+                    deadline="21.05.2022" 
+                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
+                    price=700 
+                    reviews=57 
+                    duration=104
+                    imageBox="Long term" 
+                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"
+                    boxcolourclass="bluebox"
+                    />
+
+                <Card title="PHP programmer" 
+                    owner="UCLA" 
+                    deadline="21.05.2021" 
+                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
+                    price=300 
+                    reviews=10 
+                    duration=40
+                    imageBox="Long term"
+                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
+                    boxcolourclass="bluebox"
+                    />
+            </div>
+    </section>
+    <section id="rightBar">
+        <!--Bare satt det inn her for å se litt på grid-->
+        <div>
+            <LimitSearch 
+                heading="Experience" 
+                choice1="Work" 
+                choice2="Study programme" 
+                choice3="Exchange"/>
+            <LimitSearch 
+                heading="Engagement type" 
+                choice1="Internship" 
+                choice2="Short term" 
+                choice3="Long term"/>
+        </div>
     </section>
 </div>
 </template>
 <script>
 import Card from "../components/Card.vue";
+import LimitSearch from "../components/limitSearch.vue";
 export default {
     components:{
+        LimitSearch
         Card
     },
     created(){
@@ -21,3 +94,76 @@ export default {
    
 }
 </script>
+
+<style>
+    /* .bluebox {
+        background-color: #5E80F8;
+    } */
+
+    #imageBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 100px;
+    height: 40px;
+    float:left;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    box-shadow: 2px 1px 5px #010;
+    }
+    
+    #imageBox p {
+        font-size: 20px;
+    }
+    #discoverheading {
+        width: 100%;
+        display: inline-grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+    }
+
+    #discover{
+        display: inline-grid;
+        grid-template-columns: 170px auto 170px;
+        grid-column-gap: 20px;
+        margin: 5% 2%;
+    }
+    #leftBar {
+        grid-column: 1 / 2;
+        position: fixed;
+    }
+    #middleBar{
+        grid-column: 2 / 3;
+        border-left: 1px solid rgb(177, 177, 177);
+        border-right: 1px solid rgb(177, 177, 177);
+        padding: 2%;
+    }
+
+    #rightBar{
+        grid-column: 3 / 4;
+        margin-right: 2%;
+        right: 0;
+        position: fixed;
+    }
+
+    #cards {
+        margin-bottom: 50px;
+    }
+
+    #search input{
+        width: 100%;
+        height: 20px;
+        border-radius: 40px;
+        padding: 5px;
+        border: none;
+        background-color: rgb(240, 240, 240);
+        color: black;
+    }
+    
+
+    
+
+</style>

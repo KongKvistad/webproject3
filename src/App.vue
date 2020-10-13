@@ -2,6 +2,7 @@
   <div id="app">
     
 
+
     <NavBar :userProfile="userProfile.name"></NavBar>
     
     <router-view/>
