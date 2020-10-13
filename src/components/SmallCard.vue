@@ -1,5 +1,6 @@
 <template>
   <div class="smallCard">
+
     <router-link :to="{ name: routePath, params: { id: item.id } }">
       <img class="img" :src="image" />
       <div class="price">{{ item.price }}$</div>
@@ -7,11 +8,13 @@
         <p>{{ item.content }}</p>
       </div>
     </router-link>
+
   </div>
 </template>
 
 <script>
 export default {
+
   props: {
     item: Object,
     routePath: String,
@@ -66,4 +69,5 @@ export default {
   font-size: 22px;
   padding: 10px;
 }
+
 </style>>

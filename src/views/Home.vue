@@ -1,19 +1,27 @@
 <template>
     <main>
-        <div class="banner-area">
+        <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
           <div class="content-area">
             <div class="content">
-              <SearchBar/>
+              <!--DON'T DELETE ME YOU SILLY GOOSE
+              <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
+              <section class="w-full flex justify-between">
+                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
+                <FilterBox v-on:childToParent="onFilterChange"
+                :filters="this.filters[this.activeCats]"
+                v-if="this.activeCats" :isHorizontal="false"
+                :activeFilters="activeFilters" />
+              </section>
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
             </div>
           </div>
         </div>
-  
         <div class="content-suggestion">
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
+
             <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :content="item.content" :price="item.price" :routePath="pathEcourse"/>            
           </div>
         </div>
@@ -21,72 +29,125 @@
   </template>
 
 <script>
-//import db from '@/components/firebaseInit.js'
-//import {getCollections} from '../helpers/collections.js'
-import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar.vue'
+import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
+//import {db} from '../components/firebaseInit.js'
+import SearchBar from '../components/SearchBar'
+import FilterBox from '../components/FilterBox'
+//import RadioBtns from '../components/RadioBtns'
 import SmallCard from '../components/SmallCard.vue'
 
 export default {
   name: 'Home',
   components: {
     SearchBar,
+    FilterBox,
+    //RadioBtns,
     SmallCard
   },
 
   data(){
     return {
       results:[],
-      cityOrCountry: false,
-      resCount: 0,
       e_course: [],
+      searchTerm:false,
+      matches:[],
+      filters: [],
+      activeFilters: [],
+      activeCats:"",
+      cats: [],
+     
+      placeholder: [ 
+        { id: 1, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
+        { id: 2, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
+        { id: 3, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' }
+      ]
+    }
+  },
+  
+  // smallCard click path for displaying full data in seperate view
+  computed: {
+    pathEcourse () {
+      return this.$store.state.routePath.ecourse
     }
   },
   
   methods: {
-    getIsCapitalOrCountry: async function(){
+   
 
-      let param = "spain"
-      const citiesRef = db.collection('Work');
-      let isACity = false;
-      //We define an async function
+
+  
+
+    //needed to empty out all filter values if cats change
+    cleanData(){
+      this.activeFilters = [];
+    },
+
+    onSearchChange: function(value){
+      this.searchTerm = value
       
-        const isCity = citiesRef.where('city', '==', param).get();
-        const isCountry = citiesRef.where('country', '==', param).get();
-        const [capitalQuerySnapshot, italianQuerySnapshot] = await Promise.all([
-          isCity,
-          isCountry
-        ]);
-        const CitiesArray = capitalQuerySnapshot.docs;
-       
-        const countryArray = italianQuerySnapshot.docs;
+    },
+    onCatsChange: function(value){
+      this.activeCats = value
+      this.cleanData()
+    },
 
-        isACity = CitiesArray.length > 0 ? true : false;
-         console.log("is city?", isACity)
-        const result = CitiesArray.concat(countryArray);
-        this.resCount = result.length;
-        return result;
+    onFilterChange: function(value){
+      this.activeFilters = value
+    },
 
-       
-      },    
-      //We call the asychronous function
+
+    findMatches: function(val, type){
+      
+      //look for matching strings and count occurences of same value in name
+      let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
+      let names = match.map(x => {
+        return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
+      })
+      
+      // remove duplicates
+      return names.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
+    },
+   
+   //construct query bases on data and navigate to discover
+    search: function(){
+      let obj = {
+        searchTerm: this.searchTerm,
+        filters: this.activeFilters.join("+"),
+        cat: this.activeCats
+        }
+      console.log(obj)
+      this.$router.push({ path: 'discover', query: obj })
+    }
      
-      // Sorting function for returning and displaying randomly picked e-courses on home page
-    randomList: function(rand){
-      return rand.slice().sort(function(){return 0.5 - Math.random()});
-      },
-
   },
+  watch:{
+    searchTerm: function(){
+      if(this.searchTerm == ""){
+        this.matches = false;
 
+      } else {
+        let countries = this.findMatches(this.searchTerm, "country")
+        let cities = this.findMatches(this.searchTerm, "city")
+        this.matches = countries.concat(cities)
+      }
+      
+
+
+    }
+  },
   created(){
+    // initialize values
+    this.results = getCollections("Work", true);
+   
+    filtersWithHeaders().then(res => {
     
-     this.getIsCapitalOrCountry().then(result => {
-        result.forEach(docSnapshot => {
-          console.log(docSnapshot.data());
-        });
-      });
+      this.filters = res
+      this.cats = Object.keys(res)
+      this.activeCats=this.cats[0]
     
-    // Get e-course data fro db used for displaying suggested content on home page
+    });
+    
+     // Get e-course data fro db used for displaying suggested content on home page
     db.collection('E-course').get()
     .then(qs => {
       qs.forEach(doc => {
@@ -98,14 +159,9 @@ export default {
         this.e_course.push(data)
       })
     })
+     
   },
-
-  // smallCard click path for displaying full data in seperate view
-  computed: {
-    pathEcourse () {
-      return this.$store.state.routePath.ecourse
-    }
-  }
+  
 }
 </script>
 
@@ -115,10 +171,6 @@ export default {
     main {
       width: auto;
       margin: auto;
-      /*
-       height: calc(100vh - 1em);
-       width: 100vw;
-       */
     }
    
    /* Search bar and main content text */
@@ -132,7 +184,7 @@ export default {
    }
    
    .content-area {
-     display: flex;
+      display: flex;
      justify-content: center;
      flex-direction: column;
      align-items: center;
@@ -140,8 +192,9 @@ export default {
      
    .content {
      text-align: center;
-     margin-top: 20%;
-     width: 60%;
+     margin-top: 10%;
+     width: 72%;
+     position: relative
    }
    
    
@@ -153,6 +206,8 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+     position: absolute;
+     top:1em;
    }
    
    .under-headline {
@@ -163,6 +218,9 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+
+     position: absolute;
+     top:6em;
    }
    
    
@@ -184,10 +242,16 @@ export default {
       margin-left: 3%;
     }
    
+
+  
+
+   .content-suggestion-cards {
+      
+    }
+   
    .smallCard {
      display: flex;
      flex-direction: columns;
    }
    
    </style>
-   

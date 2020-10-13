@@ -14,5 +14,5 @@ export {
     db,
     auth,
     usersCollection,
-   
+
 }
