@@ -30,7 +30,7 @@
             v-for="(item, idx) in matches"
             :key="item.name+idx"
             class="mt-2 bg-white rounded flex items-center w-full p-3 shadow-sm border border-gray-200">
-              <img class="h-6 mr-5" v-if="item.type == 'country'" src="@/assets/world.svg"/>
+              <img class="h-6 mr-5" v-if="item.type == 'Country'" src="@/assets/world.svg"/>
               <img class="h-6 mr-5" v-else src="@/assets/city.svg"/>
               <p>{{item.name}} {{item.num ? "(" + item.num + ")" : ""}}</p>
           </li>
@@ -46,7 +46,7 @@
 
 export default {
   name:"SearchBar",
-  props: ["matches", "cats"],
+  props: ["matches", "cats", "cleanTerm"],
   data(){
     return {
       searchTerm:'',
@@ -78,7 +78,13 @@ export default {
   watch:{
     activeCat: function(val){
       this.$emit('catsChanged', val)
-  }
+  },
+    cleanTerm:function(val){
+      if(val == ""){
+         this.searchTerm = ''
+      }
+     
+    }
   }
 
 }

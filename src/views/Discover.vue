@@ -109,6 +109,7 @@ export default {
         this.activeCat=activeCat
         this.results = getCollections(activeCat, true);
         
+        
     }
 
    

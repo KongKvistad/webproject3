@@ -6,7 +6,7 @@
               <!--DON'T DELETE ME YOU SILLY GOOSE
               <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
               <section class="w-full flex justify-between">
-                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
+                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats" :cleanTerm="this.searchTerm"/>
                 <FilterBox v-on:childToParent="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
@@ -76,7 +76,11 @@ export default {
     //needed to empty out all filter values if cats change
     cleanData(){
       this.activeFilters = [];
+      this.matches =[];
+      this.searchTerm = "";
     },
+
+    
 
     onSearchChange: function(value){
       this.searchTerm = value
@@ -84,13 +88,19 @@ export default {
     },
     onCatsChange: function(value){
       this.activeCats = value
+      
       this.cleanData()
+      this.populate(value)
     },
 
     onFilterChange: function(value){
       this.activeFilters = value
+      
     },
 
+    populate: function(type){
+      this.results = getCollections(type, true);
+    },
 
     findMatches: function(val, type){
       
@@ -122,8 +132,8 @@ export default {
         this.matches = false;
 
       } else {
-        let countries = this.findMatches(this.searchTerm, "country")
-        let cities = this.findMatches(this.searchTerm, "city")
+        let countries = this.findMatches(this.searchTerm, "Country")
+        let cities = this.findMatches(this.searchTerm, "City")
         this.matches = countries.concat(cities)
       }
       
@@ -133,13 +143,14 @@ export default {
   },
   created(){
     // initialize values
-    this.results = getCollections("Work", true);
+    
    
     filtersWithHeaders().then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)
       this.activeCats=this.cats[0]
+      this.populate(this.activeCats)
     
     });
     

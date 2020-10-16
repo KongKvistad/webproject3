@@ -34,13 +34,16 @@ export default {
 }
 </script>
 
-<style>
 
+<style scoped>
+/* PLEASE ikke glem "scoped"-taggen, brukte 10 min på å debugge */
 
     #checkboxHeading{
         font-size: 1.2em;
         font-weight: bold;
     }
+
+    
     label{
         cursor: pointer;
         display: block;
