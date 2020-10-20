@@ -87,7 +87,7 @@
 <script>
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
-import {getCollections} from "../helpers/collections.js"
+import {getPostByTerm} from "../helpers/collections.js"
 export default {
     name:"Discover",
     components:{
@@ -104,10 +104,14 @@ export default {
         
     },
     created(){
-        //console.log(this.$route.query.filters.split("+"))
-        let activeCat= this.$route.query.cat
+        let query = this.$route.query
+        let activeCat= query.cat
         this.activeCat=activeCat
-        this.results = getCollections(activeCat, true);
+        
+        getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+
+            this.results = res
+        )
         
         
     }

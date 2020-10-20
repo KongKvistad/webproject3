@@ -6,7 +6,15 @@
               <!--DON'T DELETE ME YOU SILLY GOOSE
               <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
               <section class="w-full flex justify-between">
-                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats" :cleanTerm="this.searchTerm"/>
+                <SearchBar v-on:childToParent="onSearchChange" 
+                v-on:catsChanged="onCatsChange"
+                v-on:clickedItem="onClickedItemChanged" 
+                v-on:searchClicked="search" 
+                :matches="this.matches" 
+                v-if="this.cats.length > 0" 
+                :cats="this.cats" 
+                :cleanTerm="this.searchTerm"/>
+                
                 <FilterBox v-on:childToParent="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
@@ -55,6 +63,7 @@ export default {
       activeFilters: [],
       activeCats:"",
       cats: [],
+      clickedItem: false
     }
   },
   
@@ -97,6 +106,9 @@ export default {
       this.activeFilters = value
       
     },
+    onClickedItemChanged:function(value){
+      this.clickedItem = value
+    },
 
     populate: function(type){
       this.results = getCollections(type, true);
@@ -119,7 +131,8 @@ export default {
       let obj = {
         searchTerm: this.searchTerm,
         filters: this.activeFilters.join("+"),
-        cat: this.activeCats
+        cat: this.activeCats,
+        type: this.clickedItem.type
         }
       console.log(obj)
       this.$router.push({ path: 'discover', query: obj })

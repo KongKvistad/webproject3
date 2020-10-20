@@ -33,5 +33,24 @@ async function filtersWithHeaders(){
     return res
 }
 
+async function getPostByTerm(collection, searchTerm, type){
+    
+    let res = []
 
-export {getCollections, getDocByReference, filtersWithHeaders};
+    let ref = db.collection(collection).where(type, "==", searchTerm);
+    await ref.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            
+            res.push(doc.data());
+        });
+    });
+    return res;
+}
+
+
+export {
+    getCollections,
+    getDocByReference,
+    filtersWithHeaders,
+    getPostByTerm
+};

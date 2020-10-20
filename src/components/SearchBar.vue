@@ -84,6 +84,12 @@ export default {
          this.searchTerm = ''
       }
      
+    },
+    clickedItem: function(){
+      if(this.clickedItem){
+        this.$emit('clickedItem', this.clickedItem)
+      }
+      
     }
   }
 
