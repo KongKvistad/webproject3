@@ -2,12 +2,21 @@
 <div id="discover">
     <section id="leftBar">
         <div>
+        <!--
             <LimitSearch
                 checkboxcolour="bluecheckbox"
                 heading="Experience" 
                 choice1="Work" 
                 choice2="Study programme" 
                 choice3="Exchange"/>
+        -->
+            <CatChooser
+            :heading="'Experience'"
+            :cats="cats"
+            :activeCat="activeCat"
+            v-on:catsChanged="onCatsChange"
+
+            />
             <LimitSearch
                 checkboxcolour="bluecheckbox"
                 heading="Engagement type" 
@@ -20,16 +29,19 @@
     
     <section id="middleBar">
         <div id="discoverheading">
-            <h1>Discover</h1>
-            <form id="search" action="">
-                <input type="text" name="search" placeholder="Search...">
-            </form>
+            <SearchMaster
+                v-on:catsChanged="onCatsChange"
+                :results="results"
+                :cats="cats"
+                :activeCats="activeCat"
+                :activeFilters="activeFilters"
+                />
         </div>
-            <div id="cards">
+            <div id="cards" v-if="!compoundView">
                 
                <Card
                     :key="idx" 
-                    v-for="(elem,idx) in results"
+                    v-for="(elem,idx) in searchResults"
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
@@ -42,34 +54,37 @@
                     boxcolourclass="bluebox"
                     />
             
-               <!-- <Card title="Scientific findings" 
-                    owner="NASA" 
-                    deadline="21.05.2022" 
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=700 
-                    reviews=57 
-                    duration=104
-                    imageBox="Long term" 
-                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"
+              
+            </div>
+            <div id="cards" v-else>
+                <template v-for="(elem,idx) in searchResults" >
+                <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
+                    <h3>{{elem.isLast}}</h3>
+                </div>
+               <Card
+                    :key="elem.Title+idx+'cmp'"
+                    :title="elem.Title" 
+                    :owner="elem.School" 
+                    :deadline="elem.Visa"
+                    :description="elem.Description" 
+                    :price="elem.Cost" 
+                    :reviews="elem.Testemonies" 
+                    :duration="elem.Duration"
+                    :isLast="elem.isLast"
+                    imageBox="Internship" 
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
-
-                <Card title="PHP programmer" 
-                    owner="UCLA" 
-                    deadline="21.05.2021" 
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=300 
-                    reviews=10 
-                    duration=40
-                    imageBox="Long term"
-                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
-                    boxcolourclass="bluebox"
-                    />-->
+                
+            </template>
+              
             </div>
+
     </section>
     <section id="rightBar">
         <!--Bare satt det inn her for å se litt på grid-->
         <div>
+            <!--
             <LimitSearch 
                 heading="Experience" 
                 choice1="Work" 
@@ -80,6 +95,7 @@
                 choice1="Internship" 
                 choice2="Short term" 
                 choice3="Long term"/>
+                -->
         </div>
     </section>
 </div>
@@ -87,32 +103,72 @@
 <script>
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
-import {getPostByTerm} from "../helpers/collections.js"
+import SearchMaster from "../components/SearchMaster.vue"
+import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections} from "../helpers/collections.js"
+import CatChooser from "../components/CatChooser.vue"
 export default {
     name:"Discover",
     components:{
         LimitSearch,
-        Card
+        Card,
+        SearchMaster,
+        CatChooser
+       
     },
     data(){
         return{
-            results: false,
-            activeCat: false
+            searchResults: false,
+            activeCat: false,
+            compoundView: false,
+            //data for pre-search
+            results:false,
+            cats: [],
+            
+            filters: [],
+            activeFilters:[],
         }
     },
     computed:{
         
     },
+    methods:{
+        populate: function(type){
+            this.results = getCollections(type, true);
+        },
+        onCatsChange: function(value){
+            this.activeCat = value
+            this.activeFilters = [];
+            this.populate(value)
+        },
+    },
     created(){
         let query = this.$route.query
         let activeCat= query.cat
-        this.activeCat=activeCat
         
-        getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
-
-            this.results = res
+        //if user came from search
+        if(activeCat){
+        
+            this.activeCat=activeCat
+        
+            getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                this.searchResults = res
         )
+        //if user just pressed the navbar
+        } else {
+            this.compoundView = true
+            populateRandom(["Work", "StudyProgramme", "Exchange"]).then(res => 
+            this.searchResults = res
+            )
+        }
         
+        //get pre-load data for SearchBar
+        filtersWithHeaders().then(res => {
+        
+            this.filters = res
+            this.cats = Object.keys(res)           
+            activeCat? this.populate(this.activeCat) : this.populate("Work")
+        
+        });
         
     }
 
@@ -124,6 +180,22 @@ export default {
     /* .bluebox {
         background-color: #5E80F8;
     } */
+
+
+    .newCat{
+    border-bottom: 1px solid #8080805e;
+    
+    
+    width: 35%;
+    margin: 4em auto;
+    }
+
+    .newCat > h3{
+        font-size: 2em;
+    color: #5e80f8;
+    text-align: center;
+    margin-bottom: 10px;
+    }
 
     #imageBox {
     display: flex;
@@ -145,8 +217,7 @@ export default {
     }
     #discoverheading {
         width: 100%;
-        display: inline-grid;
-        grid-template-columns: auto auto;
+        display:flex;
         align-items: center;
     }
 
@@ -154,7 +225,8 @@ export default {
         display: inline-grid;
         grid-template-columns: 170px auto 170px;
         grid-column-gap: 20px;
-        margin: 5% 2%;
+        margin: 2% 2%;
+        width: calc(100vw - 5%);
     }
     #leftBar {
         grid-column: 1 / 2;
@@ -165,6 +237,8 @@ export default {
         border-left: 1px solid rgb(177, 177, 177);
         border-right: 1px solid rgb(177, 177, 177);
         padding: 2%;
+        max-width:50em;
+        margin: 0px auto;
     }
 
     #rightBar{
