@@ -21,15 +21,15 @@ export default {
   },
   watch:{
     checkedfilters: function(val){
-      this.emitToParent(val)
+      this.emitToSearch(val)
     },
     activeFilters: function(val){
         this.checkedfilters = val;
     }
   },
   methods: {
-     emitToParent (val) {
-      this.$emit('childToParent', val)
+     emitToSearch (val) {
+      this.$emit('filterToSearch', val)
     }
   }
   

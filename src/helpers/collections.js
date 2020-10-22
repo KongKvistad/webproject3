@@ -33,5 +33,48 @@ async function filtersWithHeaders(){
     return res
 }
 
+async function getPostByTerm(collection, searchTerm, type){
+    
+    let res = []
 
-export {getCollections, getDocByReference, filtersWithHeaders};
+    let ref = db.collection(collection).where(type, "==", searchTerm);
+    await ref.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            
+            res.push(doc.data());
+        });
+    });
+    return res;
+}
+
+async function populateRandom(refs){
+
+    let res = []
+    let num = 3
+
+    refs.forEach(ref => {
+        let i = num;
+        
+        db.collection(ref).orderBy("Title", "asc").limit(num).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                
+                let obj = doc.data()
+                obj.isLast = i == num ? ref : false;
+                i--
+                
+                res.push(obj);
+                });
+            });
+    })
+    await res;
+    return res
+    
+}
+
+export {
+    getCollections,
+    getDocByReference,
+    filtersWithHeaders,
+    getPostByTerm,
+    populateRandom
+};

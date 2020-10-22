@@ -10,7 +10,13 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
       userProfile: {},
+
+      routePath: {
+        ecourse: 'Ecourse', 
+      },
+
       filters: {}
+
     },
     mutations: {
       setUserProfile(state, val) {
@@ -61,10 +67,6 @@ const store = new Vuex.Store({
           router.push(user.cameFrom ? user.cameFrom : "/")
         }
       },
-
-
-
-
 
       async logout({ commit }) {
         // log user out

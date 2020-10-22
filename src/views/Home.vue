@@ -1,13 +1,20 @@
 <template>
     <main>
-        <div class="banner-area"> <!-- :style="image">  Virker til å vise bilde på vue måten men da virker ikke css'en-->
+        <div class="banner-area">
           <div class="content-area">
             <div class="content">
               <!--DON'T DELETE ME YOU SILLY GOOSE
               <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
               <section class="w-full flex justify-between">
-                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats"/>
-                <FilterBox v-on:childToParent="onFilterChange"
+                <SearchMaster
+                v-on:catsChanged="onCatsChange"
+                :results="results"
+                :cats="cats"
+                :activeCats="activeCats"
+                :activeFilters="activeFilters"
+                :fromHome="true"
+                />
+                <FilterBox v-on:filterToSearch="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
                 :activeFilters="activeFilters" />
@@ -17,13 +24,12 @@
             </div>
           </div>
         </div>
-  
-  
         <div class="content-suggestion">
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
-            <SmallCard v-for="item in placeholder" :key="item.id" :item="item"/>
+
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :content="item.content" :price="item.price" :routePath="pathEcourse"/>            
           </div>
         </div>
     </main>
@@ -31,16 +37,15 @@
 
 <script>
 import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
-//import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar'
+import {db} from '../components/firebaseInit.js'
 import FilterBox from '../components/FilterBox'
-//import RadioBtns from '../components/RadioBtns'
+import SearchMaster from '../components/SearchMaster.vue'
 import SmallCard from '../components/SmallCard.vue'
 
 export default {
   name: 'Home',
   components: {
-    SearchBar,
+    SearchMaster,
     FilterBox,
     //RadioBtns,
     SmallCard
@@ -48,94 +53,73 @@ export default {
 
   data(){
     return {
-      results:[],
-      searchTerm:false,
-      matches:[],
-      filters: [],
-      activeFilters: [],
-      activeCats:"",
+      results:false,
       cats: [],
-     
-      placeholder: [ 
-        { id: 1, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 2, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' },
-        { id: 3, img: '@/assests/logo.png', content: 'How to write a good application for Uni and stuff..', price: '34' }
-      ]
+      activeCats:"",
+      filters: [],
+      activeFilters:[],
+      e_course: [],
+    }
+  },
+  
+  // smallCard click path for displaying full data in seperate view
+  computed: {
+    pathEcourse () {
+      return this.$store.state.routePath.ecourse
     }
   },
   
   methods: {
-
-    //needed to empty out all filter values if cats change
-    cleanData(){
-      this.activeFilters = [];
-    },
-
-    onSearchChange: function(value){
-      this.searchTerm = value
-      
-    },
-    onCatsChange: function(value){
-      this.activeCats = value
-      this.cleanData()
+   
+    randomList: function(rand){
+      return rand.slice().sort(function(){return 0.5 - Math.random()});
+      },
+    populate: function(type){
+      this.results = getCollections(type, true);
     },
 
     onFilterChange: function(value){
       this.activeFilters = value
+      
     },
 
-
-    findMatches: function(val, type){
-      
-      //look for matching strings and count occurences of same value in name
-      let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
-      let names = match.map(x => {
-        return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
-      })
-      
-      // remove duplicates
-      return names.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
+    onCatsChange: function(value){
+      this.activeCats = value
+      this.activeFilters = [];
+      this.populate(value)
     },
-   
-   //construct query bases on data and navigate to discover
-    search: function(){
-      let obj = {
-        searchTerm: this.searchTerm,
-        filters: this.activeFilters.join("+"),
-        cat: this.activeCats
-        }
-      console.log(obj)
-      this.$router.push({ path: 'discover', query: obj })
-    }
+
+  
      
   },
   watch:{
-    searchTerm: function(){
-      if(this.searchTerm == ""){
-        this.matches = false;
-
-      } else {
-        let countries = this.findMatches(this.searchTerm, "country")
-        let cities = this.findMatches(this.searchTerm, "city")
-        this.matches = countries.concat(cities)
-      }
-      
-
-
-    }
+    
   },
   created(){
     // initialize values
-    this.results = getCollections("Work", true);
+    
    
     filtersWithHeaders().then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)
       this.activeCats=this.cats[0]
+      this.populate(this.activeCats)
     
     });
     
+     // Get e-course data fro db used for displaying suggested content on home page
+    db.collection('E-course').get()
+    .then(qs => {
+      qs.forEach(doc => {
+        const data = {
+          'id': doc.id,
+          'content': doc.data().content,
+          'price': doc.data().price
+        }
+        this.e_course.push(data)
+      })
+    })
      
   },
   
@@ -143,13 +127,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-
- 
-
-
-
   <style scoped>
-  
 
     main {
       width: auto;
@@ -201,6 +179,7 @@ export default {
      background-color: #5E80F8;
      color: white;
      text-align: left;
+
      position: absolute;
      top:6em;
    }
@@ -224,6 +203,7 @@ export default {
       margin-left: 3%;
     }
    
+
   
 
    .content-suggestion-cards {
@@ -236,5 +216,3 @@ export default {
    }
    
    </style>
-   
-
