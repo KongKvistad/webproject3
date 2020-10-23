@@ -19,7 +19,19 @@
             </form>
         </div>
             <div id="cards">
-                <Card title="How to write a good application" 
+                <Card
+                    :key="idx" 
+                    v-for="(item, idx) in ecourseresults"
+                    :title="item.Title"
+                    :timePosted="item.TimePosted"
+                    :country="item.Country"
+                    :city="item.City"
+                    :description="item.Description"
+                    :price="item.Price"
+                    imageLink="https://miro.medium.com/max/10944/1*S81O15rjKfG-BFdnNC6-GQ.jpeg"
+                    boxcolourclass="greenbox"
+                    />
+                <!-- <Card title="How to write a good application" 
                     owner="John Hopkins" 
                     description="How should you present yourself, and what is important to mention? Learn how to write the best possible application for an internship, job etc." 
                     imageLink="https://mendeleyblog.files.wordpress.com/2017/06/writingatdesk.jpg?w=810"
@@ -44,7 +56,7 @@
                     imageBox="12.5$"
                     boxcolourclass="greenbox"
                     rating=5
-                    ecoursetime=600 />
+                    ecoursetime=600 /> -->
             </div>
     </section>
     <section id="rightBar">
@@ -67,17 +79,32 @@
 <script>
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
+import {getCollections} from "../helpers/collections.js";
 export default {
+    name:"Marketplace",
     components:{
         Card,
         LimitSearch
+    },
+    data(){
+        return{
+            secondhandresults: [],
+            mentoringresults: [],
+            ecourseresults:[]
+        }
+    },
+    created(){
+        this.secondhandresults = getCollections("SecondHand", true);
+        this.mentoringresults = getCollections("Mentoring", true);
+        this.ecourseresults = getCollections("E-course", true);
+    
     }
 
    
 }
 </script>
 
-<style>
+<style scoped>
 
     #marketplaceheading {
         width: 100%;

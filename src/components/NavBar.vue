@@ -11,7 +11,7 @@
       </div>
       <div id="links">
           <div id="navDiscover" :class="[currentPage.includes('Discover') ? activeDiscover : '']"><router-link to="/Discover"><img src="@/assets/compass.svg">Discover</router-link></div>
-          <div id="navMarket" :class="[currentPage.includes('market') ? activeMarket : '']"><router-link to="/market"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
+          <div id="navMarket" :class="[currentPage.includes('Marketplace') ? activeMarket : '']"><router-link to="/Marketplace"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
           <div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']"><router-link to="/social"><img src="@/assets/users.svg">Social</router-link></div>
       </div>
       <div id="left">

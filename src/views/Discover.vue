@@ -31,12 +31,14 @@
                     :key="idx" 
                     v-for="(elem,idx) in results"
                     :title="elem.Title" 
-                    :owner="elem.School" 
-                    :deadline="elem.Visa"
+                    :owner="elem.School"
+                    :terms="elem.Visa"
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
+                    :country="elem.Country"
+                    :city="elem.City"
                     imageBox="Internship" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
@@ -84,6 +86,7 @@
     </section>
 </div>
 </template>
+
 <script>
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
@@ -120,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     /* .bluebox {
         background-color: #5E80F8;
     } */

@@ -12,13 +12,22 @@
 
       <div id="right-column">
           <h2>{{ title }}</h2>
-          <p>{{ owner }}</p>
+          <div id="ownerInfo">
+            <p v-if="owner">{{ owner }}</p>
+            <p v-if="timePosted">Posted {{ timePosted }}</p>
+            <p v-if="country">|</p>
+            <p v-if="country">{{country}} </p>
+            <p v-if="city">|</p>
+            <p v-if="city">{{city}} </p>
+          </div>
           <p v-if="deadline" id = "deadline">Deadline: {{ deadline }}</p>
+          <p v-if="terms">Terms of stay: {{terms}}</p>
           <p>{{ description }}</p>
           <div id="liste">
-                <p v-if="price">{{ price }}k</p>
+                
+                <p v-if="price">{{ price }}</p>
                 <p v-if="reviews">{{ reviews }} testemonies</p>
-                <p v-if="duration">{{ duration }} weeks</p>
+                <p v-if="duration">{{ duration }} </p>
                 <p v-if="ecoursetime>60" > {{ ecoursetime/60 }} hours </p>
                 <p v-else-if="ecoursetime<60"> {{ecoursetime}} minutes</p>
                 <div v-if="rating">
@@ -39,6 +48,7 @@ export default {
   props: {
     title: String,
     owner: String,
+    timePosted: Symbol,
     deadline: Date,
     description: String,
     price: Number,
@@ -49,7 +59,10 @@ export default {
     altText: String,
     boxcolourclass: String,
     rating: Number,
-    ecoursetime: Number
+    ecoursetime: Number,
+    country: String,
+    city: String,
+    terms: String
   },
   components: {
     StarRating
@@ -105,8 +118,9 @@ export default {
   /*border: 1px solid rgb(162, 162, 162);*/
 }
 #card:hover{
-    border: 1px solid #00000047;
-    box-shadow: 2px 3px 6px #00000073;
+    background-color: rgba(235, 234, 234, 0.639);
+    /* border: 1px solid #00000047;
+    box-shadow: 2px 3px 6px #00000073; */
 
 }
 #left-column {
@@ -126,6 +140,16 @@ export default {
 #deadline, #liste {
   font-weight: bold;
 }
+#ownerInfo {
+  display: flex;
+  margin: 0 -2%;
+}
+
+#ownerInfo>p {
+  padding: 2%;
+  font-weight: bold;
+}
+
 #liste {
   
     display: flex;
@@ -137,6 +161,10 @@ h1 {
 }
 h2 {
   font-size: 1.5em;
+}
+
+h2:first-letter{
+  text-transform: capitalize;
 }
 
 p {
