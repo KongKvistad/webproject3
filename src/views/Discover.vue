@@ -136,9 +136,14 @@ export default {
             this.results = getCollections(type, true);
         },
         onCatsChange: function(value){
-            this.activeCat = value
-            this.activeFilters = [];
-            this.populate(value)
+            let obj = {
+                searchTerm: false,
+                filters: false,
+                cat: value,
+                type: false
+            }
+
+            this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
         },
     },
     created(){
@@ -162,7 +167,7 @@ export default {
         }
         
         //get pre-load data for SearchBar
-        filtersWithHeaders().then(res => {
+        filtersWithHeaders("filters").then(res => {
         
             this.filters = res
             this.cats = Object.keys(res)           
@@ -176,7 +181,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     /* .bluebox {
         background-color: #5E80F8;
     } */

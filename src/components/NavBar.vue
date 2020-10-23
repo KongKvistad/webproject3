@@ -46,7 +46,7 @@ export default {
           activeDiscover: 'activeDiscover',
           activeMarket: 'activeMarket',
           activeSocial: 'activeSocial',
-          //activeDropDown: false,
+          activeDropDown: false,
           // posCats:{
           //   social: ["events", "groups"],
           //   marketplace: ["e-courses", "mentoring", "second-hand", "accomodation"],

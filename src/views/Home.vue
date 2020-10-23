@@ -99,7 +99,7 @@ export default {
     // initialize values
     
    
-    filtersWithHeaders().then(res => {
+    filtersWithHeaders("filters").then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)

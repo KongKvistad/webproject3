@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
     #marketplaceheading {
         width: 100%;
