@@ -2,12 +2,19 @@
 <div id="marketplace">
     <section id="leftBar">
         <div>
-            <LimitSearch 
+            <ul>
+                <li v-for="type in mpType" :key="type">
+                    <input type="checkbox" :name="type" :value="type" :id="type" checked="checked" v-model="checkedBox">
+                    <label :for="type">{{type}}</label>
+                </li>
+            </ul>
+            <!-- <LimitSearch 
                 checkboxcolour="greencheckbox"
                 heading="Market" 
-                choice1="E-courses" 
+                choice1="E-courses" v-on:click="getContent" 
                 choice2="Second hand" 
-                choice3="Mentoring"/>
+                choice3="Mentoring"/> -->
+                <!-- <span>{{checkedBox}}</span> -->
         </div>
       <!-- searchboxes   -->
     </section>
@@ -18,7 +25,7 @@
                 <input type="text" name="search" placeholder="Search...">
             </form>
         </div>
-            <div id="cards">
+            <div v-if="checkedBox[0] === 'E-course' || checkedBox[1] === 'E-course' || checkedBox[2] === 'E-course'" id="cards">
                 <Card
                     :key="idx" 
                     v-for="(item, idx) in ecourseresults"
@@ -28,7 +35,7 @@
                     :city="item.City"
                     :description="item.Description"
                     :price="item.Price"
-                    imageLink="https://miro.medium.com/max/10944/1*S81O15rjKfG-BFdnNC6-GQ.jpeg"
+                    imageLink="https://www.learningrevolution.net/wp-content/uploads/2019/04/free_training-3734521_1280-800x600.jpg"
                     boxcolourclass="greenbox"
                     />
                 <!-- <Card title="How to write a good application" 
@@ -57,6 +64,34 @@
                     boxcolourclass="greenbox"
                     rating=5
                     ecoursetime=600 /> -->
+            </div>
+             <div v-if="checkedBox[0] === 'Mentoring' || checkedBox[1] === 'Mentoring' || checkedBox[2] === 'Mentoring'" id="cards">
+                <Card
+                    :key="idx" 
+                    v-for="(item, idx) in mentoringresults"
+                    :title="item.Title"
+                    :timePosted="item.TimePosted"
+                    :country="item.Country"
+                    :city="item.City"
+                    :description="item.Description"
+                    :price="item.Price"
+                    imageLink="https://bookdown.org/kulasj/catrina_check/images/cover.png"
+                    boxcolourclass="greenbox"
+                    />
+            </div>
+            <div v-if="checkedBox[0] === 'Second-hand' || checkedBox[1] === 'Second-hand' || checkedBox[2] === 'Second-hand'" id="cards3">
+                <Card
+                    :key="idx" 
+                    v-for="(item, idx) in secondhandresults"
+                    :title="item.Title"
+                    :timePosted="item.TimePosted"
+                    :country="item.Country"
+                    :city="item.City"
+                    :description="item.Description"
+                    :price="item.Price"
+                    imageLink="https://miro.medium.com/max/10944/1*S81O15rjKfG-BFdnNC6-GQ.jpeg"
+                    boxcolourclass="greenbox"
+                    />
             </div>
     </section>
     <section id="rightBar">
@@ -88,8 +123,10 @@ export default {
     },
     data(){
         return{
-            secondhandresults: [],
+            mpType: ['E-course', 'Mentoring', 'Second-hand'],
+            checkedBox: ['E-course', 'Mentoring', 'Second-hand'],
             mentoringresults: [],
+            secondhandresults: [],
             ecourseresults:[]
         }
     },
@@ -98,10 +135,20 @@ export default {
         this.mentoringresults = getCollections("Mentoring", true);
         this.ecourseresults = getCollections("E-course", true);
     
-    }
+    },
+    /* computed: {
+      selectedItems: function () {
+        return this.items.filter(function (item) {
+          return this.checkedBox.includes(item.category);
+        }, this);
+      },
+    }, */
 
    
 }
+/* function getContent(){
+    return this.ecourseresults
+} */
 </script>
 
 <style scoped>
