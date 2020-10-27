@@ -23,7 +23,7 @@ import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
 import Marketplace from './../views/Marketplace.vue'
 import Ecourse from './../views/Ecourse.vue'
-import Profile from './../views/Profile.vue'
+import profileAbout from './../views/Profile/profileAbout.vue'
 
 Vue.use(VueRouter)
 
@@ -65,9 +65,9 @@ const routes = [
     component: Ecourse
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile
+    path: '/profile/aboutme',
+    name: 'profileAbout',
+    component: profileAbout
   }
 ]
 

@@ -17,7 +17,7 @@
       <div id="left">
         <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">{{userProfile}}
           <div class="dropdown-content">
-            <router-link to="/Profile">Profile</router-link>
+            <router-link to="/aboutme">Profile</router-link>
             <a @click="logOut()">Log Out</a>
           </div>
         </div>
