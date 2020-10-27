@@ -5,7 +5,7 @@
             <div class="content">
               <!--DON'T DELETE ME YOU SILLY GOOSE
               <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
-              <section class="w-full flex justify-between">
+              <section class="w-full flex justify-between relative z-10">
                 <SearchMaster
                 v-on:catsChanged="onCatsChange"
                 :results="results"
@@ -99,7 +99,7 @@ export default {
     // initialize values
     
    
-    filtersWithHeaders().then(res => {
+    filtersWithHeaders("filters").then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)

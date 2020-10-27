@@ -1,6 +1,6 @@
 <template>
 
-  <div class="box z-10" :class="fromHome ? 'w-3/5': 'w-full'">
+  <div class="box" :class="fromHome ? 'w-3/5': 'w-full'">
     <div class="box-wrapper">
       <div class=" bg-white rounded flex items-center justify-between w-full shadow-sm border border-none" v-if="clickedItem">
       <div class="bg-gray w-2/5 flex p-5">

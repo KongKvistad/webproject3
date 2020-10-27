@@ -13,6 +13,9 @@
           <div @click="checkroute()" id="navDiscover" :class="[currentPage.includes('Discover') ? activeDiscover : '']"><router-link to="/Discover"><img src="@/assets/compass.svg">Discover</router-link></div>
           <div id="navMarket" :class="[currentPage.includes('market') ? activeMarket : '']"><router-link to="/market"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
           <div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']"><router-link to="/social"><img src="@/assets/users.svg">Social</router-link></div>
+          <!--<div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']" @mouseover="setActiveDropDown('social')" @mouseleave="setActiveDropDown(false)">
+            <div><img src="@/assets/users.svg">Social</div>
+          </div>-->
       </div>
       <div id="left">
         <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">{{userProfile}}
@@ -23,18 +26,32 @@
         </div>
         <div v-else><router-link to="/login">LOG IN</router-link></div> 
       </div>
+       <transition name="dropTrans">
+          <MenuDropDown v-on:cursorChanged="val => monitorCursor(val)" v-if="this.activeDropDown" :data="activeDropDown"/>
+        </transition>
   </div>
+  
 </template>
 
 <script> //Javascript and vue scripts to be used in the component
 import store from '@/store';
+import MenuDropDown from './MenuDropDown.vue'
 export default {
     name: 'NavBar', // name of component to be used elsewhere as well as router
+    components: {
+      MenuDropDown
+    },
     data() {
         return {
           activeDiscover: 'activeDiscover',
           activeMarket: 'activeMarket',
           activeSocial: 'activeSocial',
+          activeDropDown: false,
+          // posCats:{
+          //   social: ["events", "groups"],
+          //   marketplace: ["e-courses", "mentoring", "second-hand", "accomodation"],
+          // },
+          //cursorState: false
         }
 
     },
@@ -57,7 +74,7 @@ export default {
     },
 
     computed: { 
-      currentPage() {
+      currentPage() { 
         return this.$route.path;
       }
     }
@@ -179,5 +196,12 @@ export default {
 .dropdown:hover .dropbtn {
   background-color: #f1f1f1;
 }
-
+.dropTrans-enter-active, .dropTrans-leave-active {
+  transition: all 0.2s;
+  max-height: 30%;
+}
+.dropTrans-enter, .dropTrans-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  max-height: 0px;
+}
 </style>

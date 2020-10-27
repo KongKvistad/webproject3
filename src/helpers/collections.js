@@ -22,8 +22,8 @@ function getDocByReference(refParam, refId){
 }
 
 //true async
-async function filtersWithHeaders(){
-    let ref = db.collection('filters');
+async function filtersWithHeaders(type){
+    let ref = db.collection(type);
     let res = {};
     await ref.get().then((querySnapshot) => {
         querySnapshot.forEach(function(doc) {
@@ -36,8 +36,14 @@ async function filtersWithHeaders(){
 async function getPostByTerm(collection, searchTerm, type){
     
     let res = []
+    let ref = ""
+    type = type == "false" ? false : type
 
-    let ref = db.collection(collection).where(type, "==", searchTerm);
+    if(searchTerm !== "false") { 
+        ref = db.collection(collection).where(type, "==", searchTerm)
+    } else {
+        ref = db.collection(collection)
+    }
     await ref.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             

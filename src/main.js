@@ -19,6 +19,17 @@ import store from './store'
 import { auth } from './components/firebaseInit'
 
 Vue.config.productionTip = false
+Vue.prototype.$objFilter = function(param) {
+  let res = []
+  for(var key in param){
+    if (Object.prototype.hasOwnProperty.call(param, key)){
+      let obj = param[key]
+      obj.uid= key
+      res.push(obj)
+    }
+  }
+  return res
+};
 
 let app
 auth.onAuthStateChanged(user => {
