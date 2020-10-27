@@ -4,8 +4,6 @@
       <div id="left-column">
        <img :src=imageLink :alt=altText>
        <div id="imageBox" :class=boxcolourclass>
-       <!-- denne kan legges på imagediv for å style-> :style= "[imageBox == 'Internship' ? {'background-color': '#5E80F8'} : {'background-color': '#fff'}]"-->
-       <!--<div id="imageBox">-->
         <p>{{ imageBox }}</p>
        </div>
       </div>
@@ -13,27 +11,30 @@
       <div id="right-column">
           <h2>{{ title }}</h2>
           <div id="ownerInfo">
-            <p v-if="owner">{{ owner }}</p>
+            <p v-if="owner">By {{ owner }}</p>
             <p v-if="timePosted">Posted {{ timePosted }}</p>
-            <p v-if="country">|</p>
+            <p v-if="country">&middot;</p>
             <p v-if="country">{{country}} </p>
-            <p v-if="city">|</p>
+            <p v-if="city">&middot;</p>
             <p v-if="city">{{city}} </p>
+            <p v-if="language">&middot;</p>
+            <p v-if="language">Language: {{language}}</p>
           </div>
           <p v-if="deadline" id = "deadline">Deadline: {{ deadline }}</p>
           <p v-if="terms">Terms of stay: {{terms}}</p>
           <p>{{ description }}</p>
+
           <div id="liste">
-                
-                <p v-if="price">{{ price }}</p>
+                <p v-if="price>0" :style= "[imageBox == 'Second Hand' ? {'color': 'green', 'font-size': '1.5em'} : {}]">{{ price }}$</p>
+                <p v-else-if="price==0" :style= "price==0 ? {'color': 'green', 'font-size': '1.5em'} : {}">FREE</p>
                 <p v-if="reviews">{{ reviews }} testemonies</p>
                 <p v-if="duration">{{ duration }} </p>
+                <p v-if="type">Type: {{ type }}</p>
                 <p v-if="ecoursetime>60" > {{ ecoursetime/60 }} hours </p>
                 <p v-else-if="ecoursetime<60"> {{ecoursetime}} minutes</p>
                 <div v-if="rating">
                   <star-rating v-model="rating" read-only=true @rating-selected ="setRating" star-size= 20></star-rating>
                 </div>
-        
           </div>
       </div>
   </div>
@@ -62,7 +63,9 @@ export default {
     ecoursetime: Number,
     country: String,
     city: String,
-    terms: String
+    terms: String,
+    language: String,
+    type: String
   },
   components: {
     StarRating
@@ -89,20 +92,21 @@ export default {
       background-color: #5E80F8;
     }
 .greenbox {
-    background-color: #36A90F;
+    background-color:  rgb(18,244,122);
   }
 
 #imageBox {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   width: 100px;
   height: 40px;
   float:left;
   position: absolute;
   bottom: 0;
   left: 0;
+  box-shadow: 2px 3px 6px #00000073;
 }
 
 
@@ -119,8 +123,8 @@ export default {
 }
 #card:hover{
     background-color: rgba(235, 234, 234, 0.639);
-    /* border: 1px solid #00000047;
-    box-shadow: 2px 3px 6px #00000073; */
+    /* border: 1px solid #00000047; */
+    box-shadow: 2px 3px 6px #00000073; 
 
 }
 #left-column {
@@ -129,7 +133,7 @@ export default {
 }
 #right-column {
   padding: 0 2%;
-    width: 70%;
+  width: 70%;
 }
 #left-column img {
     height: 100%;
@@ -151,9 +155,10 @@ export default {
 }
 
 #liste {
-  
+
     display: flex;
     justify-content: space-between;
+
 }
 
 h1 {
