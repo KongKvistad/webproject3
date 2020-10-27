@@ -1,8 +1,21 @@
 import {db} from '../components/firebaseInit.js'
 
-async function createGroup(){
-    db.collection("Groups").add({
-        created: new Date(),
+async function createGroup(obj, user){
+    //add the creator as member
+    obj.members.push(user.uid)
+
+    await db.collection("Groups").add({
+        Created: new Date(),
+        Title: obj.name,
+        Desc: obj.desc,
+        Members: obj.members,
+        creator: user.uid
+
+    }).then(function(messageRef) {
+        user.belongsTo ? user.belongsTo.push(messageRef.id) : user.belongsTo = [messageRef.id]
+        
+        let ref = db.collection("Users")
+        ref.doc(user.uid).set(user)
     })
 }
 

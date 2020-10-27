@@ -68,11 +68,13 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button
-        title="New group"
-        :uid="userProfile.uid"
-        />
+        <Button v-on:showModal="modalShowing = true"/>
+        <Modal v-if="modalShowing" @close="modalShowing = false">
+            <h2 slot="header">Create a group</h2>
+            <GroupForm slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+        </Modal>
         </template>
+        
     </MainLayout>
 </template>
 <script>
@@ -82,6 +84,8 @@ import LimitSearch from "../components/limitSearch.vue"
 import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
 import Button from "../components/Button.vue"
+import Modal from "../components/Modal.vue"
+import GroupForm from "../components/GroupForm.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections} from "../helpers/collections.js"
 
@@ -95,11 +99,15 @@ export default {
        LimitSearch,
        SearchMaster,
        Card,
-       Button
+       Button,
+       Modal,
+       GroupForm
        
     },
     data() {
         return{
+            modalShowing: false,
+
             searchResults: false,
             activeCat: false,
             compoundView: false,
@@ -113,6 +121,9 @@ export default {
     },
     computed: mapState(['userProfile']),
     methods:{
+        showModal(){
+
+        },
         populate: function(type){
             this.results = getCollections(type, true);
         },
