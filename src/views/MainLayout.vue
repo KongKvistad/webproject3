@@ -104,6 +104,7 @@ export default {
     #leftBar {
         grid-column: 1 / 2;
         position: fixed;
+        margin-left: 3%;
     }
     #middleBar{
         grid-column: 2 / 3;
@@ -121,7 +122,9 @@ export default {
         align-items: center;
         
     }
-    
+    #rightBar > div {
+        max-width: 14%;
+    }
 
     #cards {
         margin-bottom: 50px;
