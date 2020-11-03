@@ -14,17 +14,20 @@
                 choice1="Internship" 
                 choice2="Short term" 
                 choice3="Long term"/>
+           
         </div>
       <!-- searchboxes   -->
     </section>
     
     <section id="middleBar">
+     
         <div id="discoverheading">
             <h1>Discover</h1>
             <form id="search" action="">
                 <input type="text" name="search" placeholder="Search...">
             </form>
         </div>
+            <Upload/>
             <div id="cards">
                 
                <Card
@@ -88,11 +91,14 @@
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
 import {getCollections} from "../helpers/collections.js"
+
+import Upload from "../components/Upload"
 export default {
     name:"Discover",
     components:{
         LimitSearch,
-        Card
+        Card,
+        Upload
     },
     data(){
         return{

@@ -274,24 +274,12 @@
                 <label>Price</label><br/>
                 <input type="number" v-model.number="price" placeholder="Price..">
             </div>
-            <div id="image">
-                <label>Upload image</label><br/>
-                <!-- File inpput accepting images -->
-                <input type="file" ref="imgInput" @change="previewImage" accept="image/*" >
-            </div>
-            <div v-if="hidden" id="progress">
-                <!-- Upload progress bar -->
-                <p>Progress: {{ uploadValue.toFixed()+"%" }}
-                <progress id="progress" :value="uploadValue" max="100" ></progress>  
-                </p>
-            </div>
-            <!-- Upload image button appears when a image file is selected and hidden after the upload image button is pressed -->
-            <!-- Displays a preview of the uploaded image -->
-            <div v-if="imageData != null" id="preview">
-                <img class="preview" :src="imageUrl">
-                <button v-if="!hidden" @click="onUpload(), hidden = true">Upload image</button>
-                <br>
-            </div>
+            <label>Upload image</label><br/>
+            <imgUpload
+            v-on:imgUpload="imageUploaded"
+            :shouldReset="lastPost"
+           
+            />
             <!-- Submitting/uploading the post -->
             <div id="submitbtn">
                 <button @click="submitForm">Submit post</button>
@@ -302,54 +290,34 @@
 
 <script>
 
-import firebase from 'firebase';
 import {db} from '../components/firebaseInit.js'
+import ImgUpload from '../components/ImgUpload'
 
 export default {
 name: 'Upload',
+components: {
+    ImgUpload
+},
 data() {
     return {
+        //imgdata
         imageData: null,
         imageUrl: null,
-        uploadValue: 0,
-        hidden: false,
+        lastPost: false,
+     
+        //other
         title: '',
         description: '',
         creator: '',
         country: '',
         city: '',
         price: '',
-        timePosted: new Date(),
+        timePosted: false,
     }
 },
 
 methods: {
-    // Preview of image after uplaod
-    previewImage(event) {
-        this.uploadValue = 0;
-        this.imageUrl = null,
-        this.imageData = event.target.files[0];
-    },
-    // Uploads image to firebase storage
-    onUpload() {
-        this.imageUrl = null;
-        // Storing img in firebase storage referenced by 10 random characters + filename.
-        const storageRef = firebase.storage().ref(`${this.randomChars(9) + '_' + this.imageData.name}`).put(this.imageData);
-        storageRef.on(`state_changed`, snapshot => {
-            // Upload progress bar
-            this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-        }, error => {
-            console.log(error.message)},
-            ()=>{this.uploadValue = 100;
-                storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-                    // Set url to imageUrl which is used for adding image to firebase collection
-                    this.imageUrl = url;
-                    console.log(this.imageUrl);
-                    console.log(this.imageData);
-                });
-            }   
-        );
-    },
+   
     // Sumbit and store user input form to firebase collection
     submitForm() {
         // Converting value to boolean
@@ -373,37 +341,40 @@ methods: {
                 Country: this.country,
                 City: this.city,
                 Price: this.price,
-                TimePosted: this.timePosted
+                TimePosted: new Date(),
             }).then(() => {
                 console.log("Succesfully added to database");
             }).catch((error) => {
                 console.error("Error", error);
             });
+            //let the child know to reset
+            this.lastPost = this.title,
             // Reset form after submitting
-            this.$refs.imgInput.value = '',
-            this.imageData = null,
-            this.uploadValue = 0,
-            this.hidden = false, 
             this.title = '',
             this.description = '',
             this.creator = '',
             this.country = '',
             this.city = '',
-            this.price = '';
+            this.price = '',
+           
+            //imgdata 
+            this.imageUrl = null;
+            this.imageData = null;
+            this.timePosted = null
+        
         } else {
            console.log('Error, invalid form');
         }
     },
-    // Generates random characters which is added to image name as reference to firebase storage as firebase storage don't accept name duplicates
-    randomChars(length) {
-        let result = '';
-        let char = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        let charLenght = char.length;
-        for (let i = 0; i < length; i++) {
-            result += char.charAt(Math.floor(Math.random()* charLenght));
-        }
-        return result;
-    },
+    
+    imageUploaded(val){
+        let url = val[0]
+        let imageData = val[1]
+        
+        this.imageUrl = url;
+        this.imageData = imageData;
+        
+    }
 },
 
 }
