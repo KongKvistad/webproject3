@@ -1,3 +1,9 @@
+<!--
+*
+@desc   Information about yourself in a card layout similar to other cards used
+*
+-->
+
 <template>
 <div id="card">
     <div id="left">
@@ -12,7 +18,7 @@
         <h3>About Me:</h3>
         <p>{{userProfile.About}}</p>
         <div id="location"><img src="@/assets/home.svg" alt="Location"><p class="right">: {{userProfile.Location}}</p></div>
-        <button type="button" id ="editButton" style="float: right"><router-link to="/profile/settings/general">Edit</router-link></button>
+        <button type="button" id ="editButton" style="float: right"><router-link to="/profile/settings/general">Edit</router-link></button><br><br>
     </div>
 </div>
   
@@ -63,8 +69,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin-top: 60px;
-    border: 1px solid #00000047;
-    box-shadow: 2px 3px 6px #00000073;
 }
 
 #left {

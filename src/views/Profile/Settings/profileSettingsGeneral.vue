@@ -1,17 +1,24 @@
+<!--
+    @desc view for general settings in profile
+-->
 <template>
     <ProfileLayout>
         <template v-slot:middleBar>
             <div class="container">
+                <!-- 
+                    FORM TO CHANGE THE DIFFERENT INFORMATION ABOUT THE USER
+                    Every setting has its own save button so not everything is changed/saved at once
+                -->
                 <h1>General Settings</h1>
-                <form class="aligner-item align-item-top" @submit.prevent>
+                <form class="aligner-item align-item-top" @submit.prevent><!-- Form to edit name -->
                     <br>
                     <h2>Name:</h2>
                     <br>
-                    <label>First Name: </label><input type="text" v-model="fname"><label> Last name: </label><input type="text" v-model="lname"><br>
+                    <label>First Name: </label><input type="text" v-model="fname"><label> Last name: </label><input type="text" v-model="lname">
                     <button type="submit" @click="changeName()">Save</button>
                 </form>
 
-                <form class="aligner-item" @submit.prevent>
+                <form class="aligner-item" @submit.prevent> <!-- Form to edit gender -->
                     <br>
                     <h2>Gender</h2>
                     <br>
@@ -23,7 +30,7 @@
                     <button type="submit" @click="changeGender()">Save</button>
                 </form>
 
-                <form class="aligner-item" @submit.prevent>
+                <form class="aligner-item" @submit.prevent> <!-- Form to edit Birthday -->
                     <br>
                     <h2>Birthday</h2>
                     <br>
@@ -31,15 +38,15 @@
                     <button type="submit" @click="updateBirthday()">Save</button>
                 </form>
 
-                <form class="aligner-item" @submit.prevent>
+                <form class="aligner-item" @submit.prevent><!-- Form to edit the about section -->
                     <br>
                     <h2>About Me:</h2>
                     <br>
-                    <textarea v-model="aboutMe" :placeholder="[[userProfile.About]]"></textarea><br>
+                    <textarea v-model="aboutMe" :placeholder="[[userProfile.About]]"></textarea>
                     <button type="submit" @click="updateAbout()">Save</button>
                 </form>
 
-                <form class="aligner-item align-item-bottom" @submit.prevent>
+                <form class="aligner-item align-item-bottom" @submit.prevent> <!-- Form to edit Location -->
                     <br>
                     <h2>Location</h2>
                     <br>
@@ -79,7 +86,14 @@ export default {
     computed: mapState(['userProfile']),
 
     methods:{
-        changeName() {
+        /*
+        ** METHODS FOR CHANGING INFORMATION
+        ** Common for all: if the information does not exist in the database it will be created
+        ** otherwise it will be overwritten
+        */
+
+
+        changeName() { //updates Name
             var docRef = db.collection('Users').doc(auth.currentUser.uid);
             var fullName = this.fname + " " + this.lname
             return docRef.update({
@@ -94,7 +108,7 @@ export default {
             })
         },
 
-        changeGender() {
+        changeGender() { //updates gender
             var docRef = db.collection('Users').doc(auth.currentUser.uid);
             var data = this.Gender;
             return docRef.update({
@@ -109,7 +123,7 @@ export default {
             })
         },
 
-        updateBirthday(){
+        updateBirthday(){ // Updates Birthday
             var docRef = db.collection('Users').doc(auth.currentUser.uid);
             var data = this.Birthday
             return docRef.update({
@@ -124,7 +138,7 @@ export default {
             })
         },
 
-        updateAbout() {
+        updateAbout() { //updates About
             var docRef = db.collection('Users').doc(auth.currentUser.uid);
             var data = this.aboutMe
             return docRef.update({
@@ -139,7 +153,7 @@ export default {
             })
         },
 
-        updateLocation() {
+        updateLocation() { //updates location
             var docRef = db.collection('Users').doc(auth.currentUser.uid);
             var data = this.Location
             return docRef.update({
@@ -158,11 +172,6 @@ export default {
     },
 
     created() {
-        
-        db.collection('Users').doc(auth.currentUser.uid).get()
-        .then(function(doc) {
-            console.log(doc.data())
-        })
         
         
     }
@@ -184,6 +193,7 @@ h1, h2 {
 
 input, textarea, select{
     border: 1px solid;
+    border-radius: 7px;
     
 }
 
@@ -202,6 +212,7 @@ button {
     background-color: #bb4584;
     color: white;
     border-radius: 10%;
+    float: right;
 }
 
 </style>

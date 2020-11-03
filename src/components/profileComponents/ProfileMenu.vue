@@ -1,3 +1,7 @@
+<!--
+    @desc The menu on the left side in profile layout to navigate the profile and settings in there
+-->
+
 <template>
     <div>
         <div class="menu">

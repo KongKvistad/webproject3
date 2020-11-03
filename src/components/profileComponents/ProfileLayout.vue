@@ -1,6 +1,11 @@
+<!--
+    @desc Layout for the profile pages with menu on left side and content in the middle
+-->
+
 <template>
 <div id="profile">
     <div id="leftBar">
+        <!-- The menu to navigate the profile page -->
         <ProfileMenu></ProfileMenu>
     </div>
 
