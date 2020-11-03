@@ -59,9 +59,11 @@ export default {
     
 
     findMatches: function(val, type){
+      console.log(type)
       
       //look for matching strings and count occurences of same value in name
       let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
+      
       let names = match.map(x => {
         return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
       })
@@ -79,10 +81,13 @@ export default {
         type: this.clickedItem.type
         }
       console.log(obj)
-      if(this.$route.name == "discover"){
+      //special handling when coming from homepage
+      if(this.$route.name == "Home"){
          this.$router.push({ path: 'discover', query: obj }).then(this.$router.go(this.$router.currentRoute))
       }
-      this.$router.push({ path: 'discover', query: obj })
+     
+      this.$router.push({ path: this.$router.currentRoute.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
+      
     }
      
   },

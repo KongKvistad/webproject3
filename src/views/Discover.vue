@@ -49,7 +49,7 @@
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
-                    imageBox="Internship" 
+                    :imageBox="elem.Type" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
@@ -71,7 +71,7 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
-                    imageBox="Internship" 
+                    :imageBox="elem.Type" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
@@ -104,8 +104,9 @@
 import Card from "../components/Card.vue";
 import LimitSearch from "../components/limitSearch.vue";
 import SearchMaster from "../components/SearchMaster.vue"
-import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections} from "../helpers/collections.js"
 import CatChooser from "../components/CatChooser.vue"
+import {mapState} from "vuex"
+import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
 export default {
     name:"Discover",
     components:{
@@ -115,8 +116,10 @@ export default {
         CatChooser
        
     },
-    data(){
+    data() {
         return{
+            modalShowing: false,
+
             searchResults: false,
             activeCat: false,
             compoundView: false,
@@ -128,12 +131,14 @@ export default {
             activeFilters:[],
         }
     },
-    computed:{
-        
-    },
+    computed: mapState(['userProfile']),
     methods:{
+        
         populate: function(type){
+            
             this.results = getCollections(type, true);
+            
+            
         },
         onCatsChange: function(value){
             let obj = {
@@ -142,38 +147,63 @@ export default {
                 cat: value,
                 type: false
             }
-
+            //double check this
             this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
         },
     },
     created(){
         let query = this.$route.query
-        let activeCat= query.cat
-        
-        //if user came from search
-        if(activeCat){
-        
-            this.activeCat=activeCat
-        
-            getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
-                this.searchResults = res
-        )
-        //if user just pressed the navbar
-        } else {
-            this.compoundView = true
-            populateRandom(["Work", "StudyProgramme", "Exchange"]).then(res => 
-            this.searchResults = res
-            )
-        }
-        
+        let activeCat= query.cat == "false" || !query.cat ? false : query.cat
+       
+
         //get pre-load data for SearchBar
         filtersWithHeaders("filters").then(res => {
-        
+            
             this.filters = res
-            this.cats = Object.keys(res)           
-            activeCat? this.populate(this.activeCat) : this.populate("Work")
-        
+            this.cats = Object.keys(res)    
+
+            //if user has a selected category
+            if(activeCat){
+                
+                this.activeCat=activeCat
+            
+                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                    this.searchResults = res     
+                )
+
+                this.populate(this.activeCat)
+                
+            // otherwise
+            } else {
+                //user may just have clicked the navbar
+                
+                if(query.searchTerm == "false" || !query.searchTerm){
+                    
+                    this.compoundView = true
+                    
+                    populateRandom([...this.cats]).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+
+                //or searched inn the "all"-category
+                }else {
+
+                    getAllByTerm(this.cats, query.searchTerm, query.type).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+                }
+            }
+
+ 
         });
+        
+        
+        
+        
         
     }
 

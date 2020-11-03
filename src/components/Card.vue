@@ -81,7 +81,12 @@ export default {
 .greenbox {
     background-color: #36A90F;
   }
-
+  .yellowbox {
+    background-color: yellow;
+  }
+.yellowbox > p {
+  color: black;
+}
 #imageBox {
   display: flex;
   justify-content: center;

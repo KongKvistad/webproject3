@@ -97,7 +97,7 @@ export default {
   },
   created(){
     // initialize values
-    
+    console.log(this.$route)
    
     filtersWithHeaders("filters").then(res => {
     

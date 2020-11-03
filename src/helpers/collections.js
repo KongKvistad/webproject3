@@ -6,13 +6,27 @@ import {db} from '../components/firebaseInit.js'
 
 function getCollections(collection, payLoad){
     let res = []
-    db.collection(collection).get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // if payload is not requested, assume the programmer wants headers (document ids)
-            let data = payLoad ? doc.data() : doc.id
-            res.push(data);
+    
+    if(typeof collection === 'string'){
+
+        db.collection(collection).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // if payload is not requested, assume the programmer wants headers (document ids)
+                let data = payLoad ? doc.data() : doc.id
+                res.push(data);
+            });
         });
-    });
+    } else {
+        collection.forEach(ref => {
+            db.collection(ref).get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    // if payload is not requested, assume the programmer wants headers (document ids)
+                    let data = payLoad ? doc.data() : doc.id
+                    res.push(data);
+                });
+            });
+        })
+    }
     return res;
 }
 
@@ -53,6 +67,24 @@ async function getPostByTerm(collection, searchTerm, type){
     return res;
 }
 
+async function getAllByTerm(collections, searchTerm, type){
+    
+    let res = []
+   
+    
+    collections.forEach(ref => {
+        db.collection(ref).where(type, "==", searchTerm).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+            res.push(doc.data());
+            });
+        });
+    })
+    await res
+    return res
+
+    
+}
+
 async function populateRandom(refs){
 
     let res = []
@@ -70,7 +102,7 @@ async function populateRandom(refs){
                 
                 res.push(obj);
                 });
-            });
+        });
     })
     await res;
     return res
@@ -82,5 +114,6 @@ export {
     getDocByReference,
     filtersWithHeaders,
     getPostByTerm,
-    populateRandom
+    populateRandom,
+    getAllByTerm,
 };
