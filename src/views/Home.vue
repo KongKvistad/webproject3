@@ -18,11 +18,15 @@
           </div>
         </div>
         <div class="content-suggestion">
+          
+         <!--  <div>
+            <Upload></Upload>
+          </div> -->
+        
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
-
-            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :content="item.content" :price="item.price" :routePath="pathEcourse"/>            
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price" :routePath="pathEcourse"/>            
           </div>
         </div>
     </main>
@@ -35,6 +39,7 @@ import SearchBar from '../components/SearchBar'
 import FilterBox from '../components/FilterBox'
 //import RadioBtns from '../components/RadioBtns'
 import SmallCard from '../components/SmallCard.vue'
+//import Upload from '../components/Upload.vue'
 
 export default {
   name: 'Home',
@@ -42,7 +47,8 @@ export default {
     SearchBar,
     FilterBox,
     //RadioBtns,
-    SmallCard
+    SmallCard,
+    //Upload
   },
 
   data(){
@@ -66,12 +72,11 @@ export default {
   },
   
   methods: {
-   
+    // Randomly sorts list of e-courses for home page
     randomList: function(rand){
       return rand.slice().sort(function(){return 0.5 - Math.random()});
       },
 
-  
 
     //needed to empty out all filter values if cats change
     cleanData(){
@@ -160,8 +165,8 @@ export default {
       qs.forEach(doc => {
         const data = {
           'id': doc.id,
-          'content': doc.data().content,
-          'price': doc.data().price
+          'title': doc.data().Title,
+          'price': doc.data().Price
         }
         this.e_course.push(data)
       })
