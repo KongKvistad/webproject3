@@ -5,9 +5,6 @@
     </div>
 
     <div id="middleBar">
-        <div id="profileHeading">
-            <h1>Profile</h1>
-        </div>
         <slot name="middleBar"></slot>
     </div>
 

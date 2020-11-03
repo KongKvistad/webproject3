@@ -24,6 +24,7 @@ import Discover from './../views/Discover.vue'
 import Marketplace from './../views/Marketplace.vue'
 import Ecourse from './../views/Ecourse.vue'
 import profileAbout from './../views/Profile/profileAbout.vue'
+import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,11 @@ const routes = [
     path: '/profile/aboutme',
     name: 'profileAbout',
     component: profileAbout
+  },
+  {
+    path: '/profile/settings/general',
+    name: 'profileSettingsGeneral',
+    component: profileSettingsGeneral
   }
 ]
 

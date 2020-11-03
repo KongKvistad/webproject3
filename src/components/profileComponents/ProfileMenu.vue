@@ -3,18 +3,18 @@
         <div class="menu">
             <p class="menuHeading">Profile</p>
             <ul>
-                <li :class="[currentPage.includes('profile/aboutme') ? activeLink : '']"><a>About Me</a></li>
+                <li :class="[currentPage.includes('profile/aboutme') ? activeLink : '']"><router-link to="/profile/aboutme">About Me</router-link></li>
                 <li :class="[currentPage.includes('profile/favorites') ? activeLink : '']"><a>Favorites</a></li>
             </ul>
         </div><br>
         <div class="menu">
             <p class="menuHeading">Settings</p>
             <ul>
-                <li :class="[currentPage.includes('settings/general') ? activeLink : '']"><a>General</a></li>
-                <li :class="[currentPage.includes('settings/security') ? activeLink : '']"><a>Security</a></li>
-                <li :class="[currentPage.includes('settings/privacy') ? activeLink : '']"><a>Privacy</a></li>
-                <li :class="[currentPage.includes('settings/notifications') ? activeLink : '']"><a>Notifications</a></li>
-                <li :class="[currentPage.includes('settings/invite-friends') ? activeLink : '']"><a>Invite Friends</a></li>
+                <li :class="[currentPage.includes('profile/settings/general') ? activeLink : '']"><router-link to="/profile/settings/general">General</router-link></li>
+                <li :class="[currentPage.includes('profile/settings/security') ? activeLink : '']"><a>Security</a></li>
+                <li :class="[currentPage.includes('profile/settings/privacy') ? activeLink : '']"><a>Privacy</a></li>
+                <li :class="[currentPage.includes('profile/settings/notifications') ? activeLink : '']"><a>Notifications</a></li>
+                <li :class="[currentPage.includes('profile/settings/invite-friends') ? activeLink : '']"><a>Invite Friends</a></li>
             </ul>
             
         </div>

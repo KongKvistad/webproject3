@@ -12,7 +12,7 @@
         <h3>About Me:</h3>
         <p>{{userProfile.About}}</p>
         <div id="location"><img src="@/assets/home.svg" alt="Location"><p class="right">: {{userProfile.Location}}</p></div>
-        <button type="button" id ="editButton" style="float: right"><a>Edit</a></button>
+        <button type="button" id ="editButton" style="float: right"><router-link to="/profile/settings/general">Edit</router-link></button>
     </div>
 </div>
   

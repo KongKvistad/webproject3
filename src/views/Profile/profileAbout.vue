@@ -4,7 +4,6 @@
        <MyInfoCard></MyInfoCard>
     </template>   
 </ProfileLayout>
-
 </template>
 
 
