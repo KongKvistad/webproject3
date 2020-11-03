@@ -63,12 +63,8 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     margin-top: 60px;
-}
-
-#card:hover{
     border: 1px solid #00000047;
     box-shadow: 2px 3px 6px #00000073;
-
 }
 
 #left {
