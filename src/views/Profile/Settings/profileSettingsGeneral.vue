@@ -52,6 +52,13 @@
                     <br>
                     <label>Your Location: </label><input type="text" v-model="Location" :placeholder="[[userProfile.Location]]"> <button type="submit" @click="updateLocation()">Save</button>
                 </form>
+                <div>
+                    <br>
+                    <h2>Profile Picture</h2>
+                    <p>Upload a new profile picture here</p>
+                    <br>
+                    <ImgUpload></ImgUpload>
+                </div>
             </div>
         </template>
 
@@ -62,12 +69,14 @@
 <script>
 import { mapState } from 'vuex';
 import ProfileLayout from '@/components/profileComponents/ProfileLayout.vue';
+import ImgUpload from '@/components/ImgUpload.vue';
 //import {getCollections} from '@/helpers/collections.js'
 import {db, auth} from '@/components/firebaseInit.js';
 export default {
     name: 'profileSettingsGeneral',
     components: {
         ProfileLayout,
+        ImgUpload,
 
     },
     data() {
