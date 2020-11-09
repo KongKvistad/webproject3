@@ -5,7 +5,7 @@
       <img class="img" :src="image" />
       <div class="price">{{ item.price }}$</div>
       <div class="desc">
-        <p>{{ item.content }}</p>
+        <p>{{ item.title }}</p>
       </div>
     </router-link>
 
