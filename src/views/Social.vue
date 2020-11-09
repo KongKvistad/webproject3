@@ -7,12 +7,17 @@
             :cats="cats"
             :activeCat="activeCat"
             v-on:catsChanged="onCatsChange"/>
-        <LimitSearch
-                checkboxcolour="bluecheckbox"
-                heading="Engagement type" 
-                choice1="Internship" 
-                choice2="Short term" 
-                choice3="Long term"/>
+        
+        <CheckBoxMaster
+        v-for="cat in derivedFilters"
+        :key="cat.uid"
+        :cats = "cat"
+        v-on:checkbox="checkboxes"
+        :activeFilters="activeFilters"
+        
+   
+        />
+
         </template>
         <template v-slot:discoverheading>
             <SearchMaster
@@ -80,12 +85,12 @@
 <script>
 import MainLayout from "./MainLayout.vue"
 import CatChooser from "../components/CatChooser.vue"
-import LimitSearch from "../components/limitSearch.vue"
 import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
 import Button from "../components/Button.vue"
 import Modal from "../components/Modal.vue"
 import GroupForm from "../components/GroupForm.vue"
+import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
 
@@ -96,7 +101,7 @@ export default {
     components:{
        MainLayout,
        CatChooser,
-       LimitSearch,
+       CheckBoxMaster,
        SearchMaster,
        Card,
        Button,
@@ -119,8 +124,33 @@ export default {
             activeFilters:[],
         }
     },
-    computed: mapState(['userProfile']),
+    computed: {
+        ...mapState(['userProfile']),
+        
+        
+        derivedFilters(){
+            const allFilt = this.$objFilter(this.filters, true)
+            
+            if(this.activeCat){
+                return allFilt.filter(x => x.uid == this.activeCat)
+            } else {
+                return allFilt
+            }
+
+
+            
+        }
+    },
     methods:{
+        checkboxes(value){
+            if(this.activeFilters.indexOf(value) >=0 ){
+                let index = this.activeFilters.indexOf(value)
+                this.activeFilters.splice(index,1)
+            } else {
+                this.activeFilters.push(value)
+            }
+            
+        },
         
         populate: function(type){
             
@@ -142,6 +172,12 @@ export default {
     created(){
         let query = this.$route.query
         let activeCat= query.cat == "false" || !query.cat ? false : query.cat
+        if(query.filters){
+            let filters = query.filters.length > 0 ? query.filters.split("+") : false
+
+            this.activeFilters = filters ? filters : []
+        }
+        
        
 
         //get pre-load data for SearchBar
@@ -177,8 +213,9 @@ export default {
 
                 //or searched inn the "all"-category
                 }else {
+                    console.log("this")
 
-                    getAllByTerm(this.cats, query.searchTerm, query.type).then(res => 
+                    getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
                         this.searchResults = res
                     )
 

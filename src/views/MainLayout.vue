@@ -103,8 +103,8 @@ export default {
     }
     #leftBar {
         grid-column: 1 / 2;
-        position: fixed;
-        margin-left: 3%;
+        
+        margin-left: 18%;
     }
     #middleBar{
         grid-column: 2 / 3;
@@ -122,7 +122,7 @@ export default {
         align-items: center;
         
     }
-    #rightBar > div {
+    #rightBar > div:first-of-type {
         max-width: 14%;
     }
 

@@ -17,12 +17,17 @@
             v-on:catsChanged="onCatsChange"
 
             />
-            <LimitSearch
+            <template v-for="cat in filters">
+                <LimitSearch
+                :key="cat.uid"
                 checkboxcolour="bluecheckbox"
-                heading="Engagement type" 
+                :heading="cat.uid" 
                 choice1="Internship" 
                 choice2="Short term" 
                 choice3="Long term"/>
+
+            </template>
+            
         </div>
       <!-- searchboxes   -->
     </section>

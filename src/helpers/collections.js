@@ -8,7 +8,7 @@ function getCollections(collection, payLoad){
     let res = []
     
     if(typeof collection === 'string'){
-
+        //if only one resource has been requested
         db.collection(collection).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 // if payload is not requested, assume the programmer wants headers (document ids)
@@ -17,6 +17,7 @@ function getCollections(collection, payLoad){
             });
         });
     } else {
+        //otherwise
         collection.forEach(ref => {
             db.collection(ref).get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
@@ -67,7 +68,7 @@ async function getPostByTerm(collection, searchTerm, type){
     return res;
 }
 
-async function getAllByTerm(collections, searchTerm, type){
+async function getAllByTerm(collections, searchTerm, type, filters){
     
     let res = []
    
@@ -75,7 +76,22 @@ async function getAllByTerm(collections, searchTerm, type){
     collections.forEach(ref => {
         db.collection(ref).where(type, "==", searchTerm).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-            res.push(doc.data());
+            let data = doc.data()
+            
+            if(data.Params && filters){
+                
+                let filtered = filterByParam(data, filters)
+                
+                if(filtered){
+                    res.push(filtered);
+                }
+                
+                
+            } else {
+                console.log("this one failed check", data)
+            }
+            
+
             });
         });
     })
@@ -84,6 +100,22 @@ async function getAllByTerm(collections, searchTerm, type){
 
     
 }
+
+
+function filterByParam(entry, filters){
+    
+    //extend to include more than one filter
+
+    let filtersArr = filters.split("+")
+    
+    let matchCount = 0;
+
+    matchCount = entry.Params.filter(x => filtersArr.includes(x)).length
+    console.log(matchCount)
+    
+    return matchCount >= 1 ? entry : false
+}
+
 
 async function populateRandom(refs){
 

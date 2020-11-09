@@ -19,12 +19,16 @@ import store from './store'
 import { auth } from './components/firebaseInit'
 
 Vue.config.productionTip = false
-Vue.prototype.$objFilter = function(param) {
+Vue.prototype.$objFilter = function(param, wantUid) {
   let res = []
   for(var key in param){
     if (Object.prototype.hasOwnProperty.call(param, key)){
       let obj = param[key]
-      obj.uid= key
+      
+      if(wantUid){
+        obj.uid= key
+      }
+      
       res.push(obj)
     }
   }

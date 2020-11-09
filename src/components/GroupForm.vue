@@ -89,8 +89,8 @@ export default{
         },
         
         findMatches: function(val){
-    
-            let matches = this.$objFilter(this.results).filter(x => x.name.toLowerCase().indexOf(val) >= 0)
+            //pass true to objfilter if uid is needed
+            let matches = this.$objFilter(this.results, true).filter(x => x.name.toLowerCase().indexOf(val) >= 0)
             return matches
         },
         addItem:function(val){
