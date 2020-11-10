@@ -57,7 +57,9 @@
                     <h2>Profile Picture</h2>
                     <p>Upload a new profile picture here</p>
                     <br>
-                    <ImgUpload></ImgUpload>
+                    <ImgUpload
+                    @imgUpload="addImgURL()"
+                    />
                 </div>
             </div>
         </template>
@@ -174,6 +176,21 @@ export default {
             })
             .catch(function(error){
                 console.log("Error: ", error)
+            })
+        },
+
+        addImgURL() { //Adding image URL to display profile picture
+            console.log("started function");
+            const docRef = db.collection('Users').doc(auth.currentUser.uid);
+            var data = imgUpload.imageUrl;
+            return docRef.update({
+                imgURL: data
+            })
+            .then(function(){
+                console.log("image uploaded");
+            })
+            .catch(function(error){
+                console.log("error: ", error)
             })
         }
         
