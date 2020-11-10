@@ -10,12 +10,14 @@
           <router-link to="/"><div>LOGO</div></router-link>
       </div>
       <div id="links">
+
           <div @click="checkroute('Discover')" id="navDiscover" :class="[currentPage.includes('Discover') ? activeDiscover : '']"><router-link to="/Discover"><img src="@/assets/compass.svg">Discover</router-link></div>
           <div @click="checkroute('Marketplace')" id="navMarket" :class="[currentPage.includes('Market') ? activeMarket : '']"><router-link to="/market"><img src="@/assets/marketplace.svg">Marketplace</router-link></div>
           <div @click="checkroute('Social')" id="navSocial" :class="[currentPage.includes('Social') ? activeSocial : '']"><router-link to="/social"><img src="@/assets/users.svg">Social</router-link></div>
           <!--<div id="navSocial" :class="[currentPage.includes('social') ? activeSocial : '']" @mouseover="setActiveDropDown('social')" @mouseleave="setActiveDropDown(false)">
             <div><img src="@/assets/users.svg">Social</div>
           </div>-->
+
       </div>
       <div id="left">
         <div v-if="userProfile" class="dropdown"><img src="@/assets/user.svg">{{userProfile}}
