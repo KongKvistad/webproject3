@@ -1,6 +1,6 @@
 <template>
 
-  <div id="card">
+  <div id="card" :style="isLast ? 'margin-top: 30px;' : void(0)">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
        <div id="imageBox" :class=boxcolourclass>
@@ -37,6 +37,7 @@
                 </div>
           </div>
       </div>
+      
   </div>
 </template>
 
@@ -46,27 +47,22 @@ import StarRating from 'vue-star-rating';
 
 export default {
   name: 'Card',
-  props: {
-    title: String,
-    owner: String,
-    timePosted: Symbol,
-    deadline: Date,
-    description: String,
-    price: Number,
-    reviews: Number,
-    duration: Number,
-    imageBox: String,
-    imageLink: String,
-    altText: String,
-    boxcolourclass: String,
-    rating: Number,
-    ecoursetime: Number,
-    country: String,
-    city: String,
-    terms: String,
-    language: String,
-    type: String
-  },
+  props: [
+    "title",
+    "owner",
+    "deadline",
+    "description",
+    "price",
+    "reviews",
+    "duration",
+    "imageBox",
+    "imageLink",
+    "altText",
+    "boxcolourclass",
+    "rating",
+    "ecoursetime",
+    "isLast"
+  ],
   components: {
     StarRating
   },
@@ -88,13 +84,19 @@ export default {
 
 <style>
 
+
 .bluebox {
       background-color: #5E80F8;
     }
 .greenbox {
     background-color:  rgb(18,244,122);
   }
-
+  .yellowbox {
+    background-color: yellow;
+  }
+.yellowbox > p {
+  color: black;
+}
 #imageBox {
   display: flex;
   justify-content: center;
