@@ -52,7 +52,7 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3>{{elem.isLast}}</h3>
+                    <h3 v-bind:style="{'color': '#f6e05e'}">{{elem.isLast}}</h3>
                 </div>
                <Card
                     :key="elem.Title+idx+'cmp'"
@@ -73,7 +73,7 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button v-on:showModal="modalShowing = true"/>
+        <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
             <h2 slot="header">Create a group</h2>
             <GroupForm slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>

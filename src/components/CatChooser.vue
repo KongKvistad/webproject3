@@ -2,7 +2,7 @@
 
     <div id="catChooser">
         <p id="CHHeading">{{ heading }}</p>
-        <ul>
+        <ul  v-bind:style="{'border-left': '2px solid' +determineColor()}">
             <li @click="changeCat(cat)" :style="cat == activeCat ? activeStyle : 'color: black'" v-for="cat in cats" :key="cat">
             {{cat}}
             </li>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import {determineColor} from "../helpers/color.js"
 export default {
   name: 'CatChooser',
   props: [
@@ -22,13 +22,16 @@ export default {
   ],
   computed:{
       activeStyle: function(){
-          return 'color: #5e80f8; text-decoration: underline;'
+          return 'color:' + this.determineColor() + '; text-decoration: underline;'
       }
   },
   methods:{
       changeCat: function(val){
       this.$emit('catsChanged', val)
     },
+    determineColor: function(){
+        return determineColor(this.$route.name)
+    }
   }
 }
 </script>
@@ -42,7 +45,7 @@ export default {
     
 }
 #catChooser > ul{
-    border-left: 2px solid #5e80f8;
+   
     padding-left: 10px;
     margin-bottom:3em;
     

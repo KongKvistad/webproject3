@@ -43,6 +43,7 @@ export default {
         
     },
     
+    
 
 }
 
@@ -64,8 +65,8 @@ export default {
     }
 
     .newCat > h3{
-        font-size: 2em;
-    color: #5e80f8;
+    font-size: 2em;
+    
     text-align: center;
     margin-bottom: 10px;
     }

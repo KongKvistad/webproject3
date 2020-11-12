@@ -1,213 +1,241 @@
 <template>
-<div id="marketplace">
-    <section id="leftBar">
-        <div>
-            <!-- <ul>
-                <li v-for="type in mpType" :key="type">
-                    <input type="checkbox" :name="type" :value="type" :id="type" checked="checked" v-model="checkedBox">
-                    <label :for="type">{{type}}</label>
-                </li>
-            </ul> -->
-            <LimitSearch 
-                checkboxcolour="greencheckbox"
-                heading="Type of products" 
-                choice1="E-courses" v-on:click="getContent" 
-                choice2="Second hand" 
-                choice3="Mentoring"/> 
-                <!-- <span>{{checkedBox}}</span> -->
-        </div>
-      <!-- searchboxes   -->
-    </section>
-    <section id="middleBar">
-        <div id="marketplaceheading">
-            <h1>Marketplace</h1>
-            <form id="search" action="">
-                <p>Search in the marketplace</p>
-                <input type="text" name="search" placeholder="Search...">
-            </form>
-        </div>
-            <!-- <div v-if="checkedBox[0] === 'E-course' || checkedBox[1] === 'E-course' || checkedBox[2] === 'E-course'" id="cards"> -->
-                <Card
-                    :key="idx" 
-                    v-for="(item, idx) in ecourseresults"
-                    :title="item.Title"
-                    :owner="item.Creator"
-                    :timePosted="item.TimePosted"
-                    :language="item.Language"
-                    :description="item.Description"
-                    :price="item.Price"
-                    :rating="item.Rating"
-                    :ecoursetime="item.Duration"
-                    imageBox="E-course" 
-                    imageLink="https://www.learningrevolution.net/wp-content/uploads/2019/04/free_training-3734521_1280-800x600.jpg"
-                    boxcolourclass="greenbox"
-                    />
-                <!-- <Card title="How to write a good application" 
-                    owner="John Hopkins" 
-                    description="How should you present yourself, and what is important to mention? Learn how to write the best possible application for an internship, job etc." 
-                    imageLink="https://mendeleyblog.files.wordpress.com/2017/06/writingatdesk.jpg?w=810"
-                    imageBox="30$" 
-                    boxcolourclass="greenbox"
-                    rating=1
-                    ecoursetime=90 />
-            
-                <Card title="Essential strategies and skills" 
-                    owner="Sarah Berg"  
-                    description="Its essential to have good skills in everything you do. A great self esteem is always handy, am I right?." 
-                    imageLink="https://www.marketing91.com/wp-content/uploads/2020/03/Essential-Skills.jpg"
-                    imageBox="25$" 
-                    boxcolourclass="greenbox"
-                    rating=2
-                    ecoursetime=15 />
+    <MainLayout>
+        <template 
+        v-slot:leftBar>
+        <CatChooser
+            :heading="'Experience'"
+            :cats="cats"
+            :activeCat="activeCat"
+            v-on:catsChanged="onCatsChange"/>
+        
+        <CheckBoxMaster
+        v-for="cat in derivedFilters"
+        :key="cat.uid"
+        :cats = "cat"
+        v-on:checkbox="checkboxes"
+        :activeFilters="activeFilters"
+        
+   
+        />
 
-                <Card title="Finding accomodation abroad" 
-                    owner="Lisa Simpson" 
-                    description="Its essential to know exactly what you are looking for when searching for a place to live during your semester away from home. I will teach you the do's and the dont's!" 
-                    imageLink="https://pix10.agoda.net/hotelImages/747/7476707/7476707_19053021300074837521.jpg?s=1024x768"
-                    imageBox="12.5$"
-                    boxcolourclass="greenbox"
-                    rating=5
-                    ecoursetime=600 /> -->
-            <!-- </div> -->
-             <!-- <div v-if="checkedBox[0] === 'Mentoring' || checkedBox[1] === 'Mentoring' || checkedBox[2] === 'Mentoring'" id="cards"> -->
-                <Card
+        </template>
+        <template v-slot:discoverheading>
+            <SearchMaster
+                v-on:catsChanged="onCatsChange"
+                :results="results"
+                :cats="cats"
+                :activeCats="activeCat"
+                :activeFilters="activeFilters"
+                />
+               
+        </template>
+        <template v-slot:cards v-if="!compoundView">
+               <!--cards for regular search-->
+               <Card
                     :key="idx" 
-                    v-for="(item, idx) in mentoringresults"
-                    :title="item.Title"
-                    :owner="item.Creator"
-                    :language="item.Language" 
-                    :country="item.Country"
-                    :city="item.City"
-                    :description="item.Description"
-                    :price="item.Price"
-                    :type="item.Type"
-                    :rating="item.Rating"
-                    imageBox="Mentoring" 
-                    imageLink="https://bookdown.org/kulasj/catrina_check/images/cover.png"
+                    v-for="(elem,idx) in searchResults"
+                    :title="elem.Title" 
+                    :owner="elem.School" 
+                    :deadline="elem.Visa"
+                    :description="elem.Description" 
+                    :price="elem.Cost" 
+                    :reviews="elem.Testemonies" 
+                    :duration="elem.Duration"
+                    :imageBox="elem.Type" 
+                    :rating="elem.Rating"
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="greenbox"
                     />
-            <!-- </div> -->
-            <!-- <div v-if="checkedBox[0] === 'Second-hand' || checkedBox[1] === 'Second-hand' || checkedBox[2] === 'Second-hand'" id="cards3"> -->
-                <Card
-                    :key="idx" 
-                    v-for="(item, idx) in secondhandresults"
-                    :title="item.Title"
-                    :timePosted="item.TimePosted.toDate().toDateString()"
-                    :country="item.Country"
-                    :city="item.City"
-                    :description="item.Description"
-                    :price="item.Price"
-                    imageBox="Second Hand" 
-                    imageLink="https://miro.medium.com/max/10944/1*S81O15rjKfG-BFdnNC6-GQ.jpeg"
+            
+        </template>
+        <template v-slot:cards v-else>
+           
+               <!--cards for comp view-->
+               <template v-for="(elem,idx) in searchResults" >
+                <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
+                    <h3 v-bind:style="{'color': '#12f47a'}">{{elem.isLast}}</h3>
+                </div>
+               <Card
+                    :key="elem.Title+idx+'cmp'"
+                    :title="elem.Title" 
+                    :owner="elem.Creator" 
+                    :deadline="elem.Visa"
+                    :description="elem.Description" 
+                    :price="elem.Price" 
+                    :reviews="elem.Testemonies" 
+                    :duration="elem.Duration"
+                    :isLast="elem.isLast"
+                    :imageBox="elem.Type"  
+                    :rating="elem.Rating"
+                    
+
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="greenbox"
                     />
-            <!-- </div> -->
-    </section>
-    <section id="rightBar">
-        <!--Bare satt det inn her for å se litt på grid-->
-        <div>
-            <LimitSearch 
-                heading="Experience" 
-                choice1="Work" 
-                choice2="Study programme" 
-                choice3="Exchange"/>
-            <LimitSearch 
-                heading="Engagement type" 
-                choice1="Internship" 
-                choice2="Short term" 
-                choice3="Long term"/>
-        </div>
-    </section>
-</div>
+                
+            </template>
+            
+        </template>
+        <template v-slot:rightBar>
+        <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
+        <Modal v-if="modalShowing" @close="modalShowing = false">
+            <h2 slot="header">Create a group</h2>
+            <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+        </Modal>
+        
+        </template>
+        
+    </MainLayout>
 </template>
 <script>
-import Card from "../components/Card.vue";
-import LimitSearch from "../components/limitSearch.vue";
-import {getCollections} from "../helpers/collections.js";
+import MainLayout from "./MainLayout.vue"
+import CatChooser from "../components/CatChooser.vue"
+import SearchMaster from "../components/SearchMaster.vue"
+import Card from "../components/Card.vue"
+import Modal from "@/components/Modal.vue"
+import Button from "../components/Button.vue"
+import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
+import NewPost from "@/components/NewPost.vue"
+import {mapState} from "vuex"
+import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
+
+
+
 export default {
-    name:"Marketplace",
+    name:"Social",
     components:{
-        Card,
-        LimitSearch
+       MainLayout,
+       CatChooser,
+       CheckBoxMaster,
+       SearchMaster,
+       Card,
+       Modal,
+       Button,
+       NewPost
+       
     },
-    data(){
+    data() {
         return{
-            mpType: ['E-course', 'Mentoring', 'Second-hand'],
-            checkedBox: ['E-course', 'Mentoring', 'Second-hand'],
-            mentoringresults: [],
-            secondhandresults: [],
-            ecourseresults:[]
+            modalShowing: false,
+
+            searchResults: false,
+            activeCat: false,
+            compoundView: false,
+            //data for pre-search
+            results:false,
+            cats: [],
+            
+            filters: [],
+            activeFilters:[],
         }
     },
-    created(){
-        this.secondhandresults = getCollections("SecondHand", true);
-        this.mentoringresults = getCollections("Mentoring", true);
-        this.ecourseresults = getCollections("E-course", true);
-    
+    computed: {
+        ...mapState(['userProfile']),
+        
+        
+        derivedFilters(){
+            const allFilt = this.$objFilter(this.filters, true)
+            
+            if(this.activeCat){
+                return allFilt.filter(x => x.uid == this.activeCat)
+            } else {
+                return allFilt
+            }
+
+
+            
+        }
     },
-    /* computed: {
-      selectedItems: function () {
-        return this.items.filter(function (item) {
-          return this.checkedBox.includes(item.category);
-        }, this);
-      },
-    }, */
+    methods:{
+        checkboxes(value){
+            if(this.activeFilters.indexOf(value) >=0 ){
+                let index = this.activeFilters.indexOf(value)
+                this.activeFilters.splice(index,1)
+            } else {
+                this.activeFilters.push(value)
+            }
+            
+        },
+        
+        populate: function(type){
+            
+            this.results = getCollections(type, true);
+            
+            
+        },
+        onCatsChange: function(value){
+            let obj = {
+                searchTerm: false,
+                filters: false,
+                cat: value,
+                type: false
+            }
+            //double check this
+            this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
+        },
+    },
+    created(){
+        let query = this.$route.query
+        let activeCat= query.cat == "false" || !query.cat ? false : query.cat
+        if(query.filters){
+            let filters = query.filters.length > 0 ? query.filters.split("+") : false
 
-   
+            this.activeFilters = filters ? filters : []
+        }
+        
+       
+
+        //get pre-load data for SearchBar
+        filtersWithHeaders("marketFilters").then(res => {
+            
+            this.filters = res
+            this.cats = Object.keys(res)    
+
+            //if user has a selected category
+            if(activeCat){
+                
+                this.activeCat=activeCat
+            
+                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                    this.searchResults = res     
+                )
+
+                this.populate(this.activeCat)
+                
+            // otherwise
+            } else {
+                //user may just have clicked the navbar
+                
+                if(query.searchTerm == "false" || !query.searchTerm){
+                    
+                    this.compoundView = true
+                    
+                    populateRandom([...this.cats]).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+
+                //or searched inn the "all"-category
+                }else {
+                    console.log("this")
+
+                    getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+                }
+            }
+
+ 
+        });
+        
+        
+        
+        
+        
+    }
+
 }
-/* function getContent(){
-    return this.ecourseresults
-} */
 </script>
-
-<style scoped>
-
-    #marketplaceheading {
-        width: 100%;
-        display: inline-grid;
-        grid-template-columns: auto auto;
-        align-items: center;
-    }
-
-    #marketplace{
-        display: inline-grid;
-        grid-template-columns: 170px auto 170px;
-        grid-column-gap: 20px;
-        margin: 5% 2%;
-    }
-    #leftBar {
-        grid-column: 1 / 2;
-        position: fixed;
-    }
-    #middleBar{
-        grid-column: 2 / 3;
-        border-left: 1px solid rgb(177, 177, 177);
-        border-right: 1px solid rgb(177, 177, 177);
-        padding: 2%;
-    }
-
-    #rightBar{
-        grid-column: 3 / 4;
-        margin-right: 2%;
-        right: 0;
-        position: fixed;
-    }
-
-    #cards {
-        margin-bottom: 50px;
-    }
-
-    #search input{
-        width: 100%;
-        height: 20px;
-        border-radius: 40px;
-        padding: 5px;
-        border: none;
-        background-color: rgb(240, 240, 240);
-        color: black;
-    }
-    
-
-    
-
-</style>
