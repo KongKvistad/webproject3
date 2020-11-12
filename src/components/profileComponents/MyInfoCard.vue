@@ -60,6 +60,7 @@ export default {
 #card {
     margin-bottom: 50px;
     height: 40%;
+
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -82,6 +83,7 @@ export default {
 }
 
 #left img {
+
     max-height: 70%;
     width: auto;
     display: block;
@@ -92,7 +94,7 @@ export default {
 #location img{
     max-height: 1.5vw;
     max-width: 5%;
-    float: left;
+     float: left;
 }
 
 .right {
