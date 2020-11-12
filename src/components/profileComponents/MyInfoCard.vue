@@ -8,9 +8,9 @@
 <div id="card">
     <div id="left">
         <div id="imagebox">
-            <p>{{userProfile.name}}</p>
+            <h2>{{userProfile.name}}</h2>
         </div>
-        <img :src=image-link :alt=altTex>
+        <img :src="userProfile.ImgURL" alt="Profile Picture">
     </div>
 
     <div id="right">
@@ -82,7 +82,7 @@ export default {
 }
 
 #left img {
-    height: 90%;
+    max-height: 90%;
     width: 100%;
     display: block;
     object-fit: cover;
@@ -97,6 +97,15 @@ export default {
 
 .right {
     float: left;
+}
+
+#editButton {
+    border: 1px solid;
+    padding: 0 0.3% 0 0.3%;
+    background-color: #bb4584;
+    color: white;
+    border-radius: 10%;
+    float: right;
 }
 
 

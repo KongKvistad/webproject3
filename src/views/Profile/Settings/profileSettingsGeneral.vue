@@ -57,9 +57,7 @@
                     <h2>Profile Picture</h2>
                     <p>Upload a new profile picture here</p>
                     <br>
-                    <ImgUpload
-                    @imgUpload="addImgURL()"
-                    />
+                    <ImgUpload  @imgUpload="addImgURL"/> <!-- Uploads image with the childs Image URL -->
                 </div>
             </div>
         </template>
@@ -179,12 +177,12 @@ export default {
             })
         },
 
-        addImgURL() { //Adding image URL to display profile picture
-            console.log("started function");
+        addImgURL(value) { //Updating imageURL in database with new image
+            console.log(value);
             const docRef = db.collection('Users').doc(auth.currentUser.uid);
-            var data = imgUpload.imageUrl;
+            var data = value[0];
             return docRef.update({
-                imgURL: data
+                ImgURL: data
             })
             .then(function(){
                 console.log("image uploaded");
