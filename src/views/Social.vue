@@ -42,9 +42,8 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :imageBox="elem.Type" 
-                    :rating="elem.Rating"
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
-                    boxcolourclass="greenbox"
+                    boxcolourclass="yellowbox"
                     />
             
         </template>
@@ -53,24 +52,21 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3 v-bind:style="{'color': '#12f47a'}">{{elem.isLast}}</h3>
+                    <h3 v-bind:style="{'color': '#f6e05e'}">{{elem.isLast}}</h3>
                 </div>
                <Card
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
-                    :owner="elem.Creator" 
+                    :owner="elem.School" 
                     :deadline="elem.Visa"
                     :description="elem.Description" 
-                    :price="elem.Price" 
+                    :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
-                    :rating="elem.Rating"
-                    
-
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
-                    boxcolourclass="greenbox"
+                    boxcolourclass="yellowbox"
                     />
                 
             </template>
@@ -80,9 +76,8 @@
         <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
             <h2 slot="header">Create a group</h2>
-            <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+            <GroupForm slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
-        
         </template>
         
     </MainLayout>
@@ -92,10 +87,10 @@ import MainLayout from "./MainLayout.vue"
 import CatChooser from "../components/CatChooser.vue"
 import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
-import Modal from "@/components/Modal.vue"
 import Button from "../components/Button.vue"
+import Modal from "../components/Modal.vue"
+import GroupForm from "../components/GroupForm.vue"
 import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
-import NewPost from "@/components/NewPost.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
 
@@ -109,9 +104,9 @@ export default {
        CheckBoxMaster,
        SearchMaster,
        Card,
-       Modal,
        Button,
-       NewPost
+       Modal,
+       GroupForm
        
     },
     data() {
@@ -186,7 +181,7 @@ export default {
        
 
         //get pre-load data for SearchBar
-        filtersWithHeaders("marketFilters").then(res => {
+        filtersWithHeaders("socialFilters").then(res => {
             
             this.filters = res
             this.cats = Object.keys(res)    

@@ -1,20 +1,14 @@
 <template>
-
+    
     <div id="limitSearch">
         <p id="checkboxHeading">{{ heading }}</p>
-        <form action="" :class=checkboxcolour>
-            <label> {{choice1}} 
-            <input type="checkbox" id="choice1" name="choice1" value="">
-            <span></span>
-            </label>
-            <label> {{choice2}} 
-            <input type="checkbox" id="choice2" name="choice2" value="">
-            <span></span>
-            </label>
-            <label> {{choice3}}
-            <input type="checkbox" id="choice3" name="choice3" value="">
-            <span></span>
-            </label>
+        <form action="" :class="checkboxcolour">
+            <div v-for="elem in subCat" :key="elem">
+                <label> {{elem}}
+                <input type="checkbox" :id="elem" :name="elem" @change="boxChecked(elem)" v-model="activeFilters" :value="elem">
+                <span></span>
+                </label>
+            </div>
         </form>
     </div>
 </template>
@@ -26,10 +20,14 @@ export default {
   props: {
     checkboxcolour: String,
     heading: String,
-    choice1: String,
-    choice2: String,
-    choice3: String,
+    subCat: Array,
+    activeFilters: Array,
     
+  },   
+  methods:{
+      boxChecked(elem){
+          this.$emit("checkbox", elem)
+      }
   }
 }
 </script>
@@ -41,6 +39,8 @@ export default {
     #checkboxHeading{
         font-size: 1.2em;
         font-weight: bold;
+        font-family: 'Avenir', Helvetica, Arial;
+        margin-bottom: 0.5em;
     }
 
     
@@ -77,13 +77,13 @@ export default {
         display: none;
 
         /*styling the icon*/
-        left: 6px;
-        top: 2px;
-        width: 4px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        transform: rotate(45deg);
+    left: 8px;
+    top: -2px;
+    width: 9px;
+    height: 16px;
+    border: solid #3b3367;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
     }
     /*when checked, show the check icon*/
     label input:checked ~ span:after {

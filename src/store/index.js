@@ -57,9 +57,11 @@ const store = new Vuex.Store({
       async fetchUserProfile({ commit }, user) {
         // fetch user profile
         const userProfile = await fb.usersCollection.doc(user.uid).get()
-  
+        
+        let obj = userProfile.data()
+        obj.uid = user.uid
         // set user profile in state
-        commit('setUserProfile', userProfile.data())
+        commit('setUserProfile', obj)
   
         // change route to whereever the user originally came from
         if (router.currentRoute.path === '/login') {

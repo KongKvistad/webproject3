@@ -5,9 +5,16 @@
             <div class="content">
               <!--DON'T DELETE ME YOU SILLY GOOSE
               <RadioBtns v-on:childToParent="onCatsChange" v-if="this.cats.length > 0" :cats="this.cats" :isHorizontal="true"/>-->
-              <section class="w-full flex justify-between">
-                <SearchBar v-on:childToParent="onSearchChange" v-on:catsChanged="onCatsChange" v-on:searchClicked="search" :matches="this.matches" v-if="this.cats.length > 0" :cats="this.cats" :cleanTerm="this.searchTerm"/>
-                <FilterBox v-on:childToParent="onFilterChange"
+              <section class="w-full flex justify-between relative z-10">
+                <SearchMaster
+                v-on:catsChanged="onCatsChange"
+                :results="results"
+                :cats="cats"
+                :activeCats="activeCats"
+                :activeFilters="activeFilters"
+                :fromHome="true"
+                />
+                <FilterBox v-on:filterToSearch="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
                 :activeFilters="activeFilters" />
@@ -35,16 +42,15 @@
 <script>
 import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
 import {db} from '../components/firebaseInit.js'
-import SearchBar from '../components/SearchBar'
 import FilterBox from '../components/FilterBox'
-//import RadioBtns from '../components/RadioBtns'
+import SearchMaster from '../components/SearchMaster.vue'
 import SmallCard from '../components/SmallCard.vue'
 //import Upload from '../components/Upload.vue'
 
 export default {
   name: 'Home',
   components: {
-    SearchBar,
+    SearchMaster,
     FilterBox,
     //RadioBtns,
     SmallCard,
@@ -53,14 +59,12 @@ export default {
 
   data(){
     return {
-      results:[],
-      e_course: [],
-      searchTerm:false,
-      matches:[],
-      filters: [],
-      activeFilters: [],
-      activeCats:"",
+      results:false,
       cats: [],
+      activeCats:"",
+      filters: [],
+      activeFilters:[],
+      e_course: [],
     }
   },
   
@@ -76,26 +80,8 @@ export default {
     randomList: function(rand){
       return rand.slice().sort(function(){return 0.5 - Math.random()});
       },
-
-
-    //needed to empty out all filter values if cats change
-    cleanData(){
-      this.activeFilters = [];
-      this.matches =[];
-      this.searchTerm = "";
-    },
-
-    
-
-    onSearchChange: function(value){
-      this.searchTerm = value
-      
-    },
-    onCatsChange: function(value){
-      this.activeCats = value
-      
-      this.cleanData()
-      this.populate(value)
+    populate: function(type){
+      this.results = getCollections(type, true);
     },
 
     onFilterChange: function(value){
@@ -103,54 +89,23 @@ export default {
       
     },
 
-    populate: function(type){
-      this.results = getCollections(type, true);
+    onCatsChange: function(value){
+      this.activeCats = value
+      this.activeFilters = [];
+      this.populate(value)
     },
 
-    findMatches: function(val, type){
-      
-      //look for matching strings and count occurences of same value in name
-      let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
-      let names = match.map(x => {
-        return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
-      })
-      
-      // remove duplicates
-      return names.filter((v,i,a)=>a.findIndex(t=>(t.name === v.name))===i)
-    },
-   
-   //construct query bases on data and navigate to discover
-    search: function(){
-      let obj = {
-        searchTerm: this.searchTerm,
-        filters: this.activeFilters.join("+"),
-        cat: this.activeCats
-        }
-      console.log(obj)
-      this.$router.push({ path: 'discover', query: obj })
-    }
+  
      
   },
   watch:{
-    searchTerm: function(){
-      if(this.searchTerm == ""){
-        this.matches = false;
-
-      } else {
-        let countries = this.findMatches(this.searchTerm, "Country")
-        let cities = this.findMatches(this.searchTerm, "City")
-        this.matches = countries.concat(cities)
-      }
-      
-
-
-    }
+    
   },
   created(){
     // initialize values
-    
+    console.log(this.$route)
    
-    filtersWithHeaders().then(res => {
+    filtersWithHeaders("filters").then(res => {
     
       this.filters = res
       this.cats = Object.keys(res)

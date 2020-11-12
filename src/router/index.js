@@ -25,6 +25,7 @@ import Marketplace from './../views/Marketplace.vue'
 import Ecourse from './../views/Ecourse.vue'
 import profileAbout from './../views/Profile/profileAbout.vue'
 import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
+import Social from './../views/Social.vue'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,10 @@ const routes = [
     name: 'profileSettingsGeneral',
     component: profileSettingsGeneral
   }
+    path: '/social',
+    name: 'social',
+    component: Social
+  },
 ]
 
 const router = new VueRouter({

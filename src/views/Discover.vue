@@ -1,38 +1,39 @@
 <template>
-<div id="discover">
-    <section id="leftBar">
-        <div>
-            <LimitSearch
-                checkboxcolour="bluecheckbox"
-                heading="Experience" 
-                choice1="Work" 
-                choice2="Study programme" 
-                choice3="Exchange"/>
-            <LimitSearch
-                checkboxcolour="bluecheckbox"
-                heading="Engagement type" 
-                choice1="Internship" 
-                choice2="Short term" 
-                choice3="Long term"/>
-           
-        </div>
-      <!-- searchboxes   -->
-    </section>
-    
-    <section id="middleBar">
-     
-        <div id="discoverheading">
-            <h1>Discover</h1>
-            <form id="search" action="">
-                <input type="text" name="search" placeholder="Search...">
-            </form>
-        </div>
-            <Upload/>
-            <div id="cards">
-                
+
+    <MainLayout>
+        <template 
+        v-slot:leftBar>
+        <CatChooser
+            :heading="'Experience'"
+            :cats="cats"
+            :activeCat="activeCat"
+            v-on:catsChanged="onCatsChange"/>
+        
+        <CheckBoxMaster
+        v-for="cat in derivedFilters"
+        :key="cat.uid"
+        :cats = "cat"
+        v-on:checkbox="checkboxes"
+        :activeFilters="activeFilters"
+        
+   
+        />
+
+        </template>
+        <template v-slot:discoverheading>
+            <SearchMaster
+                v-on:catsChanged="onCatsChange"
+                :results="results"
+                :cats="cats"
+                :activeCats="activeCat"
+                :activeFilters="activeFilters"
+                />       
+        </template>
+        <template v-slot:cards v-if="!compoundView">
+               <!--cards for regular search-->
                <Card
                     :key="idx" 
-                    v-for="(elem,idx) in results"
+                    v-for="(elem,idx) in searchResults"
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
@@ -40,157 +41,194 @@
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
-                    imageBox="Internship" 
+                    :imageBox="elem.Type" 
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
             
-               <!-- <Card title="Scientific findings" 
-                    owner="NASA" 
-                    deadline="21.05.2022" 
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=700 
-                    reviews=57 
-                    duration=104
-                    imageBox="Long term" 
-                    imageLink="https://image.freepik.com/free-photo/front-view-scientist-holding-yellow-chemical_23-2148697236.jpg"
+        </template>
+        <template v-slot:cards v-else>
+           
+               <!--cards for comp view-->
+               <template v-for="(elem,idx) in searchResults" >
+                <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
+                    <h3>{{elem.isLast}}</h3>
+                </div>
+               <Card
+                    :key="elem.Title+idx+'cmp'"
+                    :title="elem.Title" 
+                    :owner="elem.School" 
+                    :deadline="elem.Visa"
+                    :description="elem.Description" 
+                    :price="elem.Cost" 
+                    :reviews="elem.Testemonies" 
+                    :duration="elem.Duration"
+                    :isLast="elem.isLast"
+                    :imageBox="elem.Type"  
+                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
-
-                <Card title="PHP programmer" 
-                    owner="UCLA" 
-                    deadline="21.05.2021" 
-                    description="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." 
-                    price=300 
-                    reviews=10 
-                    duration=40
-                    imageBox="Long term"
-                    imageLink="https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-768x512.jpg"
-                    boxcolourclass="bluebox"
-                    />-->
-            </div>
-    </section>
-    <section id="rightBar">
-        <!--Bare satt det inn her for å se litt på grid-->
-        <div>
-            <LimitSearch 
-                heading="Experience" 
-                choice1="Work" 
-                choice2="Study programme" 
-                choice3="Exchange"/>
-            <LimitSearch 
-                heading="Engagement type" 
-                choice1="Internship" 
-                choice2="Short term" 
-                choice3="Long term"/>
-        </div>
-    </section>
-</div>
+                
+            </template>
+            
+        </template>
+        <template v-slot:rightBar>
+        <Button desc="create a new post!" v-on:showModal="modalShowing = true"/>
+        <Modal v-if="modalShowing" @close="modalShowing = false">
+            <h2 slot="header">Create a group</h2>
+            <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+        </Modal>
+        </template>
+        
+    </MainLayout>
 </template>
 <script>
-import Card from "../components/Card.vue";
-import LimitSearch from "../components/limitSearch.vue";
-import {getCollections} from "../helpers/collections.js"
+import MainLayout from "./MainLayout.vue"
+import CatChooser from "../components/CatChooser.vue"
+import SearchMaster from "../components/SearchMaster.vue"
+import Card from "../components/Card.vue"
+import Button from "../components/Button.vue"
+import Modal from "../components/Modal.vue"
 
-import Upload from "../components/Upload"
+import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
+import NewPost from "@/components/NewPost.vue"
+import {mapState} from "vuex"
+import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
+
 export default {
-    name:"Discover",
+    name:"Social",
     components:{
-        LimitSearch,
-        Card,
-        Upload
+       MainLayout,
+       CatChooser,
+       CheckBoxMaster,
+       SearchMaster,
+       Card,
+       Button,
+       Modal,
+       NewPost
     },
-    data(){
+    data() {
         return{
-            results: false,
-            activeCat: false
+            modalShowing: false,
+
+            searchResults: false,
+            activeCat: false,
+            compoundView: false,
+            //data for pre-search
+            results:false,
+            cats: [],
+            
+            filters: [],
+            activeFilters:[],
         }
     },
-    computed:{
+    computed: {
+        ...mapState(['userProfile']),
         
+        
+        derivedFilters(){
+            const allFilt = this.$objFilter(this.filters, true)
+            
+            if(this.activeCat){
+                return allFilt.filter(x => x.uid == this.activeCat)
+            } else {
+                return allFilt
+            }
+
+
+            
+        }
+    },
+    methods:{
+        checkboxes(value){
+            if(this.activeFilters.indexOf(value) >=0 ){
+                let index = this.activeFilters.indexOf(value)
+                this.activeFilters.splice(index,1)
+            } else {
+                this.activeFilters.push(value)
+            }
+            
+        },
+        
+        populate: function(type){
+            
+            this.results = getCollections(type, true);
+            
+            
+        },
+        onCatsChange: function(value){
+            let obj = {
+                searchTerm: false,
+                filters: false,
+                cat: value,
+                type: false
+            }
+            //double check this
+            this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
+        },
     },
     created(){
-        //console.log(this.$route.query.filters.split("+"))
-        let activeCat= this.$route.query.cat
-        this.activeCat=activeCat
-        this.results = getCollections(activeCat, true);
+        let query = this.$route.query
+        let activeCat= query.cat == "false" || !query.cat ? false : query.cat
+        if(query.filters){
+            let filters = query.filters.length > 0 ? query.filters.split("+") : false
+
+            this.activeFilters = filters ? filters : []
+        }
+        
+       
+
+        //get pre-load data for SearchBar
+        filtersWithHeaders("filters").then(res => {
+            
+            this.filters = res
+            this.cats = Object.keys(res)    
+
+            //if user has a selected category
+            if(activeCat){
+                
+                this.activeCat=activeCat
+            
+                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                    this.searchResults = res     
+                )
+
+                this.populate(this.activeCat)
+                
+            // otherwise
+            } else {
+                //user may just have clicked the navbar
+                
+                if(query.searchTerm == "false" || !query.searchTerm){
+                    
+                    this.compoundView = true
+                    
+                    populateRandom([...this.cats]).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+
+                //or searched inn the "all"-category
+                }else {
+                    console.log("this")
+
+                    getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
+                        this.searchResults = res
+                    )
+
+                    this.populate(this.cats)
+                }
+            }
+
+ 
+        });
+        
+        
+        
         
         
     }
 
-   
 }
 </script>
-
-<style>
-    /* .bluebox {
-        background-color: #5E80F8;
-    } */
-
-    #imageBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    width: 100px;
-    height: 40px;
-    float:left;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    box-shadow: 2px 1px 5px #010;
-    }
-    
-    #imageBox p {
-        font-size: 20px;
-    }
-    #discoverheading {
-        width: 100%;
-        display: inline-grid;
-        grid-template-columns: auto auto;
-        align-items: center;
-    }
-
-    #discover{
-        display: inline-grid;
-        grid-template-columns: 170px auto 170px;
-        grid-column-gap: 20px;
-        margin: 5% 2%;
-    }
-    #leftBar {
-        grid-column: 1 / 2;
-        position: fixed;
-    }
-    #middleBar{
-        grid-column: 2 / 3;
-        border-left: 1px solid rgb(177, 177, 177);
-        border-right: 1px solid rgb(177, 177, 177);
-        padding: 2%;
-    }
-
-    #rightBar{
-        grid-column: 3 / 4;
-        margin-right: 2%;
-        right: 0;
-        position: fixed;
-    }
-
-    #cards {
-        margin-bottom: 50px;
-    }
-
-    #search input{
-        width: 100%;
-        height: 20px;
-        border-radius: 40px;
-        padding: 5px;
-        border: none;
-        background-color: rgb(240, 240, 240);
-        color: black;
-    }
-    
-
-    
-
-</style>
