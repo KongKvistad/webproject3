@@ -9,7 +9,7 @@
         <ProfileMenu></ProfileMenu>
     </div>
 
-    <div id="middleBar">
+    <div class="middleBar">
         <slot name="middleBar"></slot>
     </div>
 
