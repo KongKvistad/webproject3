@@ -75,7 +75,8 @@ const routes = [
     path: '/profile/settings/general',
     name: 'profileSettingsGeneral',
     component: profileSettingsGeneral
-  }
+  },
+  {
     path: '/social',
     name: 'social',
     component: Social
