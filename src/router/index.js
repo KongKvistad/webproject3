@@ -23,6 +23,8 @@ import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
 import Marketplace from './../views/Marketplace.vue'
 import Ecourse from './../views/Ecourse.vue'
+import profileAbout from './../views/Profile/profileAbout.vue'
+import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
 import Social from './../views/Social.vue'
 
 Vue.use(VueRouter)
@@ -65,6 +67,15 @@ const routes = [
     component: Ecourse
   },
   {
+    path: '/profile/aboutme',
+    name: 'profileAbout',
+    component: profileAbout
+  },
+  {
+    path: '/profile/settings/general',
+    name: 'profileSettingsGeneral',
+    component: profileSettingsGeneral
+  }
     path: '/social',
     name: 'social',
     component: Social

@@ -1,4 +1,5 @@
 <template>
+
     <MainLayout>
         <template 
         v-slot:leftBar>
@@ -26,8 +27,7 @@
                 :cats="cats"
                 :activeCats="activeCat"
                 :activeFilters="activeFilters"
-                />
-               
+                />       
         </template>
         <template v-slot:cards v-if="!compoundView">
                <!--cards for regular search-->
@@ -95,8 +95,6 @@ import NewPost from "@/components/NewPost.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
 
-
-
 export default {
     name:"Social",
     components:{
@@ -108,7 +106,6 @@ export default {
        Button,
        Modal,
        NewPost
-       
     },
     data() {
         return{
