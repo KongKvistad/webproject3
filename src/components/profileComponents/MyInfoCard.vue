@@ -16,7 +16,7 @@
     <div id="right">
         <h2>{{userProfile.Heading}}</h2>
         <h3>About Me:</h3>
-        <p>{{userProfile.About}}</p>
+        <p>{{userProfile.About}}</p><br>
         <div id="location"><img src="@/assets/home.svg" alt="Location"><p class="right">: {{userProfile.Location}}</p></div>
         <button type="button" id ="editButton" style="float: right"><router-link to="/profile/settings/general">Edit</router-link></button><br><br>
     </div>
@@ -60,7 +60,7 @@ export default {
 #card {
     margin-bottom: 50px;
     height: 40%;
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     flex-flow: row;
@@ -68,7 +68,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 60px;
+    margin-right: 1.5vw;
 }
 
 #left {
@@ -82,8 +82,8 @@ export default {
 }
 
 #left img {
-    max-height: 90%;
-    width: 100%;
+    max-height: 70%;
+    width: auto;
     display: block;
     object-fit: cover;
     float:left;
@@ -92,7 +92,7 @@ export default {
 #location img{
     max-height: 1.5vw;
     max-width: 5%;
-     float: left;
+    float: left;
 }
 
 .right {
