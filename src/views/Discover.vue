@@ -1,6 +1,6 @@
 <template>
 
-    <MainLayout>
+    <MainLayout :padding="true">
         <template 
         v-slot:leftBar>
         <CatChooser
@@ -147,6 +147,7 @@ export default {
             } else {
                 this.activeFilters.push(value)
             }
+            console.log(this.activeFilters)
             
         },
         

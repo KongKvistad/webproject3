@@ -1,5 +1,5 @@
 <template>
-    <MainLayout>
+    <MainLayout :padding="true">
         <template 
         v-slot:leftBar>
         <CatChooser
@@ -32,8 +32,10 @@
         <template v-slot:cards v-if="!compoundView">
                <!--cards for regular search-->
                <Card
+                    
                     :key="idx" 
                     v-for="(elem,idx) in searchResults"
+                    :id ="elem.id"
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
@@ -55,7 +57,9 @@
                     <h3 v-bind:style="{'color': '#f6e05e'}">{{elem.isLast}}</h3>
                 </div>
                <Card
+                    @click="navigate(elem.id)"
                     :key="elem.Title+idx+'cmp'"
+                    :id ="elem.id"
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
@@ -73,10 +77,10 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
+        <Button desc="Create a group!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
             <h2 slot="header">Create a group</h2>
-            <GroupForm slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+            <GroupForm slot="modal-body" :user="userProfile" @closeModal="groupCreated"/>
         </Modal>
         </template>
         
@@ -142,6 +146,12 @@ export default {
         }
     },
     methods:{
+        
+        groupCreated(id){
+            this.modalShowing = false
+           
+            this.$router.push({ name: 'group', params: { id: id } })
+        },
         checkboxes(value){
             if(this.activeFilters.indexOf(value) >=0 ){
                 let index = this.activeFilters.indexOf(value)

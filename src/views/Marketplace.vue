@@ -1,5 +1,5 @@
 <template>
-    <MainLayout>
+    <MainLayout :padding="true">
         <template 
         v-slot:leftBar>
         <CatChooser

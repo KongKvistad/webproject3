@@ -6,9 +6,9 @@ import {db} from '../components/firebaseInit.js'
 
 function getCollections(collection, payLoad){
     let res = []
-    
-    if(typeof collection === 'string'){
         //if only one resource has been requested
+    if(typeof collection === 'string'){
+    
         db.collection(collection).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 // if payload is not requested, assume the programmer wants headers (document ids)
@@ -16,8 +16,9 @@ function getCollections(collection, payLoad){
                 res.push(data);
             });
         });
+    //otherwise
     } else {
-        //otherwise
+        
         collection.forEach(ref => {
             db.collection(ref).get().then(function(querySnapshot) {
                 querySnapshot.forEach(function(doc) {
@@ -32,8 +33,17 @@ function getCollections(collection, payLoad){
 }
 
 
-function getDocByReference(refParam, refId){
-    db.collection("Users").where(refParam, "==", refId).get().then(res => console.log(res))
+async function getDocByReference(doctype, refId){
+    const ref = db.collection(doctype).doc(refId)
+    const res = await ref.get().then(doc => {
+        return doc.data()
+    })
+    return res
+      
+}
+
+const multipleDocs = async (ids, type) => {
+    return Promise.all(ids.map(item => getDocByReference(type, item)))
 }
 
 //true async
@@ -61,8 +71,9 @@ async function getPostByTerm(collection, searchTerm, type){
     }
     await ref.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-            
-            res.push(doc.data());
+            let obj = doc.data()
+            obj.id = doc.id
+            res.push(obj);
         });
     });
     return res;
@@ -71,12 +82,15 @@ async function getPostByTerm(collection, searchTerm, type){
 async function getAllByTerm(collections, searchTerm, type, filters){
     
     let res = []
-   
+   console.log(collections, searchTerm, type, filters)
     
     collections.forEach(ref => {
         db.collection(ref).where(type, "==", searchTerm).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-            let data = doc.data()
+            
+            let obj = doc.data()
+            obj.id = doc.id
+            let data = doc
             
             if(data.Params && filters){
                 
@@ -100,7 +114,6 @@ async function getAllByTerm(collections, searchTerm, type, filters){
 
     
 }
-
 
 function filterByParam(entry, filters){
     
@@ -129,6 +142,7 @@ async function populateRandom(refs){
             querySnapshot.forEach(function(doc) {
                 
                 let obj = doc.data()
+                obj.id = doc.id
                 obj.isLast = i == num ? ref : false;
                 i--
                 
@@ -140,6 +154,9 @@ async function populateRandom(refs){
     return res
     
 }
+//create function to get all groups by user id
+
+
 
 export {
     getCollections,
@@ -148,4 +165,7 @@ export {
     getPostByTerm,
     populateRandom,
     getAllByTerm,
+    multipleDocs,
+   
+  
 };

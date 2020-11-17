@@ -8,7 +8,7 @@
     
         </section>
     
-    <section id="middleBar">
+    <section id="middleBar" :style="this.padding ? 'padding: 3%' : 'padding: 0%'">
         <div id="discoverheading">
             <slot name="discoverheading">
                 <!--top spot-->
@@ -39,6 +39,7 @@
 
 export default {
     name:"MainLayout",
+    props:["padding"],
     components:{
         
     },
@@ -111,7 +112,7 @@ export default {
         grid-column: 2 / 3;
         border-left: 1px solid rgb(177, 177, 177);
         border-right: 1px solid rgb(177, 177, 177);
-        padding: 2%;
+     
         max-width:50em;
         margin: 0px auto;
     }

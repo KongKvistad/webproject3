@@ -26,6 +26,7 @@ import Ecourse from './../views/Ecourse.vue'
 import profileAbout from './../views/Profile/profileAbout.vue'
 import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
 import Social from './../views/Social.vue'
+import GroupPage from './../views/GroupPage.vue'
 
 Vue.use(VueRouter)
 
@@ -80,6 +81,11 @@ const routes = [
     path: '/social',
     name: 'social',
     component: Social
+  },
+  {
+    path: '/group/:id',
+    name: 'group',
+    component: GroupPage
   },
 ]
 
