@@ -9,7 +9,7 @@
           <h1>Welcome back</h1>
           <div>
             <label for="email1">Email</label><br>
-            <input v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="email1" />
+            <input autofocus v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="email1" />
           </div><br>
           <div>
             <label for="password1">Password</label><br>
