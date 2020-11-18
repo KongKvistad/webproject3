@@ -1,3 +1,5 @@
+
+  
 <template>
     <SearchBar v-on:childToParent="onSearchChange" 
     v-on:catsChanged="onCatsChange"
@@ -12,17 +14,13 @@
 </template>
 
 <script>
-
 import SearchBar from '../components/SearchBar'
-
-
 export default {
   name: 'SearchMaster',
   components: {
     SearchBar,
   },
   props:["results", "cats", "activeFilters", "activeCats", "fromHome"],
-
   data(){
     return {
       searchTerm:false,
@@ -36,13 +34,11 @@ export default {
    
    
   
-
     //needed to empty out all filter values if cats change
     cleanData(){
       this.matches =[];
       this.searchTerm = "";
     },    
-
     onSearchChange: function(value){
       this.searchTerm = value
       
@@ -51,18 +47,22 @@ export default {
       this.$emit('catsChanged', value)
       this.cleanData()
     },
-
     onClickedItemChanged:function(value){
       this.clickedItem = value
     },
-
     
-
     findMatches: function(val, type){
-      console.log(type)
+      
       
       //look for matching strings and count occurences of same value in name
-      let match = this.results.filter(x => x[type].toLowerCase().indexOf(val) >= 0)
+      let match = this.results.filter(x => {
+        if(this.activeFilters.length > 0){
+          return x[type].toLowerCase().indexOf(val) >= 0 && (x.Params != undefined && this.activeFilters.some((val) => x.Params.indexOf(val) !== -1))
+        }
+         else {
+           return x[type].toLowerCase().indexOf(val) >= 0
+         }
+      })
       
       let names = match.map(x => {
         return {type: type, name: x[type], num: match.filter(y => y[type]== x[type]).length}
@@ -95,13 +95,18 @@ export default {
     searchTerm: function(){
       if(this.searchTerm == ""){
         this.matches = false;
-
       } else {
         let countries = this.findMatches(this.searchTerm, "Country")
         let cities = this.findMatches(this.searchTerm, "City")
         this.matches = countries.concat(cities)
       }
     
+    },
+    activeFilters: function(){
+      let countries = this.findMatches(this.searchTerm, "Country")
+      let cities = this.findMatches(this.searchTerm, "City")
+      this.matches = countries.concat(cities)
+      
     }
   },
   

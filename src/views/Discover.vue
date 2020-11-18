@@ -52,7 +52,7 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3>{{elem.isLast}}</h3>
+                    <h3 v-bind:style="{'color': '#5e80f8'}">{{elem.isLast}}</h3>
                 </div>
                <Card
                     :key="elem.Title+idx+'cmp'"
@@ -68,6 +68,7 @@
                     imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
                     boxcolourclass="bluebox"
                     />
+                    
                 
             </template>
             
@@ -160,11 +161,11 @@ export default {
         onCatsChange: function(value){
             let obj = {
                 searchTerm: false,
-                filters: false,
+                filters: [],
                 cat: value,
                 type: false
             }
-            //double check this
+            
             this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
         },
     },
@@ -172,6 +173,7 @@ export default {
         let query = this.$route.query
         let activeCat= query.cat == "false" || !query.cat ? false : query.cat
         if(query.filters){
+            
             let filters = query.filters.length > 0 ? query.filters.split("+") : false
 
             this.activeFilters = filters ? filters : []
@@ -190,7 +192,7 @@ export default {
                 
                 this.activeCat=activeCat
             
-                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                getPostByTerm(activeCat, query.searchTerm, query.type, query.filters).then(res =>
                     this.searchResults = res     
                 )
 
@@ -215,7 +217,7 @@ export default {
                     console.log("this")
 
                     getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
-                        this.searchResults = res
+                        this.searchResults = res.flat()
                     )
 
                     this.populate(this.cats)

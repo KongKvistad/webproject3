@@ -7,7 +7,7 @@
         </template>
         <template v-slot:discoverheading>
             <div class="bgCanvas">
-                <img class="backGround" src="@/assets/airport.jpg"/>
+                <img class="backGround" :src="groupData.imgUrl"/>
                 <h1>{{groupData.Title}}</h1>
             </div>
         </template>

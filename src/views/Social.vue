@@ -44,7 +44,7 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :imageBox="elem.Type" 
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />
             
@@ -69,7 +69,7 @@
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />
                 
@@ -146,7 +146,11 @@ export default {
         }
     },
     methods:{
-        
+        navigate(id){
+            if(this.$route.name == "social"){
+             this.$router.push({ name: 'group', params: { id: id } })
+             }
+        },
         groupCreated(id){
             this.modalShowing = false
            
@@ -171,7 +175,7 @@ export default {
         onCatsChange: function(value){
             let obj = {
                 searchTerm: false,
-                filters: false,
+                filters: [],
                 cat: value,
                 type: false
             }
@@ -183,6 +187,7 @@ export default {
         let query = this.$route.query
         let activeCat= query.cat == "false" || !query.cat ? false : query.cat
         if(query.filters){
+            
             let filters = query.filters.length > 0 ? query.filters.split("+") : false
 
             this.activeFilters = filters ? filters : []
@@ -201,7 +206,7 @@ export default {
                 
                 this.activeCat=activeCat
             
-                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                getPostByTerm(activeCat, query.searchTerm, query.type, query.filters).then(res =>
                     this.searchResults = res     
                 )
 
@@ -226,7 +231,7 @@ export default {
                     console.log("this")
 
                     getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
-                        this.searchResults = res
+                        this.searchResults = res.flat()
                     )
 
                     this.populate(this.cats)
