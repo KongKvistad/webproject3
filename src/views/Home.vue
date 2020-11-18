@@ -85,7 +85,9 @@ export default {
     },
 
     onFilterChange: function(value){
+     
       this.activeFilters = value
+      //console.log(this.activeFilters)
       
     },
 
