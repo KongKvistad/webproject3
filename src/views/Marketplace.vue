@@ -79,7 +79,7 @@
         <template v-slot:rightBar>
         <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a group</h2>
+            <h2 slot="header">Create a Post</h2>
             <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
         
