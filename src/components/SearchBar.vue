@@ -45,7 +45,7 @@
               <img class="h-6 mr-5" v-else src="@/assets/city.svg"/>
               <p>{{item.name}} {{item.num ? "(" + item.num + ")" : ""}}</p>
           </li>
-        </ul>
+      </ul>
     </div>
   </div>
 
