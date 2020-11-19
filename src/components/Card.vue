@@ -1,6 +1,6 @@
 <template>
 
-  <div id="card" :style="isLast ? 'margin-top: 30px;' : void(0)">
+  <div @click="navigate(id)" id="card" :style="isLast ? 'margin-top: 30px;' : void(0)">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
        <div id="imageBox" :class=boxcolourclass>
@@ -61,7 +61,8 @@ export default {
     "boxcolourclass",
     "rating",
     "ecoursetime",
-    "isLast"
+    "isLast",
+    "id"
   ],
   components: {
     StarRating
@@ -69,6 +70,12 @@ export default {
   methods: {
     setRating: function(rating){
       this.rating= rating;
+    },
+    navigate(id){
+        if(this.$route.name == "social"){
+          this.$router.push({ name: 'group', params: { id: id } })
+        }
+             
     },
     /* roundup: function (ecoursetime) {		
       this.ecoursetime = this.ecoursetime.toFixed(2);

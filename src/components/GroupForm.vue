@@ -81,11 +81,14 @@ export default{
             
             const data = {name: this.groupName, desc: this.groupDesc, members: this.members.map(x => x.uid)}
             
+            //need to bind scope in order to access it inside async function call
             let scope = this
             
-            createGroup(data, this.user).then(function(){
-                scope.$emit('closeModal')
+            createGroup(data, this.user).then(groupId => {
+                scope.$emit('closeModal', groupId)
             })
+                
+        
         },
         
         findMatches: function(val){

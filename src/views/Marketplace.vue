@@ -1,5 +1,5 @@
 <template>
-    <MainLayout>
+    <MainLayout :padding="true">
         <template 
         v-slot:leftBar>
         <CatChooser
@@ -79,7 +79,7 @@
         <template v-slot:rightBar>
         <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a group</h2>
+            <h2 slot="header">Create a Post</h2>
             <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
         
@@ -166,7 +166,7 @@ export default {
         onCatsChange: function(value){
             let obj = {
                 searchTerm: false,
-                filters: false,
+                filters: [],
                 cat: value,
                 type: false
             }
@@ -178,6 +178,7 @@ export default {
         let query = this.$route.query
         let activeCat= query.cat == "false" || !query.cat ? false : query.cat
         if(query.filters){
+            
             let filters = query.filters.length > 0 ? query.filters.split("+") : false
 
             this.activeFilters = filters ? filters : []
@@ -196,7 +197,7 @@ export default {
                 
                 this.activeCat=activeCat
             
-                getPostByTerm(activeCat, query.searchTerm, query.type).then(res =>
+                getPostByTerm(activeCat, query.searchTerm, query.type, query.filters).then(res =>
                     this.searchResults = res     
                 )
 
@@ -221,7 +222,7 @@ export default {
                     console.log("this")
 
                     getAllByTerm(this.cats, query.searchTerm, query.type, query.filters).then(res => 
-                        this.searchResults = res
+                        this.searchResults = res.flat()
                     )
 
                     this.populate(this.cats)
