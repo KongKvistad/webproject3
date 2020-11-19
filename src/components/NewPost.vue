@@ -122,7 +122,7 @@
                 <option value="secondHand">Second Hand</option>
             </select>
             <select v-model="discoverSelect" :placeholder="{discoverSelect}" name="discoverSelect" v-else-if="currentPage().includes('Discover')"> <!-- Displayed if the user is in Discover -->
-                <option>Choose Type</option>
+                
                 <option value="exchange">Exchange</option>
                 <option value="studyProgramme">Study Programe</option>
                 <option value="work">Work</option>
@@ -257,7 +257,7 @@ export default{
             title: "",
             socialSelect: 'Choose Type',
             marketSelect: 'Choose Type',
-            discoverSelect: 'Choose Type',
+            discoverSelect: 'exchange',
             description: "",
             country: '',
             city: '',
