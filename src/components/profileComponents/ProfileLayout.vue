@@ -59,7 +59,7 @@ export default {
 }
 
 .middleBar{
-    grid-column: 2 / 3;
+    grid-column: 2 / 4;
     border-left: 1px solid rgb(177, 177, 177);
     border-right: 1px solid rgb(177, 177, 177);
     padding: 2%;
