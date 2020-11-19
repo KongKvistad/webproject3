@@ -79,8 +79,8 @@
         <template v-slot:rightBar>
         <Button desc="Create a group!"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a group or event</h2>
-            <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+            <h2 slot="header">Create a group</h2>
+            <GroupForm slot="modal-body" :user="userProfile" @closeModal="groupCreated"/>
         </Modal>
         </template>
         
@@ -93,7 +93,7 @@ import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
 import Button from "../components/Button.vue"
 import Modal from "../components/Modal.vue"
-import NewPost from "../components/NewPost.vue"
+import GroupForm from "../components/GroupForm.vue"
 import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
@@ -110,7 +110,7 @@ export default {
        Card,
        Button,
        Modal,
-       NewPost
+       GroupForm
        
     },
     data() {
