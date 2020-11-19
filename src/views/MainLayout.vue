@@ -105,7 +105,7 @@ export default {
     }
     #leftBar {
         grid-column: 1 / 2;
-        
+
         margin-left: 18%;
     }
     #middleBar{

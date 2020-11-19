@@ -119,12 +119,12 @@
             <select v-model="marketSelect" :placeholder="{marketSelect}" name="marketSelect" v-else-if="currentPage().includes('Marketplace')"> <!-- Displayed if the user is in marketplace -->
                 <option>Choose Type</option>
                 <option value="eCourse">E-Course</option>
-                <option value="secondHand">Second Hand</option>
+                <option value="secondHand">Second hand</option>
             </select>
             <select v-model="discoverSelect" :placeholder="{discoverSelect}" name="discoverSelect" v-else-if="currentPage().includes('Discover')"> <!-- Displayed if the user is in Discover -->
                 
                 <option value="exchange">Exchange</option>
-                <option value="studyProgramme">Study Programe</option>
+                <option value="studyProgramme">Study programme</option>
                 <option value="work">Work</option>
             </select> <br>
 
@@ -169,7 +169,7 @@
                 <input v-model="duration" name="duration" id="" type="number" min="0" placeholder="How long the course last...">
 
                 <label for="language">Language: </label>
-                <input v-model="language" name="language" id="" type="text" placeholder="Language">
+                <input v-model="language" name="language" id="" type="text" placeholder="English">
 
                 <label for="difficulty">Difficulty: </label>
                 <input v-model="difficulty" name="difficulty" placeholder="Difficulty from 1-5" id="" type="number" min="1" max="5">
@@ -181,7 +181,7 @@
             <input v-model="school" name="school" type="text" placeholder="Harvard University"><br>
 
             <div v-if="discoverSelect == 'studyProgramme'"> <!-- displays if user has selected study Programme -->
-                <label for="studyField">Study Field: </label>
+                <label for="studyField">Study field: </label>
                 <input v-model="studyField" name="studyField" type="text" placeholder="IT">
 
                 <label for="studyDuration">Duration: </label>
@@ -227,7 +227,7 @@
             <input v-model="city" type="text" placeholder="Select City...">
 
             <label>Country: </label>
-            <input v-model="country" type="text" placeholder="select country...">
+            <input v-model="country" type="text" placeholder="Select country...">
         </div>
         <ImgUpload v-on:imgUpload="imageUploaded" />
 
@@ -323,7 +323,7 @@ export default{
             })
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id)
-                alert("Event Added");
+                alert("Event added");
                 location.reload();
             })
             .catch(function(error) {
@@ -349,7 +349,7 @@ export default{
             })
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id);
-                alert("ECourse added");
+                alert("E-Course added");
                 location.reload();
             })
             .catch(function(error) {
@@ -394,11 +394,11 @@ export default{
             })
             .then(function(docRef) {
                 console.log("Document written with id: ", docRef.id);
-                alert("StudyProgramme added");
+                alert("Study programme added");
                 location.reload();
             })
             .catch(function(error){
-                console.error("error adding Document: ", error);
+                console.error("Error adding document: ", error);
             })
         },
 
@@ -418,7 +418,7 @@ export default{
                 location.reload();
             })
             .catch(function(error){
-                console.error("Error adding Document: ", error);
+                console.error("Error adding document: ", error);
             })
         },
 
@@ -527,6 +527,12 @@ export default{
 input, select, textarea{
     border: 1px solid black;
     margin: 3px;
+    width: 100%;
+    height: 20px;
+    padding: 20px;
+    border: none;
+    background-color: rgb(240, 240, 240);
+    color: black;
 }
 
 </style>

@@ -93,13 +93,13 @@ export default {
 
 
 .bluebox {
-      background-color: #5E80F8;
+      background-color: rgb(29, 103, 187);
     }
 .greenbox {
-    background-color:  rgb(18,244,122);
+    background-color:  rgb(4, 180, 86);
   }
   .yellowbox {
-    background-color: yellow;
+    background-color: rgb(246,224,94);
   }
 .yellowbox > p {
   color: black;
@@ -108,7 +108,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: white;
   width: 100px;
   height: 40px;
   float:left;

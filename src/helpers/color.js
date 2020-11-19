@@ -2,13 +2,13 @@ function determineColor(name){
     let color
     switch(name) {
         case "social":
-            color= "#f6e05e";
+            color= "rgb(246,224,94, 0.7)";
             break;
         case "discover":
-            color=  "#5e80f8";
+            color=  "rgb(29, 103, 187, 0.5)";
             break;
         default:
-            color=  "#12f47a";
+            color=  "rgb(4, 180, 86, 0.5)";
     }
     return color  
 }

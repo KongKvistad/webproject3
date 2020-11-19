@@ -24,10 +24,10 @@
           <div class="dropdown-content">
             <router-link to="/profile/aboutme">Profile</router-link>
             <router-link to="/profile/settings/general">Settings</router-link>
-            <a @click="logOut()">Log Out</a>
+            <a class="loginout" @click="logOut()">Log Out</a>
           </div>
         </div>
-        <div v-else><router-link to="/login">LOG IN</router-link></div> 
+        <div class="loginout" v-else><router-link to="/login"><img src="@/assets/user.svg">Log in</router-link></div> 
       </div>
        <transition name="dropTrans">
           <MenuDropDown v-on:cursorChanged="val => monitorCursor(val)" v-if="this.activeDropDown" :data="activeDropDown"/>
@@ -131,29 +131,18 @@ export default {
   grid-gap: 0.5em;
 }
 
-.activeDiscover{
-  border-bottom: 0.5vw solid rgb(94,166,248);
+.loginout:hover {
+  border-bottom: 0.5vw solid rgb(78, 106, 133);
+}
+.activeDiscover, #navDiscover:hover{
+  border-bottom: 0.5vw solid rgb(29, 103, 187, 0.5);
 }
 
-#navDiscover:hover {
-  border-bottom: 0.5vw solid rgb(94,166,248);
+.activeMarket, #navMarket:hover{
+  border-bottom: 0.5vw solid rgb(4, 180, 86, 0.5);
 }
-
-.activeMarket {
-  border-bottom: 0.5vw solid rgb(18,244,122);
-
-}
-
-#navMarket:hover{
-  border-bottom: 0.5vw solid rgb(18,244,122);
-
-}
-.activeSocial{
-  border-bottom: 0.5vw solid rgb(255,230,3);
-} 
-
-#navSocial:hover{
-  border-bottom: 0.5vw solid rgb(255,230,3);
+.activeSocial, #navSocial:hover{
+  border-bottom: 0.5vw solid rgb(246,224,94,0.7);
 } 
 
 #nav img{
