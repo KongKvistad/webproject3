@@ -10,11 +10,6 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
       userProfile: {},
-
-      routePath: {
-        ecourse: 'Ecourse', 
-      },
-
       filters: {}
 
     },

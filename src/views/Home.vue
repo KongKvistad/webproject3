@@ -33,7 +33,7 @@
           <h1>Maybe you're interested in...</h1>
           <p>E-courses</p>
           <div class="smallCard">
-            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price" :routePath="pathEcourse"/>            
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price"/>            
           </div>
         </div>
     </main>
@@ -68,13 +68,6 @@ export default {
     }
   },
   
-  // smallCard click path for displaying full data in seperate view
-  computed: {
-    pathEcourse () {
-      return this.$store.state.routePath.ecourse
-    }
-  },
-  
   methods: {
     // Randomly sorts list of e-courses for home page
     randomList: function(rand){
@@ -88,15 +81,11 @@ export default {
       this.activeFilters = value
       
     },
-
     onCatsChange: function(value){
       this.activeCats = value
       this.activeFilters = [];
       this.populate(value)
-    },
-
-  
-     
+    },     
   },
   watch:{
     
@@ -121,7 +110,8 @@ export default {
         const data = {
           'id': doc.id,
           'title': doc.data().Title,
-          'price': doc.data().Price
+          'price': doc.data().Price,
+          'imgUrl': doc.data().ImageUrl
         }
         this.e_course.push(data)
       })
