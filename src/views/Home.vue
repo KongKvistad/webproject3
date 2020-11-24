@@ -168,11 +168,10 @@ export default {
    
    
    .headline {
-     padding-right: 1rem;
-     padding-left: 1rem;
+     padding: 0.2rem;
      margin-top: 2rem;
      font-size: 4vw;
-     background-color: #5E80F8;
+     background-color: rgb(0,0,0,0.5);
      color: white;
      text-align: left;
      position: absolute;
@@ -184,7 +183,7 @@ export default {
      margin-top: 1rem;
      font-size: 2vw;
      float: left;
-     background-color: #5E80F8;
+     background-color: rgb(0,0,0,0.5);
      color: white;
      text-align: left;
 

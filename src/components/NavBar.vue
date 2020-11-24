@@ -131,19 +131,9 @@ export default {
   grid-gap: 0.5em;
 }
 
-.loginout:hover {
-  border-bottom: 0.5vw solid rgb(78, 106, 133);
+.loginout:hover, .activeDiscover, #navDiscover:hover,.activeMarket, #navMarket:hover,.activeSocial, #navSocial:hover {
+  border-bottom: 0.2vw solid rgb(78, 106, 133);
 }
-.activeDiscover, #navDiscover:hover{
-  border-bottom: 0.5vw solid rgb(29, 103, 187, 0.5);
-}
-
-.activeMarket, #navMarket:hover{
-  border-bottom: 0.5vw solid rgb(4, 180, 86, 0.5);
-}
-.activeSocial, #navSocial:hover{
-  border-bottom: 0.5vw solid rgb(246,224,94,0.7);
-} 
 
 #nav img{
     max-height: 2vw;
