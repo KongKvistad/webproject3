@@ -1,14 +1,16 @@
 <template>
   <div class="smallCard">
-
-    <router-link :to="{ name: routePath, params: { id: item.id } }">
+      <!-- Display image if there is one uploaded in DB, else display default image -->
+      <div v-if="!item.imgUrl">
       <img class="img" :src="image" />
+      </div>
+      <div v-else>
+        <img class="img" :src="item.imgUrl" />
+      </div>
       <div class="price">{{ item.price }}$</div>
       <div class="desc">
         <p>{{ item.title }}</p>
       </div>
-    </router-link>
-
   </div>
 </template>
 
@@ -18,11 +20,10 @@ export default {
 
   props: {
     item: Object,
-    routePath: String,
   },
   data() {
     return {
-      // Midlertidig statisk bilde i e-course card
+      // Default img used in smallcard component
       image: require("@/assets/smallCardImg.jpg"),
     };
   },
