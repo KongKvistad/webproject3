@@ -134,6 +134,9 @@ export default {
 .loginout:hover, .activeDiscover, #navDiscover:hover,.activeMarket, #navMarket:hover,.activeSocial, #navSocial:hover {
   border-bottom: 0.2vw solid rgb(78, 106, 133);
 }
+#navMarket, #navDiscover, #navSocial,.loginout {
+  border-bottom: 0.2vw solid white;
+}
 
 #nav img{
     max-height: 2vw;

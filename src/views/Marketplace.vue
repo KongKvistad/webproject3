@@ -40,7 +40,7 @@
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
-                    :duration="elem.Duration"
+                    :ecoursetime="elem.Duration"
                     :imageBox="elem.Type" 
                     :rating="elem.Rating"
                     :imageLink="elem.imgUrl"
@@ -56,6 +56,8 @@
                     <h3 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h3>
                 </div>
                <Card
+                    :timePosted="elem.TimePosted"
+                    :language="elem.Language"
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
                     :owner="elem.Creator" 
@@ -63,7 +65,7 @@
                     :description="elem.Description" 
                     :price="elem.Price" 
                     :reviews="elem.Testemonies" 
-                    :duration="elem.Duration"
+                    :ecoursetime="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
                     :rating="elem.Rating"

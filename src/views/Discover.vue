@@ -35,7 +35,7 @@
                     :key="idx" 
                     v-for="(elem,idx) in searchResults"
                     :title="elem.Title" 
-                    :owner="elem.School" 
+                    :owner="elem.Creator" 
                     :deadline="elem.Visa"
                     :description="elem.Description" 
                     :price="elem.Cost" 
@@ -55,9 +55,10 @@
                     <h3 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h3>
                 </div>
                <Card
+                    :country="elem.Country"
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
-                    :owner="elem.School" 
+                    :owner="elem.Creator"
                     :deadline="elem.Visa"
                     :description="elem.Description" 
                     :price="elem.Cost" 
