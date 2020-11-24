@@ -16,11 +16,11 @@
             <input v-model.trim="loginForm.password" type="password" placeholder="******" id="password1" />
           </div><br>
 
-          <button @click="toggleForm()">Create account</button>
-
           <div class="extras">
             <button @click="login()" class="button">Log In</button>
           </div>
+          
+          <button @click="toggleForm()">Create account</button>
         </form>
 
         <form v-else @submit.prevent>
