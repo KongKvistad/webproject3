@@ -14,10 +14,10 @@
                 :activeFilters="activeFilters"
                 :fromHome="true"
                 />
-                <FilterBox v-on:filterToSearch="onFilterChange"
+                <!--<FilterBox v-on:filterToSearch="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
-                :activeFilters="activeFilters" />
+                :activeFilters="activeFilters" />-->
               </section>
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
@@ -30,8 +30,8 @@
             <Upload></Upload>
           </div> -->
         
-          <h1>Maybe you're interested in...</h1>
-          <p>E-courses</p>
+          <h1>Maybe you're interested in these courses</h1>
+          <!--<p>E-courses</p>-->
           <div class="smallCard">
             <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price"/>            
           </div>
@@ -42,7 +42,7 @@
 <script>
 import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
 import {db} from '../components/firebaseInit.js'
-import FilterBox from '../components/FilterBox'
+//import FilterBox from '../components/FilterBox'
 import SearchMaster from '../components/SearchMaster.vue'
 import SmallCard from '../components/SmallCard.vue'
 //import Upload from '../components/Upload.vue'
@@ -51,7 +51,7 @@ export default {
   name: 'Home',
   components: {
     SearchMaster,
-    FilterBox,
+    //FilterBox,
     //RadioBtns,
     SmallCard,
     //Upload
@@ -113,7 +113,8 @@ export default {
           'id': doc.id,
           'title': doc.data().Title,
           'price': doc.data().Price,
-          'imgUrl': doc.data().imgUrl
+          'imgUrl': doc.data().imgUrl,
+          'description': doc.data().Description
         }
         this.e_course.push(data)
       })
@@ -166,6 +167,7 @@ export default {
      text-align: left;
      position: absolute;
      top:1em;
+     font-family: "Open Sans", sans-serif;
    }
    
    .under-headline {
@@ -176,7 +178,7 @@ export default {
      background-color: rgb(0,0,0,0.5);
      color: white;
      text-align: left;
-
+     font-family: "Open Sans", sans-serif;
      position: absolute;
      top:6em;
    }
@@ -185,31 +187,21 @@ export default {
    /* Content suggestions */
    
    .content-suggestion {
-      background-color: white;
+      background-color: rgb(128,128,128,0.1)
     }
 
     .content-suggestion > h1 {
-      font-size: 36px;
+      font-size: 33px;
       padding: 2%;
-      text-align: center;
-    }
-
-    .content-suggestion > p {
-      font-size: 24px;
-      padding: 3%;
-      margin-left: 3%;
-    }
-   
-
-  
-
-   .content-suggestion-cards {
-      
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 3%;
+      color: #333333;
     }
    
    .smallCard {
      display: flex;
      flex-direction: columns;
+     justify-content: space-evenly;
    }
    
    </style>

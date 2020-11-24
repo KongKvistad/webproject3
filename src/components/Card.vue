@@ -12,7 +12,7 @@
           <h2>{{ title }}</h2>
           <div id="ownerInfo">
             <p v-if="owner">By {{ owner }}</p>
-            <p v-if="timePosted">Posted {{ timePosted }}</p>
+            <p v-if="timePosted">Posted: {{ timePosted.toDate().toDateString() }}</p>
             <p v-if="country">&middot;</p>
             <p v-if="country">{{country}} </p>
             <p v-if="city">&middot;</p>
@@ -21,7 +21,7 @@
             <p v-if="language">Language: {{language}}</p>
           </div>
           <p v-if="deadline" id = "deadline">Terms of stay: {{ deadline }}</p>
-          <p>{{ description }}</p>
+          <p id="desc">{{ description }}</p>
 
           <div id="liste">
                 <p v-if="price>0" :style= "[imageBox == 'Item' ? {'color': 'green', 'font-size': '1em'} : {}]">{{ price }}$</p>
@@ -95,13 +95,13 @@ export default {
 
 
 .bluebox {
-      background-color: rgb(29, 103, 187);
+      background-color: #85add9;
     }
 .greenbox {
-    background-color:  rgb(4, 180, 86);
+    background-color:  #78d3a6;
   }
   .yellowbox {
-    background-color: rgb(246,224,94);
+    background-color: #f4e58c;
   }
 .yellowbox > p {
   color: black;
@@ -110,7 +110,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   width: 100px;
   height: 40px;
   float:left;
@@ -133,7 +133,7 @@ export default {
   /*border: 1px solid rgb(162, 162, 162);*/
 }
 #card:hover{
-    background-color: rgba(235, 234, 234, 0.639);
+    background-color: rgb(237,242,247,0.4);
     /* border: 1px solid #00000047; */
     box-shadow: 2px 3px 6px #00000073; 
 
@@ -163,6 +163,9 @@ export default {
 #ownerInfo>p {
   padding: 2%;
   font-weight: bold;
+}
+#desc {
+  color: #717171;
 }
 
 #liste {

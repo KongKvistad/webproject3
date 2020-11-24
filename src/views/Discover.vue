@@ -77,7 +77,7 @@
         <template v-slot:rightBar>
         <Button desc="Create a new post" v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a Study programme, work or exchange</h2>
+            <h2 slot="header">Create a study programme, work or exchange</h2>
             <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
         </template>

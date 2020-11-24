@@ -93,9 +93,8 @@ export default {
     grid-auto-flow: column;
     background-color: white;
     padding: 0 5vw;
-    border-bottom: 1px solid black;
-    margin-top: 5px;
     max-height: 5vw;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
     
 }
 

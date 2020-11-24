@@ -110,8 +110,7 @@ export default {
     }
     #middleBar{
         grid-column: 2 / 3;
-        border-left: 1px solid rgb(177, 177, 177);
-        border-right: 1px solid rgb(177, 177, 177);
+        border-left: 1px solid rgba(177, 177, 177, 0.2);
         min-width:100%;
         max-width:50em;
         margin: 0px auto;
