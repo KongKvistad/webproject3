@@ -113,7 +113,7 @@ export default {
           'id': doc.id,
           'title': doc.data().Title,
           'price': doc.data().Price,
-          'imgUrl': doc.data().ImageUrl
+          'imgUrl': doc.data().imgUrl
         }
         this.e_course.push(data)
       })
