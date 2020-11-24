@@ -22,7 +22,6 @@ import Stuff from './../components/stuff/Stuff.vue'
 import Login from './../components/stuff/Login.vue'
 import Discover from './../views/Discover.vue'
 import Marketplace from './../views/Marketplace.vue'
-import Ecourse from './../views/Ecourse.vue'
 import profileAbout from './../views/Profile/profileAbout.vue'
 import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
 import Social from './../views/Social.vue'
@@ -61,11 +60,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
-  },
-  {
-    path: '/ecourse/:id',
-    name: 'Ecourse',
-    component: Ecourse
   },
   {
     path: '/profile/aboutme',
