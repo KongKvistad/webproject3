@@ -42,7 +42,7 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :imageBox="elem.Type" 
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
             
@@ -65,7 +65,7 @@
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
                     

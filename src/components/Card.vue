@@ -20,13 +20,12 @@
             <p v-if="language">&middot;</p>
             <p v-if="language">Language: {{language}}</p>
           </div>
-          <p v-if="deadline" id = "deadline">Deadline: {{ deadline }}</p>
-          <p v-if="terms">Terms of stay: {{terms}}</p>
+          <p v-if="deadline" id = "deadline">Terms of stay: {{ deadline }}</p>
           <p>{{ description }}</p>
 
           <div id="liste">
-                <p v-if="price>0" :style= "[imageBox == 'Second Hand' ? {'color': 'green', 'font-size': '1.5em'} : {}]">{{ price }}$</p>
-                <p v-else-if="price==0" :style= "price==0 ? {'color': 'green', 'font-size': '1.5em'} : {}">FREE</p>
+                <p v-if="price>0" :style= "[imageBox == 'Item' ? {'color': 'green', 'font-size': '1em'} : {}]">{{ price }}$</p>
+                <p v-else-if="price==0" :style= "price==0 ? {'color': 'green', 'font-size': '1.3em'} : {}">FREE</p>
                 <p v-if="reviews">{{ reviews }} testemonies</p>
                 <p v-if="duration">{{ duration }} </p>
                 <p v-if="type">Type: {{ type }}</p>
@@ -62,7 +61,7 @@ export default {
     "rating",
     "ecoursetime",
     "isLast",
-    "id"
+    "id",
   ],
   components: {
     StarRating
