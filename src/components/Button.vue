@@ -1,7 +1,6 @@
 <template>
     <div class="modal">
         <p class="w-4/5 text-center mb-10">{{desc}}</p>
-    
         <button @click="$emit('showModal')" class="w-32 h-8 rounded" v-bind:style="{'background-color': color}">New +</button>
     
     </div>

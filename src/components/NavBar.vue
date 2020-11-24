@@ -91,7 +91,7 @@ export default {
     display: grid;
     min-height: 5vw;
     grid-auto-flow: column;
-    background-color: white;
+    background-color:white;
     padding: 0 5vw;
     max-height: 5vw;
     box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);

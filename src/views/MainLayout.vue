@@ -94,6 +94,7 @@ export default {
         width: 100%;
         display:flex;
         align-items: center;
+        
     }
 
     #discover{
@@ -105,7 +106,7 @@ export default {
     }
     #leftBar {
         grid-column: 1 / 2;
-
+        
         margin-left: 18%;
     }
     #middleBar{

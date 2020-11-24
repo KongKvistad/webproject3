@@ -29,7 +29,7 @@
       </div>
       <div v-else class=" bg-white rounded flex items-center w-full shadow-sm border border-gray-200">
         <button class="outline-none focus:outline-none m-5"><svg class=" w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
-        <input v-model="searchTerm" v-on:keyup="emitToParent(searchTerm)" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="Search country..." class="w-full p-5 pl-4 text-sm outline-none focus:outline-none bg-transparent">
+        <input v-model="searchTerm" v-on:keyup="emitToParent(searchTerm)" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="Search..." class="w-full p-5 pl-4 text-sm outline-none focus:outline-none bg-transparent">
         <div v-if="fromHome" class="select w-2/6 bg-gray-300 p-5">
           <select v-model="activeCat" name="" id="" x-model="image_type" class="text-sm outline-none focus:outline-none bg-transparent">
             <option  v-for="(cat, idx) in cats" v-bind:key="cat+idx" :value="cat">{{cat}}</option>

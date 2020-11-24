@@ -168,6 +168,7 @@ export default {
      position: absolute;
      top:1em;
      font-family: "Open Sans", sans-serif;
+     width: 60%;
    }
    
    .under-headline {
@@ -187,7 +188,7 @@ export default {
    /* Content suggestions */
    
    .content-suggestion {
-      background-color: rgb(128,128,128,0.1)
+      background-color: rgb(237,242,247);
     }
 
     .content-suggestion > h1 {
