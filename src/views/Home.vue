@@ -199,9 +199,13 @@ export default {
     }
    
    .smallCard {
-     display: flex;
-     flex-direction: columns;
-     justify-content: space-evenly;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      flex-basis: 100%;
+      justify-content: space-evenly;
    }
+
+  
    
    </style>

@@ -43,7 +43,8 @@
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
-                    :imageBox="elem.Type" 
+                    :imageBox="elem.Type"
+                    :altText="elem.altText"
                     :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />
@@ -68,7 +69,8 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
-                    :imageBox="elem.Type"  
+                    :imageBox="elem.Type"
+                    :altText="elem.altText"  
                     :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />

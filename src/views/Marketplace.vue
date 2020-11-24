@@ -43,6 +43,7 @@
                     :ecoursetime="elem.Duration"
                     :imageBox="elem.Type" 
                     :rating="elem.Rating"
+                    :altText="elem.altText"
                     :imageLink="elem.imgUrl"
                     boxcolourclass="greenbox"
                     />
@@ -70,7 +71,7 @@
                     :imageBox="elem.Type"  
                     :rating="elem.Rating"
                     
-
+                    :altText="elem.altText"
                    :imageLink="elem.imgUrl"
                     boxcolourclass="greenbox"
                     />

@@ -42,6 +42,7 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :imageBox="elem.Type" 
+                    :altText="elem.altText"
                     :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
@@ -65,7 +66,8 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
-                    :imageBox="elem.Type"  
+                    :imageBox="elem.Type"
+                    :altText="elem.altText"
                     :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
