@@ -95,7 +95,10 @@ export default {
       .then(() => {
         var rolesRef = db.collection('Users');
         return rolesRef.doc(auth.currentUser.uid).set({
-          name: this.signupForm.name
+          name: this.signupForm.name,
+          About: "Add a description about yourself!",
+          Heading: "About You",
+          Location: "Edit your location"
         })
       })
       .then(() =>{
