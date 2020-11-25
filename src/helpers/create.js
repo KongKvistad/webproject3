@@ -1,5 +1,6 @@
 import {db} from '../components/firebaseInit.js'
 
+
 async function createGroup(obj, user){
     //add the creator as member
     obj.members.push(user.uid)
@@ -23,6 +24,23 @@ async function createGroup(obj, user){
     return res
 }
 
+const attatchMembers = async (groupId, memb) => {
+
+    let exData = memb.belongsTo
+    exData.push(groupId)
+   
+    let res = await db.collection("Users").doc(memb.id).update({
+        belongsTo: exData
+    })
+    return res
+ 
+}
+
+// async function removeMembers(groupId, memberIds){
+    
+// }
+
 export {
-    createGroup
+    createGroup,
+    attatchMembers
 }

@@ -34,9 +34,15 @@ function getCollections(collection, payLoad) {
 
 
 async function getDocByReference(doctype, refId) {
+    
     const ref = db.collection(doctype).doc(refId)
     const res = await ref.get().then(doc => {
-        return doc.data()
+        let newObj = doc.data()
+        if(newObj != undefined){
+            newObj.id = doc.id
+        }
+       
+        return newObj
     })
     return res
 

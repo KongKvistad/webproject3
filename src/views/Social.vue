@@ -3,7 +3,7 @@
         <template 
         v-slot:leftBar>
         <CatChooser
-            :heading="'Experience'"
+            :heading="'Social'"
             :cats="cats"
             :activeCat="activeCat"
             v-on:catsChanged="onCatsChange"/>
@@ -84,6 +84,8 @@
             <GroupForm slot="modal-body" :user="userProfile" @closeModal="groupCreated"/>
 
         </Modal>
+        <GroupList
+        :belongsTo="userProfile.belongsTo"/>
         </template>
         
     </MainLayout>
@@ -95,7 +97,8 @@ import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
 import Button from "../components/Button.vue"
 import Modal from "../components/Modal.vue"
-import NewPost from "../components/NewPost.vue"
+import GroupForm from "../components/GroupForm.vue"
+import GroupList from "../components/GroupList.vue"
 import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
@@ -112,7 +115,8 @@ export default {
        Card,
        Button,
        Modal,
-       NewPost
+       GroupForm,
+       GroupList
        
     },
     data() {

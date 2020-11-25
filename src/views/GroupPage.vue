@@ -14,9 +14,11 @@
         <template v-slot:cards >
                <h2 class="subHead">Members</h2>
                <MemberBox
+               v-if="members"
                :user="userProfile"
                :members="members"
-               :creator="groupData.creator"
+               :creator="groupData.Creator"
+               :groupId="groupData.id"
                />
                 <h2 class="posts">Posts</h2>
                 
@@ -24,13 +26,13 @@
                 v-for="post in posts"
                 :key="post.Title"
                 :data ="post"
-                :creator="members.filter(x => x.uid == post.Creator)[0].name"/>
+                :creator="getCreator(post.Creator)"/>
                 
                
         </template>
        
         <template v-slot:rightBar>
-        
+         
         </template>
         
     </MainLayout>
@@ -41,7 +43,6 @@ import MemberBox from "@/components/MemberBox.vue"
 import GroupPost from "@/components/GroupPost.vue"
 import {getDocByReference, multipleDocs, getPostByTerm} from "@/helpers/collections.js"
 import {mapState} from "vuex"
-
 
 export default {
     name:"group",
@@ -65,7 +66,11 @@ export default {
         
     },
     methods: {
-        
+        getCreator(id){
+            if(this.members){
+            return this.members.filter(x => x.id == id)[0].name
+            }
+        }
             
     },
     created(){

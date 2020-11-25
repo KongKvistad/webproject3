@@ -49,6 +49,7 @@ export default {
   name: 'Card',
   props: [
     "title",
+    "country",
     "owner",
     "deadline",
     "description",

@@ -59,6 +59,7 @@
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
+                    :country="elem.Country"
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
