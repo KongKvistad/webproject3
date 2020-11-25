@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {db, auth} from '@/components/firebaseInit.js';
 
 
 export default {
@@ -81,7 +82,6 @@ export default {
     },
     
     login() {
-       
         // dispatch only accepts two arguments: form of dispatch and payload
       this.$store.dispatch('login', {
         email: this.loginForm.email,
@@ -91,11 +91,22 @@ export default {
    
     },
     signup() {
-      this.$store.dispatch('signup', {
-        email: this.signupForm.email,
-        password: this.signupForm.password,
-        name: this.signupForm.name,
-        repeatpass: this.signupForm.repeatpass
+      auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password)
+      .then(() => {
+        var rolesRef = db.collection('Users');
+        return rolesRef.doc(auth.currentUser.uid).set({
+          name: this.signupForm.name,
+          About: "Add a description about yourself!",
+          Heading: "About You",
+          Location: "Edit your location"
+        })
+      })
+      .then(() =>{
+        alert("User created");
+        location.reload();
+      })
+      .catch(function (error){
+        console.log("Error: ", error)
       })
     }
   },
