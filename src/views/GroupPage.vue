@@ -19,6 +19,7 @@
                :members="members"
                :creator="groupData.Creator"
                :groupId="groupData.id"
+               :memberIds="groupData.Members"
                />
                 <h2 class="posts">Posts</h2>
                 
