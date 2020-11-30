@@ -3,6 +3,7 @@
 
     <div id="image">
         <!-- File inpput accepting images -->
+        <p>Upload an image:</p>
         <input type="file" ref="imgInput" @change="newPic" accept="image/*" >
         
         <!-- Upload image button appears when a image file is selected and hidden after the upload image button is pressed -->
@@ -161,5 +162,18 @@ watch:{
 
     #remove{
         background-color: gray;
+    }
+    input[type=file] {
+        max-width: 100%;
+        margin-bottom: 20px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: white;
+    }
+    button {
+        padding: 12px;
+        background-color: rgb(78, 106, 133);
+        color: white;
     }
 </style>
