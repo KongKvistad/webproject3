@@ -4,7 +4,7 @@
         <div class="w-full flex justify-start">
         <span class="w-1 bg-blue-500 mr-4"> </span>
         <div class="bg-white rounded flex items-center w-11/12 shadow-sm border border-gray-200">
-            <input v-model="groupName" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="group name.." class="w-full p-5 pl-4 text-sm outline-none focus:outline-none bg-transparent">
+            <input v-model="groupName" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="Group name.." class="w-full p-5 pl-4 text-sm outline-none focus:outline-none bg-transparent">
         </div>
         </div>
         <div class="w-full flex justify-start relative">
@@ -30,7 +30,7 @@
         <div class="w-full flex justify-start mt-4">
             <span class="w-1 bg-blue-500 mr-4"> </span>
             <div class="bg-white rounded flex items-center h-32 w-11/12 shadow-sm border border-gray-200">
-                <textarea v-model="groupDesc" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="description.." class="w-full h-full p-2 pl-4 text-sm outline-none focus:outline-none bg-transparent"></textarea>
+                <textarea v-model="groupDesc" name="" id="" @keydown.enter="PLACEHOLDER" placeholder="Description.." class="w-full h-full p-2 pl-4 text-sm outline-none focus:outline-none bg-transparent"></textarea>
             </div>
         </div>
         <div class="w-full flex justify-start">

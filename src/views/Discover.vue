@@ -238,3 +238,9 @@ export default {
 
 }
 </script>
+
+<style scroped> /*Heading in new post*/
+h2 { 
+    font-size: 28px;
+}
+</style>

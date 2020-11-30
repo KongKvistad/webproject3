@@ -243,3 +243,8 @@ export default {
 
 }
 </script>
+<style scroped>
+h2 {
+    font-size: 28px;
+}
+</style>
