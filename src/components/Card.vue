@@ -34,6 +34,13 @@
                 <div v-if="rating">
                   <star-rating v-model="rating" read-only=true @rating-selected ="setRating" star-size= 20></star-rating>
                 </div>
+                <div v-if="currentPage.includes('Marketplace')">
+                  <button id="buybutton" type="button" @click="modalShowing = true">Buy Now</button>
+                  <Modal v-if="modalShowing" @close="modalShowing = false">
+                    <h2 slot="header">Buy item</h2>
+                    <PaymentForm slot="modal-body"/>
+                  </Modal>
+                </div>
           </div>
       </div>
       
@@ -42,7 +49,9 @@
 
 <script>
 import StarRating from 'vue-star-rating';
-
+//import Button from '@/components/Button.vue';
+import PaymentForm from '@/components/PaymentForm.vue';
+import Modal from '@/components/Modal.vue';
 
 export default {
   name: 'Card',
@@ -67,7 +76,14 @@ export default {
     "id",
   ],
   components: {
-    StarRating
+    StarRating,
+    PaymentForm,
+    Modal
+  },
+  data(){
+    return{
+    modalShowing: false,
+    }
   },
   methods: {
     setRating: function(rating){
@@ -82,6 +98,12 @@ export default {
     /* roundup: function (ecoursetime) {		
       this.ecoursetime = this.ecoursetime.toFixed(2);
     } */
+  },
+
+  computed: {
+    currentPage(){
+      return this.$route.path;
+    }
   }
   /* data: function(){
     return {
@@ -189,6 +211,14 @@ h2:first-letter{
 
 p {
   font-size: 1em;
+}
+
+#buybutton{
+  padding: 0% 0.2em 0% 0.2em;
+  margin-bottom: 0.2em;
+  background-color: #78d3a6;
+  border: solid black 1px 30%;
+  border-radius: 3px;
 }
 
 
