@@ -54,7 +54,7 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h3>
+                    <h1 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h1>
                 </div>
                <Card
                     :timePosted="elem.TimePosted"
