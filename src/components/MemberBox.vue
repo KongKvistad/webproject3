@@ -6,7 +6,7 @@
                 :key="member + idx"
                 :class="'member ' + mapColor(member.id)" >
                 {{member.name}}
-                <span @click="removeUser(member.id)" v-if="isCreator && member.id != user.id">
+                <span class="cross" @click="removeUser(member.id)" v-if="isCreator && member.id != user.id">
                 x
                 </span>
             </li>
@@ -41,7 +41,7 @@
 <script>
 
 import {getPostByTerm} from "@/helpers/collections.js"
-import {attatchToMembers, attatchToGroup} from "@/helpers/create.js"
+import {updateMembers} from "@/helpers/create.js"
 export default {
     name:"memberArea",
     props:["members", "user", "creator", "groupId", "memberIds"],
@@ -58,6 +58,7 @@ export default {
             matches: [],
             results: [],
             clickedItem: false,
+            processed: 0,
             
             didUpdate: 0
 
@@ -127,68 +128,46 @@ export default {
             this.didUpdate -= 1
         },
 
-        addToGroup(groupId, membId){
-            // guaranteed to only be one
-            let member = this.members.filter(x => x.id == membId)[0]
-            
-            attatchToMembers(groupId, member).then(userId => {
-               if(userId){
-                   console.log(userId)
-                   attatchToGroup(this.groupId,this.memberIds, userId).then(res => {
-                       console.log(res)
-                   })
-               }
-               
-            })
-        },
-        // removeFromGroup(groupId, membId){
-        //     // guaranteed to only be one
-        //     let member = this.members.filter(x => x.id == membId)[0]
-            
-        //     attatchToMembers(groupId, member).then(userId => {
-        //        if(userId){
-        //            console.log(userId)
-        //            attatchToGroup(this.groupId,this.memberIds, userId).then(res => {
-        //                console.log(res)
-        //            })
-        //        }
-               
-        //     })
-        // },
+       
 
         submit(){
            
             // need to keep list of:
             //who originally was part of group on page load
-           let orgMembs = this.memberIds
-           // list of members after alteration has been made
-           let currMembs = this.members.map(x => x.id)
-           // list of removed members
-           let removedMembs = this.removedIds
-           
-          //iterate over all the org members. They're either:
-          orgMembs.forEach(memb => {
-              //1: still part of the group
-              if(currMembs.includes(memb)){
-                  console.log("already member:",memb)
-              //2: they were removed
-              } else if (!currMembs.includes(memb) && removedMembs.includes(memb)){
-                  console.log("removed member;", memb)
-                  this.removeFromGroup(this.groupId, memb)
-              }
-          })
-          // get all current members who are not part of the original crew but are not in removed list either
-          currMembs.forEach(memb => {
-              if(!orgMembs.includes(memb) && !removedMembs.includes(memb)){
-                  console.log("added as memb:", memb)
-                  this.addToGroup(this.groupId, memb)
-              }
-          })
-        },
-        
-
+            let orgMembs = this.memberIds
+            // list of members after alteration has been made
+            let currMembs = this.members.map(x => x.id)
+            // list of removed members
+            let removedMembs = this.removedIds
+            
+            // set operations to figure out what's what
+            //let alreadyMembs = orgMembs.filter(x => currMembs.includes(x))
+            let removed = orgMembs.filter(x => !currMembs.includes(x) && removedMembs.includes(x))
+            let newMembs = currMembs.filter(x => !orgMembs.includes(x) && !removedMembs.includes(x))
+            
+            if(newMembs.length > 0){
+                updateMembers(newMembs, this.groupId, "add").then(res => {
+                    console.log(res)
+                    this.processed++
+                })
+            } else {
+                 this.processed++
+            }
+            if(removed.length > 0){
+                
+                updateMembers(removed, this.groupId, "delete").then(res => {
+                    console.log(res)
+                    this.processed++
+                })
+            } else {
+                this.processed++
+            }
+       
+        }
             
     },
+    //only redirects if all the async callbacks have returned
+    
     created(){
      
             this.populate()
@@ -201,9 +180,16 @@ export default {
     searchTerm: function(value){
       
         this.matches = this.findMatches(value)
- 
     
     },
+    //listens to make sure all the members are processed before redirecting
+    processed:function(val){
+        // if both checks have passed, then refresh page
+        if(val == 2){
+             this.$router.go(this.$router.currentRoute)
+        }
+        
+    }
     
   },
 }
@@ -259,12 +245,24 @@ font-family: 'Avenir';
     align-items: center;
     position: relative;
 }
-
-.member > span{
-
+.cross{
+    background-color: red;
+    width: 23px;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    color: white;
+    border: 2px solid white;
+    position: absolute;
+    right: -7px;
+    top: -10px;
+    font-weight: 600;
 }
+
 .creatorColor{
-    background-color: yellow;
+    background-color: #f4e58c;
     
     
 }
@@ -279,4 +277,6 @@ font-family: 'Avenir';
 ddColor{
     background-color: #64a2ff
 }
+
+
 </style>

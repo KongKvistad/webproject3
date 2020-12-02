@@ -125,7 +125,9 @@ export default {
         
     }
     #rightBar > div:first-of-type {
-        max-width: 14%;
+        
+        min-width: 70%;
+        max-width: 60%;
     }
 
     #cards {

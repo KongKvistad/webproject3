@@ -55,11 +55,11 @@
                     <h3 v-bind:style="{'color': '#5e80f8'}">{{elem.isLast}}</h3>
                 </div>
                <Card
+                    :country="elem.Country"
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
                     :owner="elem.School" 
                     :deadline="elem.Visa"
-                    :country="elem.Country"
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 

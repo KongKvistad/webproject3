@@ -62,10 +62,10 @@ export default {
 .groupBox{
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 22em;
-    max-width: 14%;
-    width: 16%;
+    margin-top:2em;
+    top: 36em;
+    
+    width: 66%;
 }
 .group{
     display: flex;
