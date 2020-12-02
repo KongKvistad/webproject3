@@ -30,7 +30,7 @@
             <Upload></Upload>
           </div> -->
         
-          <h1>Maybe you're interested in these courses</h1>
+          <h1>Maybe you're interested in these e-courses</h1>
           <!--<p>E-courses</p>-->
           <div class="smallCard">
             <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price"/>            

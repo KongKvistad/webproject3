@@ -53,7 +53,7 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h3>
+                    <h1 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h1>
                 </div>
                <Card
                     :country="elem.Country"
@@ -238,3 +238,9 @@ export default {
 
 }
 </script>
+
+<style scroped> /*Heading in new post*/
+h2 { 
+    font-size: 28px;
+}
+</style>

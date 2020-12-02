@@ -214,7 +214,8 @@ p {
 }
 
 #buybutton{
-  padding: 0% 0.2em 0% 0.2em;
+  padding: 2% 0.8em;
+  color: black;
   margin-bottom: 0.2em;
   background-color: #78d3a6;
   border: solid black 1px 30%;

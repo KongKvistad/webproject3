@@ -1,30 +1,30 @@
 <template>
 <div>
-    <div>
+    <div class="container">
         <div>
             <label for="title">Title </label>
             <input v-model="title" name="title" @keydown.enter="PLACEHOLDER" placeholder="Title..">
 
             <select v-model="socialSelect"  name="socialSelect" v-if="currentPage().includes('Social')"> --> <!-- Displayed if the user is in Social -->
-                <option>Choose Type</option>
+                <option disabled>Choose Type</option>
                 <option value="event">Event</option>
                 <option value="group">Group</option>
             </select>
             <select v-model="marketSelect" :placeholder="{marketSelect}" name="marketSelect" v-else-if="currentPage().includes('Marketplace')"> <!-- Displayed if the user is in marketplace -->
-                <option>Choose Type</option>
+                <option disabled>Choose Type</option>
                 <option value="eCourse">E-Course</option>
                 <option value="secondHand">Second hand</option>
             </select>
             <select v-model="discoverSelect" :placeholder="{discoverSelect}" name="discoverSelect" v-else-if="currentPage().includes('Discover')"> <!-- Displayed if the user is in Discover -->
-                
+                <option disabled>Choose Type</option>
                 <option value="exchange">Exchange</option>
                 <option value="studyProgramme">Study programme</option>
                 <option value="work">Work</option>
-            </select> <br>
+            </select>
 
             <label for="description">Description:</label><br>
             <textarea v-model="description" name="description" placeholder="Description..."></textarea>
-        </div> <br>
+        </div>
 
         <div v-if="currentPage().includes('Social')"> <!-- Displayed if the user is in social -->
             <div>
@@ -123,10 +123,10 @@
             <label>Country: </label>
             <input v-model="country" type="text" placeholder="Select country...">
         </div>
+
         <ImgUpload v-on:imgUpload="imageUploaded" />
 
-
-        <button type="submit" @click="submit()" class="w-32 h-8 rounded bg-blue-600 font-bold text-white ml-auto mr-2">Submit</button>
+        <button type="submit" @click="submit()">Submit</button>
     </div>
     
 </div>
@@ -151,7 +151,7 @@ export default{
             title: "",
             socialSelect: 'Choose Type',
             marketSelect: 'Choose Type',
-            discoverSelect: 'exchange',
+            discoverSelect: 'Choose Type',
             description: "",
             country: '',
             city: '',
@@ -418,7 +418,7 @@ export default{
     border-bottom: 2px solid black;
 }
 
-input, select, textarea{
+/* select, textarea {
     border: 1px solid black;
     margin: 3px;
     width: 100%;
@@ -427,6 +427,30 @@ input, select, textarea{
     border: none;
     background-color: rgb(240, 240, 240);
     color: black;
+    } */
+input, select, textarea {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+button {
+  background-color: rgb(78, 106, 133);
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
 }
 
 </style>
