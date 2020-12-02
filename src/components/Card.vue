@@ -1,6 +1,6 @@
 <template>
 
-  <div @click="navigate(id)" id="card" :style="isLast ? 'margin-top: 30px;' : void(0)">
+  <div @click="navigate(id, type)" id="card" :style="isLast ? 'margin-top: 30px;' : void(0)">
       <div id="left-column">
        <img :src=imageLink :alt=altText>
        <div id="imageBox" :class=boxcolourclass>
@@ -74,6 +74,7 @@ export default {
     "ecoursetime",
     "isLast",
     "id",
+    "type"
   ],
   components: {
     StarRating,
@@ -89,9 +90,11 @@ export default {
     setRating: function(rating){
       this.rating= rating;
     },
-    navigate(id){
+    navigate(id, type){
+       
+      
         if(this.$route.name == "social"){
-          this.$router.push({ name: 'group', params: { id: id } })
+           this.$router.push({ name: type.split("s")[0].toLowerCase(), params: { id: id } })
         }
              
     },

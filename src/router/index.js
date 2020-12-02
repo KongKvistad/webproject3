@@ -26,6 +26,7 @@ import profileAbout from './../views/Profile/profileAbout.vue'
 import profileSettingsGeneral from './../views/Profile/Settings/profileSettingsGeneral.vue'
 import Social from './../views/Social.vue'
 import GroupPage from './../views/GroupPage.vue'
+import EventPage from './../views/EventPage.vue'
 
 Vue.use(VueRouter)
 
@@ -80,6 +81,12 @@ const routes = [
     path: '/group/:id',
     name: 'group',
     component: GroupPage
+  },
+
+  {
+    path: '/event/:id',
+    name: 'event',
+    component: EventPage
   },
 ]
 

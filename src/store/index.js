@@ -54,7 +54,7 @@ const store = new Vuex.Store({
         const userProfile = await fb.usersCollection.doc(user.uid).get()
         
         let obj = userProfile.data()
-        obj.uid = user.uid
+        obj.id = user.uid
         // set user profile in state
         commit('setUserProfile', obj)
   

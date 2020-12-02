@@ -7,30 +7,50 @@
         </template>
         <template v-slot:discoverheading>
             <div class="bgCanvas">
-                <img class="backGround" :src="groupData.imgUrl" :alt="groupData.altText"/>
+                <img class="backGround" :src="groupData.imgUrl"/>
                 <h1>{{groupData.Title}}</h1>
+                <div class="desc">
+                    <em>Description:</em>
+                    <p>{{groupData.Description}}</p>
+                </div>
             </div>
         </template>
         <template v-slot:cards >
-               <h2 class="subHead">Members</h2>
-               <MemberBox
-               :user="userProfile"
-               :members="members"
-               :creator="groupData.creator"
-               />
-                <h2 class="posts">Posts</h2>
                 
-                <GroupPost 
-                v-for="post in posts"
-                :key="post.Title"
-                :data ="post"
-                :creator="members.filter(x => x.uid == post.Creator)[0].name"/>
+            <h2
+            v-if="userProfile.id"
+            class="subHead">Members
+            </h2>
+               
+            <MemberBox
+            v-if="members && userProfile.id"
+            :user="userProfile"
+            :members="members"
+            :creator="groupData.Creator"
+            :groupId="groupData.id"
+            :memberIds="groupData.Members"
+            />
+            
+            <NewGroupPost
+            v-if="userProfile.id"
+            :userId="userProfile.id"
+            :groupId="groupData.id"
+            />
+            
+            <h2 class="posts">Posts</h2>
+                
+            <GroupPost 
+            v-for="post in posts"
+            :key="post.Title"
+            :data ="post"
+            :creator="getCreator(post.Creator)"
+            />
                 
                
         </template>
        
         <template v-slot:rightBar>
-        
+         
         </template>
         
     </MainLayout>
@@ -39,16 +59,17 @@
 import MainLayout from "./MainLayout.vue"
 import MemberBox from "@/components/MemberBox.vue"
 import GroupPost from "@/components/GroupPost.vue"
+import NewGroupPost from "@/components/NewGroupPost.vue"
 import {getDocByReference, multipleDocs, getPostByTerm} from "@/helpers/collections.js"
 import {mapState} from "vuex"
-
 
 export default {
     name:"group",
     components:{
        MainLayout,
        MemberBox,
-       GroupPost
+       GroupPost,
+       NewGroupPost
        
        
     },
@@ -65,7 +86,11 @@ export default {
         
     },
     methods: {
-        
+        getCreator(id){
+            if(this.members){
+            return this.members.filter(x => x.id == id)[0].name
+            }
+        }
             
     },
     created(){
@@ -96,25 +121,53 @@ export default {
     position: relative;
     display: flex;
     height: 24em;
+    width:100%;
+    margin-bottom:5em;
     
 }
 
 .bgCanvas > h1{
     position: absolute;
-    background-color: #575cef;
+    background-color: #f4e58c;
    
-    top: 62%;
-    left: 4%;
-    padding: 7px 1em;
+    top: 65%;
+    left: 2%;
+    padding: 7px 2em 0px 20px;
     font-family: 'Avenir';
     font-size: 2em;
     font-weight: 800;
     text-transform: uppercase;
-    color: white;
+    color: black;
 }
 
 .backGround{
     object-fit: cover;
+    width:inherit;
+}
+.desc{
+    padding: 1em 0px 1em 20px;
+    background-color: #f4e58c;
+    position: absolute;
+    top:84%;
+    left: 2%;
+    color: black;
+    font-family: 'Avenir';
+    max-width: 30em;
+}
+.desc > p{
+    font-size: 1em;
+    max-width: 90%;
+    
+    
+    
+
+}
+.desc >em{
+    font-size: 1.2em;   
+    font-weight: bold;
+    font-style: normal;
+    
+    
 }
 .subHead{
 font-size: 1.2em;
@@ -130,7 +183,7 @@ font-family: 'Avenir';
 font-weight:600;
 text-align: center;
 
-margin-top: 2em;
+margin-top: 1em;
 font-family: 'Avenir';
 }
 

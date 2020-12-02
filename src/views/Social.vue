@@ -3,7 +3,7 @@
         <template 
         v-slot:leftBar>
         <CatChooser
-            :heading="'Experience'"
+            :heading="'Social'"
             :cats="cats"
             :activeCat="activeCat"
             v-on:catsChanged="onCatsChange"/>
@@ -32,7 +32,7 @@
         <template v-slot:cards v-if="!compoundView">
                <!--cards for regular search-->
                <Card
-                    
+                    :type="elem.Type"
                     :key="idx" 
                     v-for="(elem,idx) in searchResults"
                     :id ="elem.id"
@@ -43,8 +43,7 @@
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
-                    :imageBox="elem.Type"
-                    :altText="elem.altText"
+                    :imageBox="elem.Type" 
                     :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />
@@ -58,7 +57,7 @@
                     <h1 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h1>
                 </div>
                <Card
-                    @click="navigate(elem.id)"
+                    :type="elem.Type"
                     :key="elem.Title+idx+'cmp'"
                     :id ="elem.id"
                     :title="elem.Title" 
@@ -69,7 +68,7 @@
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
-                    :imageBox="elem.Type"
+                    :imageBox="elem.Type"  
                     :altText="elem.altText"  
                     :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
@@ -79,11 +78,24 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button desc="Create a new group"  v-on:showModal="modalShowing = true"/>
-        <Modal v-if="modalShowing" @close="modalShowing = false">
+        <div class="buttonList">
+            <Button v-if="activeCat == false || activeCat == 'Events'" desc="Create an Event!" :modalToOpen="'Events'"  v-on:showModal="setActiveModal"/>
+            <Button v-if="activeCat == false || activeCat == 'Groups'" desc="Create a group!"  :modalToOpen="'Groups'" v-on:showModal="setActiveModal"/>
+        </div>
+        <Modal v-if="modalShowing && activeModal == 'Groups'" @close="modalShowing = false">
+
             <h2 slot="header">Create a group</h2>
-            <GroupForm slot="modal-body" :user="userProfile" @closeModal="groupCreated"/>
+            <GroupAndEventForm slot="modal-body" :user="userProfile" :params="decideParams(cats[1])" :type="cats[1]" @closeModal="postCreated"/>
+
         </Modal>
+        <Modal v-else-if="modalShowing && activeModal == 'Events'" @close="modalShowing = false">
+
+            <h2 slot="header">Create an Event</h2>
+             <GroupAndEventForm slot="modal-body" :user="userProfile" :params="decideParams(cats[0])" :type="cats[0]" @closeModal="postCreated"/>
+
+        </Modal>
+        <GroupList
+        :belongsTo="userProfile.belongsTo"/>
         </template>
         
     </MainLayout>
@@ -95,7 +107,8 @@ import SearchMaster from "../components/SearchMaster.vue"
 import Card from "../components/Card.vue"
 import Button from "../components/Button.vue"
 import Modal from "../components/Modal.vue"
-import GroupForm from "../components/GroupForm.vue"
+import GroupAndEventForm from "../components/GroupAndEventForm.vue"
+import GroupList from "../components/GroupList.vue"
 import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
@@ -112,12 +125,14 @@ export default {
        Card,
        Button,
        Modal,
-       GroupForm
+       GroupAndEventForm,
+       GroupList
        
     },
     data() {
         return{
             modalShowing: false,
+            activeModal: false,
 
             searchResults: false,
             activeCat: false,
@@ -145,18 +160,30 @@ export default {
 
 
             
-        }
+        },
+
     },
     methods:{
-        navigate(id){
-            if(this.$route.name == "social"){
-             this.$router.push({ name: 'group', params: { id: id } })
-             }
+        decideParams(cat){
+            const allFilt = this.$objFilter(this.filters, true)
+            console.log(allFilt.filter(x => x.uid == cat))
+            return allFilt.filter(x => x.uid == cat)
+
         },
-        groupCreated(id){
+        setActiveModal(val){
+           this.modalShowing = true
+           this.activeModal = val
+        },
+
+        
+        postCreated(dataArr){
+            let type = dataArr[0]
+            let id = dataArr[1]
+            console.log(type,id)
             this.modalShowing = false
-           
-            this.$router.push({ name: 'group', params: { id: id } })
+            
+           //pray to god nobody sees this
+            this.$router.push({ name: type.split("s")[0].toLowerCase(), params: { id: id } })
         },
         checkboxes(value){
             if(this.activeFilters.indexOf(value) >=0 ){
@@ -252,8 +279,15 @@ export default {
 }
 </script>
 
-<style scroped>
-h2 {
-    font-size: 28px;
+<style scoped>
+.buttonList{
+    display: flex;
+    flex-direction: column;
+    min-width: 14%;
+    
+}
+
+.buttonList > div:first-of-type {
+    margin-bottom: 2em;
 }
 </style>

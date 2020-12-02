@@ -3,7 +3,7 @@
         <template 
         v-slot:leftBar>
         <CatChooser
-            :heading="'Experience'"
+            :heading="'Marketplace'"
             :cats="cats"
             :activeCat="activeCat"
             v-on:catsChanged="onCatsChange"/>

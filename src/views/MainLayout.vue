@@ -111,7 +111,8 @@ export default {
     }
     #middleBar{
         grid-column: 2 / 3;
-        border-left: 1px solid rgba(177, 177, 177, 0.2);
+        border-left: 1px solid rgb(177, 177, 177);
+        border-right: 1px solid rgb(177, 177, 177);
         min-width:100%;
         max-width:50em;
         margin: 0px auto;
@@ -125,7 +126,9 @@ export default {
         
     }
     #rightBar > div:first-of-type {
-        max-width: 14%;
+        
+        min-width: 70%;
+        max-width: 60%;
     }
 
     #cards {
