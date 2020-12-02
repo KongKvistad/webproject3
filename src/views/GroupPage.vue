@@ -18,7 +18,7 @@
         <template v-slot:cards >
                 
             <h2
-            v-if="userProfile.id"
+            v-if="memberStatus == 'isMember'"
             class="subHead">Members
             </h2>
                
@@ -32,11 +32,22 @@
             />
             
             <NewGroupPost
-            v-if="userProfile.id"
+            v-if="memberStatus == 'isMember'"
             :userId="userProfile.id"
             :groupId="groupData.id"
             />
-            
+            <JoinGroup
+            v-else-if="memberStatus == 'notMember'"
+            :userId="userProfile.id"
+            :groupId="groupData.id"
+            />
+            <p v-else @click="modalShowing = true" class="w-24 h-8 rounded flex justify-center items-center bg-blue-600 font-bold text-white ml-auto mr-16 mt-12 ">Join</p>
+            <Modal v-if="modalShowing" @close="modalShowing = false">
+                <h2 slot="header">Access Denied</h2>
+                <div slot="modal-body" class="box w-full flex flex-col items-between" >
+                    <h3 class="warning">You have to <em @click="$router.replace({ path: '/login'})">sign in</em> to join!</h3>
+                </div>
+            </Modal>
             <h2 class="posts">Posts</h2>
                 
             <GroupPost 
@@ -60,6 +71,8 @@ import MainLayout from "./MainLayout.vue"
 import MemberBox from "@/components/MemberBox.vue"
 import GroupPost from "@/components/GroupPost.vue"
 import NewGroupPost from "@/components/NewGroupPost.vue"
+import Modal from "@/components/Modal.vue"
+import JoinGroup from "@/components/JoinGroup.vue"
 import {getDocByReference, multipleDocs, getPostByTerm} from "@/helpers/collections.js"
 import {mapState} from "vuex"
 
@@ -69,7 +82,9 @@ export default {
        MainLayout,
        MemberBox,
        GroupPost,
-       NewGroupPost
+       NewGroupPost,
+       JoinGroup,
+       Modal
        
        
     },
@@ -77,13 +92,24 @@ export default {
         return {
             groupData: false,
             members: false,
-            posts: false
+            posts: false,
+            modalShowing: false
         }
     },
     computed:{
         ...mapState(['userProfile']),
 
-        
+        memberStatus(){
+            let id = this.userProfile.id
+            if(id && this.members){
+                let chk = this.members.filter(x => x.id == id)
+                return chk.length > 0 ? "isMember" : "notMember"
+            }else {
+                return false
+            }
+
+            
+        }
     },
     methods: {
         getCreator(id){
@@ -186,5 +212,15 @@ text-align: center;
 margin-top: 1em;
 font-family: 'Avenir';
 }
+.warning{
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 1em;
+    
+}
 
+.warning > em{
+    text-decoration: underline;
+    color: blue;
+}
 </style>
