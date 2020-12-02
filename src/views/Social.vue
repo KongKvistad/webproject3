@@ -54,7 +54,7 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3 v-bind:style="{'color': '#f6e05e'}">{{elem.isLast}}</h3>
+                    <h1 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h1>
                 </div>
                <Card
                     :type="elem.Type"
@@ -69,6 +69,7 @@
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
+                    :altText="elem.altText"  
                     :imageLink="elem.imgUrl ? elem.imgUrl : 'https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg'"
                     boxcolourclass="yellowbox"
                     />

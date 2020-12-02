@@ -65,7 +65,7 @@ export default {
     margin: 4em auto;
     }
 
-    .newCat > h3{
+    .newCat > h1{
     font-size: 2em;
     
     text-align: center;
@@ -94,6 +94,7 @@ export default {
         width: 100%;
         display:flex;
         align-items: center;
+        
     }
 
     #discover{

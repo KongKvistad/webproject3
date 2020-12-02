@@ -35,14 +35,15 @@
                     :key="idx" 
                     v-for="(elem,idx) in searchResults"
                     :title="elem.Title" 
-                    :owner="elem.School" 
+                    :owner="elem.Creator" 
                     :deadline="elem.Visa"
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :imageBox="elem.Type" 
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :altText="elem.altText"
+                    :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
             
@@ -58,15 +59,16 @@
                     :country="elem.Country"
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
-                    :owner="elem.School" 
+                    :owner="elem.Creator"
                     :deadline="elem.Visa"
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
                     :duration="elem.Duration"
                     :isLast="elem.isLast"
-                    :imageBox="elem.Type"  
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :imageBox="elem.Type"
+                    :altText="elem.altText"
+                    :imageLink="elem.imgUrl"
                     boxcolourclass="bluebox"
                     />
                     
@@ -75,9 +77,9 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button desc="create a new post!" v-on:showModal="modalShowing = true"/>
+        <Button desc="Create a new post" v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a StudyProgram/work/Exchange</h2>
+            <h2 slot="header">Create a study programme, work or exchange</h2>
             <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
         </template>
@@ -236,3 +238,9 @@ export default {
 
 }
 </script>
+
+<style scroped> /*Heading in new post*/
+h2 { 
+    font-size: 28px;
+}
+</style>

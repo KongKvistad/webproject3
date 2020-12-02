@@ -40,10 +40,11 @@
                     :description="elem.Description" 
                     :price="elem.Cost" 
                     :reviews="elem.Testemonies" 
-                    :duration="elem.Duration"
+                    :ecoursetime="elem.Duration"
                     :imageBox="elem.Type" 
                     :rating="elem.Rating"
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :altText="elem.altText"
+                    :imageLink="elem.imgUrl"
                     boxcolourclass="greenbox"
                     />
             
@@ -53,9 +54,11 @@
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
                 <div v-if="elem.isLast" :key="elem.Title+idx" class="newCat">
-                    <h3 v-bind:style="{'color': '#12f47a'}">{{elem.isLast}}</h3>
+                    <h1 v-bind:style="{'color': '#333333'}">{{elem.isLast}}</h1>
                 </div>
                <Card
+                    :timePosted="elem.TimePosted"
+                    :language="elem.Language"
                     :key="elem.Title+idx+'cmp'"
                     :title="elem.Title" 
                     :owner="elem.Creator" 
@@ -63,13 +66,13 @@
                     :description="elem.Description" 
                     :price="elem.Price" 
                     :reviews="elem.Testemonies" 
-                    :duration="elem.Duration"
+                    :ecoursetime="elem.Duration"
                     :isLast="elem.isLast"
                     :imageBox="elem.Type"  
                     :rating="elem.Rating"
                     
-
-                    imageLink="https://image.freepik.com/free-photo/man-recording-studio-music-production_1303-20390.jpg"
+                    :altText="elem.altText"
+                   :imageLink="elem.imgUrl"
                     boxcolourclass="greenbox"
                     />
                 
@@ -77,9 +80,9 @@
             
         </template>
         <template v-slot:rightBar>
-        <Button desc="create a new post!"  v-on:showModal="modalShowing = true"/>
+        <Button desc="Create a new post"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
-            <h2 slot="header">Create a Post</h2>
+            <h2 slot="header">Create a post</h2>
             <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
         </Modal>
         
@@ -240,3 +243,8 @@ export default {
 
 }
 </script>
+<style scroped>
+h2 {
+    font-size: 28px;
+}
+</style>

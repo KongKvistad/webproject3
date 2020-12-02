@@ -24,10 +24,10 @@
           <div class="dropdown-content">
             <router-link to="/profile/aboutme">Profile</router-link>
             <router-link to="/profile/settings/general">Settings</router-link>
-            <a @click="logOut()">Log Out</a>
+            <a class="loginout" @click="logOut()">Log Out</a>
           </div>
         </div>
-        <div v-else><router-link to="/login">LOG IN</router-link></div> 
+        <div class="loginout" v-else><router-link to="/login"><img src="@/assets/user.svg">Log in</router-link></div> 
       </div>
        <transition name="dropTrans">
           <MenuDropDown v-on:cursorChanged="val => monitorCursor(val)" v-if="this.activeDropDown" :data="activeDropDown"/>
@@ -91,11 +91,10 @@ export default {
     display: grid;
     min-height: 5vw;
     grid-auto-flow: column;
-    background-color: white;
+    background-color:white;
     padding: 0 5vw;
-    border-bottom: 1px solid black;
-    margin-top: 5px;
     max-height: 5vw;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
     
 }
 
@@ -131,30 +130,12 @@ export default {
   grid-gap: 0.5em;
 }
 
-.activeDiscover{
-  border-bottom: 0.5vw solid rgb(94,166,248);
+.loginout:hover, .activeDiscover, #navDiscover:hover,.activeMarket, #navMarket:hover,.activeSocial, #navSocial:hover {
+  border-bottom: 0.2vw solid rgb(78, 106, 133);
 }
-
-#navDiscover:hover {
-  border-bottom: 0.5vw solid rgb(94,166,248);
+#navMarket, #navDiscover, #navSocial,.loginout {
+  border-bottom: 0.2vw solid white;
 }
-
-.activeMarket {
-  border-bottom: 0.5vw solid rgb(18,244,122);
-
-}
-
-#navMarket:hover{
-  border-bottom: 0.5vw solid rgb(18,244,122);
-
-}
-.activeSocial{
-  border-bottom: 0.5vw solid rgb(255,230,3);
-} 
-
-#navSocial:hover{
-  border-bottom: 0.5vw solid rgb(255,230,3);
-} 
 
 #nav img{
     max-height: 2vw;

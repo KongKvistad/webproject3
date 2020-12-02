@@ -407,7 +407,7 @@ methods: {
 
     button {
         width: auto;
-        background-color: #00509e;
+        background-color: rgb(29, 103, 187);
         color: white;
         padding: 6px 15px;
         margin-top: 15px;

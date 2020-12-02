@@ -51,10 +51,10 @@ export default {
 <style scoped>
 
 .bluebox {
-      background-color: #5E80F8;
+      background-color: rgb(29, 103, 187);
     }
 .greenbox {
-    background-color: #36A90F;
+    background-color: rgb(13, 170, 86);
   }
 
 #imageBox {

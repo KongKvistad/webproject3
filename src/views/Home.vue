@@ -14,10 +14,10 @@
                 :activeFilters="activeFilters"
                 :fromHome="true"
                 />
-                <FilterBox v-on:filterToSearch="onFilterChange"
+                <!--<FilterBox v-on:filterToSearch="onFilterChange"
                 :filters="this.filters[this.activeCats]"
                 v-if="this.activeCats" :isHorizontal="false"
-                :activeFilters="activeFilters" />
+                :activeFilters="activeFilters" />-->
               </section>
               <div class="headline">Opportunities abroad.</div>
               <div class="under-headline">Made easy.</div>
@@ -30,10 +30,10 @@
             <Upload></Upload>
           </div> -->
         
-          <h1>Maybe you're interested in...</h1>
-          <p>E-courses</p>
+          <h1>Maybe you're interested in these e-courses</h1>
+          <!--<p>E-courses</p>-->
           <div class="smallCard">
-            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price" :routePath="pathEcourse"/>            
+            <SmallCard v-for="item in randomList(e_course).slice(0, 3)" :key="item.id" :item="item" :title="item.title" :price="item.price"/>            
           </div>
         </div>
     </main>
@@ -42,7 +42,7 @@
 <script>
 import {getCollections, filtersWithHeaders} from '../helpers/collections.js'
 import {db} from '../components/firebaseInit.js'
-import FilterBox from '../components/FilterBox'
+//import FilterBox from '../components/FilterBox'
 import SearchMaster from '../components/SearchMaster.vue'
 import SmallCard from '../components/SmallCard.vue'
 //import Upload from '../components/Upload.vue'
@@ -51,7 +51,7 @@ export default {
   name: 'Home',
   components: {
     SearchMaster,
-    FilterBox,
+    //FilterBox,
     //RadioBtns,
     SmallCard,
     //Upload
@@ -65,13 +65,6 @@ export default {
       filters: [],
       activeFilters:[],
       e_course: [],
-    }
-  },
-  
-  // smallCard click path for displaying full data in seperate view
-  computed: {
-    pathEcourse () {
-      return this.$store.state.routePath.ecourse
     }
   },
   
@@ -90,15 +83,11 @@ export default {
       //console.log(this.activeFilters)
       
     },
-
     onCatsChange: function(value){
       this.activeCats = value
       this.activeFilters = [];
       this.populate(value)
-    },
-
-  
-     
+    },     
   },
   watch:{
     
@@ -123,7 +112,9 @@ export default {
         const data = {
           'id': doc.id,
           'title': doc.data().Title,
-          'price': doc.data().Price
+          'price': doc.data().Price,
+          'imgUrl': doc.data().imgUrl,
+          'description': doc.data().Description
         }
         this.e_course.push(data)
       })
@@ -168,15 +159,16 @@ export default {
    
    
    .headline {
-     padding-right: 1rem;
-     padding-left: 1rem;
+     padding: 0.2rem;
      margin-top: 2rem;
      font-size: 4vw;
-     background-color: #5E80F8;
+     background-color: rgb(0,0,0,0.5);
      color: white;
      text-align: left;
      position: absolute;
      top:1em;
+     font-family: "Open Sans", sans-serif;
+     width: 60%;
    }
    
    .under-headline {
@@ -184,10 +176,10 @@ export default {
      margin-top: 1rem;
      font-size: 2vw;
      float: left;
-     background-color: #5E80F8;
+     background-color: rgb(0,0,0,0.5);
      color: white;
      text-align: left;
-
+     font-family: "Open Sans", sans-serif;
      position: absolute;
      top:6em;
    }
@@ -196,31 +188,25 @@ export default {
    /* Content suggestions */
    
    .content-suggestion {
-      background-color: white;
+      background-color: rgb(237,242,247);
     }
 
     .content-suggestion > h1 {
-      font-size: 36px;
+      font-size: 33px;
       padding: 2%;
-      text-align: center;
-    }
-
-    .content-suggestion > p {
-      font-size: 24px;
-      padding: 3%;
-      margin-left: 3%;
-    }
-   
-
-  
-
-   .content-suggestion-cards {
-      
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 3%;
+      color: #333333;
     }
    
    .smallCard {
-     display: flex;
-     flex-direction: columns;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      flex-basis: 100%;
+      justify-content: space-evenly;
    }
+
+  
    
    </style>
