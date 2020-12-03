@@ -101,7 +101,7 @@ import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
 
 export default {
-    name:"Social",
+    name:"Discover",
     components:{
        MainLayout,
        CatChooser,
@@ -152,7 +152,7 @@ export default {
             } else {
                 this.activeFilters.push(value)
             }
-            console.log(this.activeFilters)
+          
             
         },
         
@@ -172,6 +172,12 @@ export default {
             
             this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
         },
+    },
+    watch:{
+        activeFilters: function() {
+                this.$el.querySelector("#searchBar").focus({preventScroll: true});
+                //this.rePopulate()
+        }
     },
     created(){
         let query = this.$route.query

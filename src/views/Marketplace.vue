@@ -177,6 +177,11 @@ export default {
             this.$router.push({ path: this.$route.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
         },
     },
+    watch:{
+        activeFilters: function() {
+                this.$el.querySelector("#searchBar").focus({preventScroll: true});
+        }
+    },
     created(){
         let query = this.$route.query
         let activeCat= query.cat == "false" || !query.cat ? false : query.cat

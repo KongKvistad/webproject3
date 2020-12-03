@@ -5,6 +5,7 @@
     v-on:catsChanged="onCatsChange"
     v-on:clickedItem="onClickedItemChanged" 
     v-on:searchClicked="search" 
+    v-on:showData="getResults"
     :matches="this.matches" 
     v-if="this.cats.length > 0" 
     :cats="this.cats" 
@@ -23,7 +24,7 @@ export default {
   props:["results", "cats", "activeFilters", "activeCats", "fromHome"],
   data(){
     return {
-      searchTerm:false,
+      searchTerm:"",
       matches:[],
       clickedItem: false
     }
@@ -88,27 +89,27 @@ export default {
      
       this.$router.push({ path: this.$router.currentRoute.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
       
+    },
+    getResults(){
+     
+        let countries = this.findMatches(this.searchTerm, "Country")
+        let cities = this.findMatches(this.searchTerm, "City")
+        this.matches = countries.concat(cities)
     }
      
   },
   watch:{
     searchTerm: function(){
-      if(this.searchTerm == ""){
-        this.matches = false;
-      } else {
-        let countries = this.findMatches(this.searchTerm, "Country")
-        let cities = this.findMatches(this.searchTerm, "City")
-        this.matches = countries.concat(cities)
-      }
+      // run if focused
+        this.getResults()
+      
     
     },
     activeFilters: function(){
-      let countries = this.findMatches(this.searchTerm, "Country")
-      let cities = this.findMatches(this.searchTerm, "City")
-      this.matches = countries.concat(cities)
-      
+      this.getResults()
     }
   },
+  created(){}
   
   
 }
