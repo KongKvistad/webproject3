@@ -76,14 +76,16 @@
                     boxcolourclass="greenbox"
                     />
                 
-            </template>
+        </template>
             
         </template>
         <template v-slot:rightBar>
         <Button desc="Create a new post"  v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
             <h2 slot="header">Create a post</h2>
-            <NewPost slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+            <NewPost  v-if="userProfile.id" slot="modal-body" :user="userProfile" @closeModal="modalShowing = false"/>
+            
+            <AccessDenied v-else slot="modal-body" @closeModal="modalShowing = false"/>
         </Modal>
         
         </template>
@@ -101,7 +103,8 @@ import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import NewPost from "@/components/NewPost.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
-
+//import auth from "@/components/firebaseInit.js"
+import AccessDenied from "@/components/AccessDenied.vue"
 
 
 export default {
@@ -114,7 +117,8 @@ export default {
        Card,
        Modal,
        Button,
-       NewPost
+       NewPost,
+       AccessDenied,
        
     },
     data() {

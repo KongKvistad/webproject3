@@ -49,17 +49,13 @@ export default {
     font-weight: bold;
 }
 
-.menu {
-    border-left: 1px solid black;
-    padding-left: 10%;
-}
-
 .activeLink {
-    border-bottom: 2px solid #bb4584;
+    border-bottom: 2px solid #a33e74bb;
+    color: #a33e74bb;
 }
 
 .menu a:hover{
-    border-bottom: 2px solid #bb4584;
+    color: #a33e74bb;
 }
 
 </style>
