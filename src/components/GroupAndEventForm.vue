@@ -28,7 +28,7 @@
         
         
         </div>
-    <div v-if="type='Events'" :class="`box-wrapper grid grid-cols-1 grid-rows-1`">
+    <div v-if="type=='Events'" :class="`box-wrapper grid grid-cols-1 grid-rows-1`">
         <div class="w-full flex justify-start mt-4">
             <span class="w-1 bg-blue-500 mr-4"> </span>
             <div :class="`bg-white rounded flex items-center ${type=='Events' ? 'w-full' : 'w-11/12'} shadow-sm border border-gray-200`">

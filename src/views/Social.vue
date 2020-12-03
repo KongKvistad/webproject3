@@ -177,6 +177,7 @@ export default {
 
         },
         setActiveModal(val){
+            console.log(val)
            this.modalShowing = true
            this.activeModal = val
         },

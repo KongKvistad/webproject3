@@ -85,9 +85,11 @@ export default {
       //special handling when coming from homepage
       if(this.$route.name == "Home"){
          this.$router.push({ path: 'discover', query: obj }).then(this.$router.go(this.$router.currentRoute))
+      } else {
+        this.$router.push({ path: this.$router.currentRoute.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
       }
      
-      this.$router.push({ path: this.$router.currentRoute.path, query: obj }).then(this.$router.go(this.$router.currentRoute))
+      
       
     },
     getResults(){
@@ -107,6 +109,8 @@ export default {
     },
     activeFilters: function(){
       this.getResults()
+
+      
     }
   },
   created(){}

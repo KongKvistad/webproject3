@@ -29,7 +29,11 @@
                 :activeFilters="activeFilters"
                 />       
         </template>
+        
+        
+       
         <template v-slot:cards v-if="!compoundView">
+        <h1 class="noRes" v-if="searchResults.length == 0">No results found..</h1>
                <!--cards for regular search-->
                <Card
                     :key="idx" 
@@ -48,7 +52,8 @@
                     />
             
         </template>
-        <template v-slot:cards v-else>
+        <template v-slot:cards v-else-if="compoundView">
+        
            
                <!--cards for comp view-->
                <template v-for="(elem,idx) in searchResults" >
@@ -77,6 +82,7 @@
             </template>
             
         </template>
+        
         <template v-slot:rightBar>
         <Button desc="Create a new post" v-on:showModal="modalShowing = true"/>
         <Modal v-if="modalShowing" @close="modalShowing = false">
@@ -179,8 +185,9 @@ export default {
     },
     watch:{
         activeFilters: function() {
-                this.$el.querySelector("#searchBar").focus({preventScroll: true});
-                //this.rePopulate()
+            this.$el.querySelector("#searchBar").focus({preventScroll: true});
+                
+            
         }
     },
     created(){
@@ -253,5 +260,13 @@ export default {
 <style scroped> /*Heading in new post*/
 h2 { 
     font-size: 28px;
+}
+.noRes{
+    font-family: 'Avenir';
+    
+    font-size: 2.4em;
+    text-align: center;
+    margin-top:2em;
+
 }
 </style>
