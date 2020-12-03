@@ -28,7 +28,7 @@
                 <p v-else-if="price==0" :style= "price==0 ? {'color': 'green', 'font-size': '1.3em'} : {}">FREE</p>
                 <p v-if="reviews">{{ reviews }} testemonies</p>
                 <p v-if="duration">{{ duration }} </p>
-                <p v-if="type">Type: {{ type }}</p>
+                
                 <p v-if="ecoursetime>60" > {{ ecoursetime/60 }} hours </p>
                 <p v-else-if="ecoursetime<60"> {{ecoursetime}} minutes</p>
                 <div v-if="rating">
