@@ -38,7 +38,8 @@
                   <button id="buybutton" type="button" @click="modalShowing = true">Buy Now</button>
                   <Modal v-if="modalShowing" @close="modalShowing = false">
                     <h2 slot="header">Buy item</h2>
-                    <PaymentForm slot="modal-body"/>
+                    <PaymentForm v-if="userProfile.id" slot="modal-body"/>
+                    <AccessDenied v-else slot="modal-body" @closeModal="modalShowing = false"/>
                   </Modal>
                 </div>
           </div>
@@ -52,6 +53,8 @@ import StarRating from 'vue-star-rating';
 //import Button from '@/components/Button.vue';
 import PaymentForm from '@/components/PaymentForm.vue';
 import Modal from '@/components/Modal.vue';
+import AccessDenied from '@/components/AccessDenied.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Card',
@@ -79,7 +82,8 @@ export default {
   components: {
     StarRating,
     PaymentForm,
-    Modal
+    Modal,
+    AccessDenied
   },
   data(){
     return{
@@ -106,7 +110,9 @@ export default {
   computed: {
     currentPage(){
       return this.$route.path;
-    }
+    },
+
+    ...mapState(['userProfile'])
   }
   /* data: function(){
     return {
