@@ -104,7 +104,7 @@ export default {
 #editButton {
     border: 1px solid;
     padding: 0 0.3% 0 0.3%;
-    background-color: #bb4584;
+    background-color: #a33e74bb;
     color: white;
     border-radius: 10%;
     float: right;

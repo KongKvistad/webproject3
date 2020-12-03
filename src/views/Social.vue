@@ -85,13 +85,17 @@
         <Modal v-if="modalShowing && activeModal == 'Groups'" @close="modalShowing = false">
 
             <h2 slot="header">Create a group</h2>
-            <GroupAndEventForm slot="modal-body" :user="userProfile" :params="decideParams(cats[1])" :type="cats[1]" @closeModal="postCreated"/>
+            <GroupAndEventForm v-if="userProfile.id" slot="modal-body" :user="userProfile" :params="decideParams(cats[1])" :type="cats[1]" @closeModal="postCreated"/>
+
+            <AccessDenied v-else slot="modal-body" @closeModal="modalShowing = false"/>
 
         </Modal>
         <Modal v-else-if="modalShowing && activeModal == 'Events'" @close="modalShowing = false">
 
             <h2 slot="header">Create an Event</h2>
-             <GroupAndEventForm slot="modal-body" :user="userProfile" :params="decideParams(cats[0])" :type="cats[0]" @closeModal="postCreated"/>
+            <GroupAndEventForm v-if="userProfile.id" slot="modal-body" :user="userProfile" :params="decideParams(cats[0])" :type="cats[0]" @closeModal="postCreated"/>
+
+            <AccessDenied v-else slot="modal-body" @closeModal="modalShowing = false"/>
 
         </Modal>
         <GroupList
@@ -112,6 +116,7 @@ import GroupList from "../components/GroupList.vue"
 import CheckBoxMaster from "@/components/CheckBoxMaster.vue"
 import {mapState} from "vuex"
 import {getPostByTerm, populateRandom, filtersWithHeaders, getCollections, getAllByTerm} from "../helpers/collections.js"
+import AccessDenied from '@/components/AccessDenied.vue'
 
 
 
@@ -126,7 +131,8 @@ export default {
        Button,
        Modal,
        GroupAndEventForm,
-       GroupList
+       GroupList,
+       AccessDenied
        
     },
     data() {
