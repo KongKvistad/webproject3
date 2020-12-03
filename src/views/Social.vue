@@ -98,7 +98,7 @@
             <AccessDenied v-else slot="modal-body" @closeModal="modalShowing = false"/>
 
         </Modal>
-        <GroupList
+        <GroupList v-if="userProfile.id"
         :belongsTo="userProfile.belongsTo"/>
         </template>
         
